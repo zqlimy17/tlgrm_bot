@@ -1,4 +1,4 @@
 {
-    "port": 8080,
+    "port": 8000,
     "default_API": "https://api.telegram.org/bot1077415661:AAEkLQcaCbvVoAGmKE_gU6Govv0NElZCy3g"
 }

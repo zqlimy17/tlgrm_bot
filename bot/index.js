@@ -8,6 +8,10 @@ const PORT = process.env.PORT || config.get("port");
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+router.get("/", async (req, res) => {
+    res.send("Hello World");
+});
+
 router.post("/", async (req, res) => {
     try {
         let webhook_message = req.body;

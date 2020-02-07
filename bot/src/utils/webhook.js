@@ -10,6 +10,7 @@ class Webhooks {
                     console.log(error);
                 }
             } else {
+                console.log(payload);
             }
         } else if (payload.hasOwnProperty("callback_query")) {
         }
