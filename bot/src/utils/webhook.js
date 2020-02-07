@@ -1,17 +1,18 @@
 const API = require("../services/api");
+const Db = require("../services/db");
+
 class Webhooks {
     async filter(payload) {
         if (payload.hasOwnProperty("message")) {
-            let chat_type = payload.message.chat.type;
-            if (chat_type === "private") {
+            let { from, chat, text } = payload.message;
+            new Db(from, chat, text).processing_data();
+            if (chat.type === "private") {
                 try {
                     new API(payload, payload.message.from).delete_message();
                 } catch (error) {
                     console.log(error);
                 }
-            } else {
             }
-        } else if (payload.hasOwnProperty("callback_query")) {
         }
     }
 }
