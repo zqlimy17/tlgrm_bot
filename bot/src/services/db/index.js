@@ -82,6 +82,12 @@ class Db {
 
         this.telegram_log(message_id);
     }
+
+    static async get_users() {
+        let user = await User.findAll();
+        if (user) return user;
+        return;
+    }
 }
 
 module.exports = Db;
