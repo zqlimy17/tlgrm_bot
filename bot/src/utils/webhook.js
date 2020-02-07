@@ -5,18 +5,15 @@ class Webhooks {
     async filter(payload) {
         if (payload.hasOwnProperty("message")) {
             let { from, chat, text } = payload.message;
-            new Db(from, chat, text).processing_data();
+            new Db(from, chat, text).processing_data(
+                payload.message.message_id
+            );
             if (chat.type === "private") {
                 try {
                     new API(payload, payload.message.from).delete_message();
                 } catch (error) {
                     console.log(error);
                 }
-<<<<<<< HEAD
-            } else {
-                console.log(payload);
-=======
->>>>>>> 1bf132d886bb8fad70185ebebbf873d1af3f9633
             }
         }
     }

@@ -1,6 +1,5 @@
 const { Sequelize, DataTypes } = require("sequelize");
 const config = require("config");
-const psql_url = "postgres://mohammadasshikin@localhost:5432/tlgrm";
 
 const sequelize = new Sequelize(config.get("psql_url"), {
     timezone: "+08:00",

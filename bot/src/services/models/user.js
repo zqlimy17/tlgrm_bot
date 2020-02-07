@@ -11,6 +11,7 @@ let User = sequelize.define(
         language: { type: DataTypes.STRING }
     },
     {
+        paranoid: true,
         freezeTableName: true,
         createdAt: "created_at",
         updatedAt: "updated_at",

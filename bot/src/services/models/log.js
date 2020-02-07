@@ -5,6 +5,7 @@ let Log = sequelize.define(
     {
         telegram_id: { type: DataTypes.INTEGER, allowNull: false },
         chat_id: { type: DataTypes.STRING, allowNull: false },
+        message_id: { type: DataTypes.INTEGER, allowNull: false },
         text: { type: DataTypes.TEXT }
     },
     {

@@ -14,9 +14,10 @@ router.get("/", async (req, res) => {
 
 router.post("/", async (req, res) => {
     try {
+        console.log("working");
+        res.sendStatus(202);
         let webhook_message = req.body;
         new Webhooks().filter(webhook_message);
-        res.sendStatus(202);
     } catch (error) {
         console.log(error);
         res.sendStatus(404);
