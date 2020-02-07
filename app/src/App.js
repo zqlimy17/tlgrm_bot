@@ -6,6 +6,7 @@ import Nav from "./components/Nav";
 import Home from "./components/Home";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
+import Chart from "./components/Playground";
 
 function App() {
     return (
@@ -21,6 +22,9 @@ function App() {
                     </Route>
                     <Route path="/signup">
                         <Signup />
+                    </Route>
+                    <Route path="/playground">
+                        <Chart />
                     </Route>
                     {/* <Route
                         path={"/movie/:movieId"}
