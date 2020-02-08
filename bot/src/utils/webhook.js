@@ -16,8 +16,6 @@ class Webhooks {
                 } catch (error) {
                     console.log(error);
                 }
-                if (payload.message.text === "/start") {
-                }
             }
         }
     }
