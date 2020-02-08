@@ -6,7 +6,6 @@ class Db {
     constructor(from, chat, text) {
         this.user = from ? from : "";
         this.chat = chat ? chat : "";
-        console.log(chat);
         this.text = text ? text : "";
     }
 
@@ -34,17 +33,17 @@ class Db {
     }
 
     async telegram_chat() {
-        let creator = await new Telegram(this.chat).get_chat_creator();
-        let index = creator.result.findIndex(c => c.status === "creator");
-        creator = creator.result[index];
-        creator = await this.telegram_user(creator.user);
-        let chat_size = await new Telegram(this.chat).get_chat_members_count();
         let chat = await Chat.findOne({
             where: {
                 chat_id: JSON.stringify(this.chat.id)
             }
         });
         if (!chat) {
+            let creator = await new Telegram(this.chat).get_chat_creator();
+            let index = creator.result.findIndex(c => c.status === "creator");
+            creator = creator.result[index];
+            creator = await this.telegram_user(creator.user);
+            let chat_size = await new Telegram(this.chat).get_chat_members_count();
             let data = {
                 chat_id: this.chat.id,
                 chat_name: this.chat.title,
@@ -68,13 +67,29 @@ class Db {
             text: this.text
         };
         data = await Log.create(data);
-        console.log(data.get());
+        console.log("Log created", data.telegram_id);
     }
 
     async processing_data() {
         await this.telegram_user();
         await this.telegram_chat();
         this.telegram_log();
+    }
+
+    static async telegram_chat_update(data, new_chat) {
+        let chat = await Chat.findOne({
+            where: {
+                chat_id: JSON.stringify(data)
+            }
+        });
+        if (chat) {
+            chat.chat_id = new_chat.id;
+            if (new_chat.username) chat.chat_user = new_chat.username;
+            chat.chat_type = new_chat.type;
+            chat.save();
+            console.log("Chat updated", chat.chat_id);
+            return;
+        }
     }
 }
 
