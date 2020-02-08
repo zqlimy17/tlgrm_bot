@@ -41,18 +41,21 @@ class Db {
             }
         });
         if (!chat) {
-            let creator = await new Telegram(this.chat).get_chat_creator();
-            let index = creator.result.findIndex(c => c.status === "creator");
-            creator = creator.result[index];
-            creator = await this.telegram_user(creator.user);
-            let chat_size = await new Telegram(this.chat).get_chat_members_count();
+            let creator, chat_size;
+            if (this.chat.type !== "private") {
+                creator = await new Telegram(this.chat).get_chat_creator();
+                let index = creator.result.findIndex(c => c.status === "creator");
+                creator = creator.result[index];
+                creator = await this.telegram_user(creator.user);
+                chat_size = await new Telegram(this.chat).get_chat_members_count();
+            }
             let data = {
                 chat_id: this.chat.id,
-                chat_name: this.chat.title,
+                chat_name: this.chat.title ? this.chat.title : null,
                 chat_type: this.chat.type,
                 chat_username: this.chat.username ? this.chat.username : null,
-                chat_size: chat_size.result,
-                chat_owner: creator.telegram_id
+                chat_size: chat_size ? chat_size.result : null,
+                chat_owner: creator ? creator.telegram_id : this.chat.id
             };
             chat = await Chat.create(data);
             Utils.log("[Chat created]", chat.chat_id);
@@ -73,18 +76,6 @@ class Db {
         Utils.log("[Log created]", `user_id -> ${data.telegram_id}`, `message_id -> ${message_id}`);
     }
 
-    async processing_data(message_id) {
-        await this.telegram_user();
-        await this.telegram_chat();
-        this.telegram_log(message_id);
-    }
-
-    static async get_users() {
-        let user = await User.findAll();
-        if (user) return user;
-        return;
-    }
-
     static async telegram_chat_update(data, new_chat) {
         let chat = await Chat.findOne({
             where: {
@@ -99,6 +90,12 @@ class Db {
             Utils.log(`Chat updated from ${data} to ${chat.chat_id}`);
             return;
         }
+    }
+
+    async processing_data(message_id) {
+        await this.telegram_user();
+        await this.telegram_chat();
+        this.telegram_log(message_id);
     }
 }
 
