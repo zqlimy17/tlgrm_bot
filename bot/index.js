@@ -11,9 +11,8 @@ app.use(express.urlencoded({ extended: true }));
 
 router.get("/users", async (req, res) => {
     let users = await Db.get_users();
-    console.log(users);
     if (users) {
-        res.send(users).status(200);
+        res.send({ users }).status(200);
     } else {
         res.sendStatus(404);
     }
