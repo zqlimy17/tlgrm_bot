@@ -48,7 +48,7 @@ class Db {
                 chat_id: this.chat.id,
                 chat_name: this.chat.title,
                 chat_type: this.chat.type,
-                chat_username: this.chat.username,
+                chat_username: this.chat.username ? this.chat.username : null,
                 chat_size: chat_size.result,
                 chat_owner: creator.telegram_id
             };
@@ -60,20 +60,32 @@ class Db {
         return;
     }
 
-    async telegram_log() {
+    async telegram_log(message_id) {
         let data = {
             telegram_id: this.user.id,
             chat_id: this.chat.id,
+            message_id,
             text: this.text
         };
         data = await Log.create(data);
         console.log("Log created", data.telegram_id);
     }
 
-    async processing_data() {
+    async processing_data(message_id) {
+        console.log("working");
         await this.telegram_user();
+        console.log("working2");
+
         await this.telegram_chat();
-        this.telegram_log();
+        console.log("working3");
+
+        this.telegram_log(message_id);
+    }
+
+    static async get_users() {
+        let user = await User.findAll();
+        if (user) return user;
+        return;
     }
 
     static async telegram_chat_update(data, new_chat) {
