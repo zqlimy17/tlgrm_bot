@@ -1,7 +1,9 @@
 const User = require("../models/user");
 const Chat = require("../models/chat");
 const Log = require("../models/log");
+const Utils = require("../../utils/utils");
 const Telegram = require("../telegram");
+
 class Db {
     constructor(from, chat, text) {
         this.user = from ? from : "";
@@ -25,9 +27,9 @@ class Db {
         });
         if (!user) {
             user = await User.create(data);
-            console.log("User created", user.telegram_id);
+            Utils.log("[User created]", user.telegram_id);
         } else {
-            console.log("User exist", user.telegram_id);
+            Utils.log("[User exist]", user.telegram_id);
         }
         return user.get();
     }
@@ -53,9 +55,9 @@ class Db {
                 chat_owner: creator.telegram_id
             };
             chat = await Chat.create(data);
-            console.log("Chat created", chat.chat_id);
+            Utils.log("[Chat created]", chat.chat_id);
         } else {
-            console.log("Chat exist", chat.chat_id);
+            Utils.log("[Chat exist]", chat.chat_id);
         }
         return;
     }
@@ -68,17 +70,12 @@ class Db {
             text: this.text
         };
         data = await Log.create(data);
-        console.log("Log created", data.telegram_id);
+        Utils.log("[Log created]", `user_id -> ${data.telegram_id}`, `message_id -> ${message_id}`);
     }
 
     async processing_data(message_id) {
-        console.log("working");
         await this.telegram_user();
-        console.log("working2");
-
         await this.telegram_chat();
-        console.log("working3");
-
         this.telegram_log(message_id);
     }
 
@@ -99,7 +96,7 @@ class Db {
             if (new_chat.username) chat.chat_user = new_chat.username;
             chat.chat_type = new_chat.type;
             chat.save();
-            console.log("Chat updated", chat.chat_id);
+            Utils.log(`Chat updated from ${data} to ${chat.chat_id}`);
             return;
         }
     }

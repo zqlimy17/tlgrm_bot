@@ -3,7 +3,6 @@ const { sequelize, DataTypes } = require("./sequelize");
 let User = sequelize.define(
     "user",
     {
-        // id: { type: DataTypes.INTEGER },
         telegram_id: { type: DataTypes.INTEGER, allowNull: false },
         first_name: { type: DataTypes.STRING },
         username: { type: DataTypes.STRING },
