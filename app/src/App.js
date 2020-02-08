@@ -2,11 +2,14 @@ import React, { useEffect } from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./App.css";
-import Nav from "./components/Nav";
+import "bootstrap/dist/css/bootstrap.min.css";
+
+import Navigation from "./components/Nav";
 import Home from "./components/Home";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
-import Chart from "./components/Playground";
+import Dashboard from "./components/Dashboard";
+import GroupView from "./components/GroupView";
 
 function App() {
     useEffect(() => {
@@ -25,19 +28,22 @@ function App() {
     return (
         <Router>
             <div className="App">
-                <Nav />
+                <Navigation />
                 <Switch>
                     <Route exact path="/">
                         <Home />
                     </Route>
-                    <Route path="/login">
+                    <Route path="/login/">
                         <Login />
                     </Route>
-                    <Route path="/signup">
+                    <Route path="/signup/">
                         <Signup />
                     </Route>
-                    <Route path="/playground">
-                        <Chart />
+                    <Route path="/dashboard/">
+                        <Dashboard />
+                    </Route>
+                    <Route path="/group/:groupId">
+                        <GroupView />
                     </Route>
                     {/* <Route
                         path={"/movie/:movieId"}

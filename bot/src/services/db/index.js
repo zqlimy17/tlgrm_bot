@@ -73,13 +73,8 @@ class Db {
     }
 
     async processing_data(message_id) {
-        console.log("working");
         await this.telegram_user();
-        console.log("working2");
-
         await this.telegram_chat();
-        console.log("working3");
-
         this.telegram_log(message_id);
     }
 

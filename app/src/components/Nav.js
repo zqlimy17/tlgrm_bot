@@ -1,10 +1,17 @@
 import React from "react";
-const Nav = () => {
+import { Nav, Navbar } from "react-bootstrap";
+
+const Navigation = () => {
     return (
-        <React.Fragment>
-            <h1>Nav Goes Here</h1>
-        </React.Fragment>
+        <Navbar bg="dark" variant="dark">
+            <Navbar.Brand href="#home">TLGRM</Navbar.Brand>
+            <Nav className="mr-auto">
+                <Nav.Link href="/dashboard/">Dashboard</Nav.Link>
+                <Nav.Link href="/login/">Login</Nav.Link>
+                <Nav.Link href="/logout/">Logout</Nav.Link>
+            </Nav>
+        </Navbar>
     );
 };
 
-export default Nav;
+export default Navigation;

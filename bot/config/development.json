@@ -1,5 +1,5 @@
 {
     "port": 8080,
     "default_API": "https://api.telegram.org/bot997286944:AAHOONG3DMu6CGEdZliBZj_PR2NA9Tz-KZg",
-    "psql_url": "postgres://zqlimy@localhost:5432/tlgrm"
+    "psql_url": "postgresql://doadmin:bpi6eqdvm88ngpp2@tlgrm-ga-do-user-7083063-0.db.ondigitalocean.com:25060/defaultdb?sslmode=require&ssl=true"
 }
