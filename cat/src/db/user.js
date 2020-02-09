@@ -7,8 +7,8 @@ class DbUsers {
     async users() {
         let users = await User.findAll();
         if (users) {
-            users = users.map(async user => {
-                user = user.get();
+            users = users.map(user => {
+                return user.get();
             });
         }
         return users;
