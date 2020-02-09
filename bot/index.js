@@ -3,7 +3,7 @@ const config = require("config");
 const Webhooks = require("./src/utils/webhook");
 const app = express();
 const router = express.Router();
-const PORT = process.env.PORT || config.get("port");
+const PORT = config.get("port");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

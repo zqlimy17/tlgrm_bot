@@ -1,14 +1,12 @@
 const API = require("../services/api");
 const Db = require("../services/db");
+const Message = require("./message");
 
 class Webhooks {
     async filter(payload) {
         if (payload.hasOwnProperty("message")) {
             let { from, chat, text } = payload.message;
-            if (payload.message.hasOwnProperty("migrate_from_chat_id")) {
-                let migrate_chat = payload.message.migrate_from_chat_id;
-                await Db.telegram_chat_update(migrate_chat, chat);
-            }
+            await new Message(from, chat).additional_props(payload.message);
             new Db(from, chat, text).processing_data(payload.message.message_id);
             if (chat.type === "private") {
                 try {
