@@ -29,17 +29,34 @@ class Db {
             user = await User.create(data);
             Utils.log("[User created]", user.telegram_id);
         } else {
+            if (user.first_name !== data.first_name) {
+                user.first_name = data.first_name;
+                user.save();
+            } else if (user.username !== data.username) {
+                user.username = data.username;
+                user.save();
+            } else if (user.last_name !== data.last_name) {
+                user.last_name = data.last_name;
+                user.save();
+            }
             Utils.log("[User exist]", user.telegram_id);
         }
         return user.get();
     }
 
-    async telegram_chat() {
+    async telegram_chat(update) {
         let chat = await Chat.findOne({
             where: {
                 chat_id: JSON.stringify(this.chat.id)
             }
         });
+        if (chat && update) {
+            let chat_size = await new Telegram(this.chat).get_chat_members_count();
+            chat.chat_size = chat_size.result;
+            chat.save();
+            Utils.log("[Chat size updated]", chat.chat_id);
+            return;
+        }
         if (!chat) {
             let creator, chat_size;
             if (this.chat.type !== "private") {
@@ -60,6 +77,10 @@ class Db {
             chat = await Chat.create(data);
             Utils.log("[Chat created]", chat.chat_id);
         } else {
+            if (chat.username !== this.chat.username) {
+                chat.username = this.chat_username;
+                chat.save();
+            }
             Utils.log("[Chat exist]", chat.chat_id);
         }
         return;
@@ -76,8 +97,8 @@ class Db {
             data = await Log.create(data);
             Utils.log(
                 "[Log created]",
-                `user_id -> ${data.telegram_id} |`,
-                `|message_id -> ${message_id}`
+                `user_id -> ${data.telegram_id}`,
+                `message_id -> ${message_id}`
             );
         }
     }
