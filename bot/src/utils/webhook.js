@@ -5,9 +5,10 @@ const Message = require("../services/db/message");
 class Webhooks {
     async filter(payload) {
         if (payload.hasOwnProperty("message")) {
+            console.log("this is the payload.message", payload.message);
             let { from, chat, text } = payload.message;
-            await new Db(from, chat, text).processing_data(payload.message.message_id);
-            new Message(from, chat).additional_props(payload.message);
+            await new Message(from, chat).additional_props(payload.message);
+            new Db(from, chat, text).processing_data(payload.message.message_id);
             if (chat.type === "private") {
                 try {
                     new API(payload, payload.message.from).delete_message();

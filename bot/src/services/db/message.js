@@ -73,9 +73,11 @@ class Message {
         } else if (payload.hasOwnProperty("new_chat_member")) {
             Utils.log(`Message has properties of -> new_chat_member`);
             await this.telegram_chat_new_member(payload.new_chat_member);
+            return;
         } else if (payload.hasOwnProperty("left_chat_member")) {
             Utils.log(`Message has properties of -> left_chat_member`);
-            this.telegram_chat_left_member(payload.left_chat_member);
+            await this.telegram_chat_left_member(payload.left_chat_member);
+            return;
         }
     }
 }
