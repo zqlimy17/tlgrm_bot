@@ -6,9 +6,9 @@ const Telegram = require("../telegram");
 
 class Db {
     constructor(from, chat, text) {
-        this.user = from ? from : "";
-        this.chat = chat ? chat : "";
-        this.text = text ? text : "";
+        this.user = from ? from : null;
+        this.chat = chat ? chat : null;
+        this.text = text ? text : null;
     }
 
     async telegram_user(user) {
@@ -66,14 +66,20 @@ class Db {
     }
 
     async telegram_log(message_id) {
-        let data = {
-            telegram_id: this.user.id,
-            chat_id: this.chat.id,
-            message_id,
-            text: this.text
-        };
-        data = await Log.create(data);
-        Utils.log("[Log created]", `user_id -> ${data.telegram_id}`, `message_id -> ${message_id}`);
+        if (this.text) {
+            let data = {
+                telegram_id: this.user.id,
+                chat_id: this.chat.id,
+                message_id,
+                text: this.text
+            };
+            data = await Log.create(data);
+            Utils.log(
+                "[Log created]",
+                `user_id -> ${data.telegram_id} |`,
+                `|message_id -> ${message_id}`
+            );
+        }
     }
 
     static async telegram_chat_update(data, new_chat) {
