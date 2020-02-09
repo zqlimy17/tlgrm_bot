@@ -2,6 +2,7 @@ const Chat = require("../models/chat");
 const Utils = require("../../utils/utils");
 const Db = require("./db");
 const ChatUsers = require("../models/chat_users");
+const ChatUserImage = require("../models/chat_user_image");
 
 class Message {
     constructor(from, chat) {
@@ -40,11 +41,12 @@ class Message {
                 data.telegram_id = new_user.telegram_id;
                 if (new_user.telegram_id != this.user.id) data.referrer_telegram_id = this.user.id;
                 data.chat_user_status = "member";
+                await new Db(this.user, this.chat).telegram_chat("update");
                 await ChatUsers.create(data);
                 Utils.log(
                     `[ChatUsers created]`,
-                    `chat_id--> ${data.chat_id}|`,
-                    `|telegram_id--> ${data.telegram_id}`
+                    `chat_id--> ${data.chat_id}`,
+                    `telegram_id--> ${data.telegram_id}`
                 );
                 return;
             }
@@ -60,7 +62,25 @@ class Message {
             }
         });
         if (left_user) left_user.destroy();
-        Utils.log(`[ChatUsers deleted]`, `user_telegram_id--> ${left_user.telegram_id}`);
+        await new Db(this.user, this.chat).telegram_chat("update");
+        Utils.log(`[ChatUsers deleted]`, `user deleted`);
+        return;
+    }
+
+    async telegram_media(image, caption) {
+        let data = {
+            telegram_id: this.user.id,
+            chat_id: this.chat.id,
+            file_id: image.file_id,
+            file_unique_id: image.file_unique_id,
+            caption
+        };
+        ChatUserImage.create(data);
+        Utils.log(
+            `[ChatUserImage created]`,
+            `user_id--> ${this.user.id}`,
+            `file_unique_id--> ${data.file_unique_id}`
+        );
         return;
     }
 
@@ -78,7 +98,13 @@ class Message {
             Utils.log(`Message has properties of -> left_chat_member`);
             await this.telegram_chat_left_member(payload.left_chat_member);
             return;
+        } else if (payload.hasOwnProperty("photo")) {
+            let image = payload.photo[1];
+            let caption = payload.caption ? payload.caption : null;
+            await this.telegram_media(image, caption);
+            return;
         }
+        return;
     }
 }
 module.exports = Message;
