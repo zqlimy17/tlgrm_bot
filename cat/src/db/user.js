@@ -5,10 +5,11 @@ const { Op } = require("sequelize");
 
 class DbUsers {
     async users() {
+        console.log("working");
         let users = await User.findAll();
         if (users) {
-            users = users.map(async user => {
-                user = user.get();
+            users = users.map(user => {
+                return user.get();
             });
         }
         return users;
