@@ -14,6 +14,15 @@ class DbLogs {
         });
         if (logs) return logs;
     }
+
+    async group_logs(id) {
+        let logs = await Log.findAll({
+            where: {
+                chat_id: id
+            }
+        });
+        if (logs) return logs;
+    }
 }
 
 module.exports = DbLogs;
