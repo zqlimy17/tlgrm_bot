@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const DbUsers = require("../db/user");
 const DbChats = require("../db/chat");
+const DbLogs = require("../db/log");
 
 router.get("/users/logs", async (req, res) => {
     let users_logs = await new DbUsers().users_logs();
@@ -40,12 +41,13 @@ router.get("/users", async (req, res) => {
 });
 
 router.get("/group/:id", async (req, res) => {
-    let logs = await new DbLogs().group_logs();
-    if (logs) {
-        res.send({ logs }).status(200);
-    } else {
-        res.sendStatus(404);
-    }
+    let logs = await new DbLogs().group_logs(req.params.id);
+    let chat = await new DbChats().chat(req.params.id);
+    let data = {
+        chat,
+        logs
+    };
+    res.send(data).status(200);
 });
 
 module.exports = router;

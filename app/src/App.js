@@ -39,7 +39,7 @@ function App() {
                     <Route path="/dashboard/">
                         <Dashboard />
                     </Route>
-                    <Route path="/group/:groupId">
+                    <Route path="/group/:id">
                         <Group />
                     </Route>
                     {/* <Route

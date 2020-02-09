@@ -16,6 +16,16 @@ class DbChats {
         });
         if (chats) return chats;
     }
+
+    async chat(chat_id) {
+        let chat = await Chat.findOne({
+            where: {
+                chat_id
+            }
+        });
+        if (chat) return chat;
+        return;
+    }
 }
 
 module.exports = DbChats;
