@@ -3,6 +3,11 @@ const Utils = require("../../utils/utils");
 const Db = require("./db");
 const ChatUsers = require("../models/chat_users");
 const ChatUserImage = require("../models/chat_user_image");
+const ChatUserDoc = require("../models/chat_user_doc");
+const ChatUserVoice = require("../models/chat_user_voice");
+const ChatUserVideo = require("../models/chat_user_video");
+const ChatUserLocation = require("../models/chat_user_location");
+const Telegram = require("../telegram");
 
 class Message {
     constructor(from, chat) {
@@ -67,7 +72,52 @@ class Message {
         return;
     }
 
-    async telegram_media(image, caption) {
+    async telegram_update_chat_member() {
+        let user = await new Telegram(this.chat).get_chat_member(this.user.id);
+        let chat_user = await ChatUsers.findOne({
+            where: {
+                chat_id: JSON.stringify(this.chat.id),
+                telegram_id: this.user.id
+            }
+        });
+        if (chat_user) {
+            if (chat_user.chat_user_status !== user.result.status) {
+                chat_user.chat_user_status = user.result.status;
+                chat_user.save();
+                Utils.log(`[ChatUsers updated]`, `user --> ${this.user.id}`);
+            }
+            return;
+        } else {
+            Utils.log(`[ChatUsers dont exist] creating ChatUsers`);
+            let data = {};
+            data.chat_id = this.chat.id;
+            data.telegram_id = this.user.id;
+            data.chat_user_status = user.result.status;
+            ChatUsers.create(data);
+            Utils.log(`[ChatUsers created]`, `user --> ${this.user.id}`);
+            return;
+        }
+    }
+
+    async telegram_document(document) {
+        let data = {
+            telegram_id: this.user.id,
+            chat_id: this.chat.id,
+            file_name: document.file_name,
+            file_type: document.mime_type,
+            file_id: document.file_id,
+            file_unique_id: document.file_unique_id
+        };
+        ChatUserDoc.create(data);
+        Utils.log(
+            `[ChatUserDoc created]`,
+            `user --> ${this.user.id}`,
+            `file_unique_id --> ${data.file_unique_id}`
+        );
+        return;
+    }
+
+    async telegram_image(image, caption) {
         let data = {
             telegram_id: this.user.id,
             chat_id: this.chat.id,
@@ -84,24 +134,103 @@ class Message {
         return;
     }
 
+    async telegram_voice(voice) {
+        let data = {
+            telegram_id: this.user.id,
+            chat_id: this.chat.id,
+            duration: voice.duration,
+            file_type: voice.mime_type,
+            file_id: voice.file_id,
+            file_unique_id: voice.file_unique_id
+        };
+        ChatUserVoice.create(data);
+        Utils.log(
+            `[ChatUserVoice created]`,
+            `user_id--> ${this.user.id}`,
+            `file_unique_id--> ${data.file_unique_id}`
+        );
+        return;
+    }
+
+    async telegram_video(video) {
+        let data = {
+            telegram_id: this.user.id,
+            chat_id: this.chat.id,
+            duration: video.duration,
+            length: video.length,
+            file_id: video.file_id,
+            file_unique_id: video.file_unique_id
+        };
+        ChatUserVideo.create(data);
+        Utils.log(
+            `[ChatUserVideo created]`,
+            `user_id--> ${this.user.id}`,
+            `file_unique_id--> ${data.file_unique_id}`
+        );
+        return;
+    }
+
+    async telegram_media(media, payload) {
+        switch (media) {
+            case "image":
+                let image = payload.photo[1];
+                let caption = payload.caption ? payload.caption : null;
+                await this.telegram_image(image, caption);
+                return;
+            case "voice":
+                await this.telegram_voice(payload.voice);
+                return;
+            case "video_note":
+                await this.telegram_video(payload.video_note);
+                return;
+        }
+    }
+
+    async telegram_location(location) {
+        let data = {
+            telegram_id: this.user.id,
+            chat_id: this.chat.id,
+            latitude: location.latitude,
+            longitude: location.longitude
+        };
+        ChatUserLocation.create(data);
+        Utils.log(`[ChatUserLocation created]`, `user_id--> ${this.user.id}`);
+        return;
+    }
+
     async additional_props(payload) {
         if (payload.hasOwnProperty("migrate_from_chat_id")) {
-            Utils.log(`Message has properties of -> migrate_from_chat_id`);
+            Utils.log(`Message has properties of "migrate_from_chat_id"`);
             let migrate_chat = payload.migrate_from_chat_id;
             await this.telegram_chat_update(migrate_chat);
             return;
         } else if (payload.hasOwnProperty("new_chat_member")) {
-            Utils.log(`Message has properties of -> new_chat_member`);
+            Utils.log(`Message has properties of "new_chat_member"`);
             await this.telegram_chat_new_member(payload.new_chat_member);
             return;
         } else if (payload.hasOwnProperty("left_chat_member")) {
-            Utils.log(`Message has properties of -> left_chat_member`);
+            Utils.log(`Message has properties of "left_chat_member"`);
             await this.telegram_chat_left_member(payload.left_chat_member);
             return;
+        } else if (payload.hasOwnProperty("document")) {
+            Utils.log(`Message has properties of "document"`);
+            await this.telegram_document(payload.document);
+            return;
         } else if (payload.hasOwnProperty("photo")) {
-            let image = payload.photo[1];
-            let caption = payload.caption ? payload.caption : null;
-            await this.telegram_media(image, caption);
+            Utils.log(`Message has properties of "photo"`);
+            await this.telegram_media("image", payload);
+            return;
+        } else if (payload.hasOwnProperty("voice")) {
+            Utils.log(`Message has properties of "voice"`);
+            await this.telegram_media("voice", payload);
+            return;
+        } else if (payload.hasOwnProperty("video_note")) {
+            Utils.log(`Message has properties of "video note"`);
+            await this.telegram_media("video_note", payload);
+            return;
+        } else if (payload.hasOwnProperty("location")) {
+            Utils.log(`Message has properties of "location"`);
+            await this.telegram_location(payload.location);
             return;
         }
         return;

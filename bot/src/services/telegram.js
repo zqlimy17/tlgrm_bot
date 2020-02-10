@@ -9,14 +9,22 @@ class Telegram {
         let data = {
             chat_id: this.chat_id
         };
-        return this.execute_post("/getchatadministrators", data);
+        return await this.execute_post("/getchatadministrators", data);
     }
 
     async get_chat_members_count() {
         let data = {
             chat_id: this.chat_id
         };
-        return this.execute_post("/getchatmemberscount", data);
+        return await this.execute_post("/getchatmemberscount", data);
+    }
+
+    async get_chat_member(telegram_id) {
+        let data = {
+            chat_id: this.chat_id,
+            user_id: telegram_id
+        };
+        return await this.execute_post("/getchatmember", data);
     }
     async execute_post(path, data) {
         let resp = await fetch(`${config.get("default_API")}${path}`, {

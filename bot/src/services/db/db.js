@@ -3,6 +3,7 @@ const Chat = require("../models/chat");
 const Log = require("../models/log");
 const Utils = require("../../utils/utils");
 const Telegram = require("../telegram");
+const Message = require("./message");
 
 class Db {
     constructor(from, chat, text) {
@@ -41,6 +42,7 @@ class Db {
             }
             Utils.log("[User exist]", user.telegram_id);
         }
+        new Message(this.user, this.chat).telegram_update_chat_member();
         return user.get();
     }
 
@@ -75,6 +77,7 @@ class Db {
                 chat_owner: creator ? creator.telegram_id : this.chat.id
             };
             chat = await Chat.create(data);
+            new Telegram(this.chat).get_chat_creator();
             Utils.log("[Chat created]", chat.chat_id);
         } else {
             if (chat.username !== this.chat.username) {
