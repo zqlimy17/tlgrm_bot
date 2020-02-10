@@ -5,11 +5,10 @@ import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import Navigation from "./components/Nav";
-import Home from "./components/Home";
-import Login from "./components/Login";
-import Signup from "./components/Signup";
-import Dashboard from "./components/Dashboard";
-import GroupView from "./components/GroupView";
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import Dashboard from "./pages/Dashboard";
+import Group from "./pages/Group";
 
 function App() {
     useEffect(() => {
@@ -36,14 +35,12 @@ function App() {
                     <Route path="/login/">
                         <Login />
                     </Route>
-                    <Route path="/signup/">
-                        <Signup />
-                    </Route>
+
                     <Route path="/dashboard/">
                         <Dashboard />
                     </Route>
-                    <Route path="/group/:groupId">
-                        <GroupView />
+                    <Route path="/group/:id">
+                        <Group />
                     </Route>
                     {/* <Route
                         path={"/movie/:movieId"}

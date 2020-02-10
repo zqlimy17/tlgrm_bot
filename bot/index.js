@@ -8,7 +8,7 @@ const PORT = config.get("port");
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-router.post("/webhook_response", async (req, res) => {
+router.post("/", async (req, res) => {
     try {
         res.sendStatus(202);
         let webhook_message = req.body;
