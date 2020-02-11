@@ -11,19 +11,6 @@ import Dashboard from "./pages/Dashboard";
 import Group from "./pages/Group";
 
 function App() {
-    useEffect(() => {
-        fetch("https://ec4fae08.ngrok.io/", {
-            method: "get",
-            headers: { "Content-Type": "application/json" }
-        })
-            .then(async c => {
-                return c.json();
-            })
-            .then(data => {
-                console.log(data);
-            });
-    }, []);
-
     return (
         <Router>
             <div className="App">

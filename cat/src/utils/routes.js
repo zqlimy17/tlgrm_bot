@@ -50,4 +50,15 @@ router.get("/group/:id", async (req, res) => {
     res.send(data).status(200);
 });
 
+router.post("/group", async (req, res) => {
+    let { id, then, now } = req.body;
+    let logs = await new DbLogs().group_logs(id, then, now);
+    let chat = await new DbChats().chat(id);
+    let data = {
+        chat,
+        logs
+    };
+    res.send(data).status(200);
+});
+
 module.exports = router;

@@ -15,13 +15,17 @@ class DbLogs {
         if (logs) return logs;
     }
 
-    async group_logs(id) {
+    async group_logs(id, then, now) {
         let logs = await Log.findAll({
             where: {
-                chat_id: id
+                chat_id: id,
+                created_at: {
+                    [Op.between]: [then, now]
+                }
             }
         });
-        if (logs) return logs;
+        console.log("LOG IS", logs);
+        return logs;
     }
 }
 
