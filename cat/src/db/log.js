@@ -24,7 +24,6 @@ class DbLogs {
                 }
             }
         });
-        console.log("LOG IS", logs);
         return logs;
     }
 }

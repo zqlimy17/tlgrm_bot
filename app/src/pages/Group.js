@@ -3,24 +3,32 @@ import { useParams } from "react-router";
 import axios from "axios";
 import { HashLoader } from "react-spinners";
 import moment from "moment";
-import { Button } from "react-bootstrap";
+import Messages from "../components/Messages";
+import Pagination from "../components/Pagination";
+import Dates from "../components/Dates";
+import GroupSize from "../components/Bar";
+import GroupStats from "../components/GroupStats";
 
 const Group = () => {
     let { id } = useParams();
     const [messages, setMessages] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [messagesPerPage] = useState(20);
     const [group, setGroup] = useState();
     const [users, setUsers] = useState(null);
     const [dateRange, setDateRange] = useState([
         moment()
             .subtract(30, "day")
-            .format("YYYY-MM-DD HH:MM:SS"),
-        moment().format("YYYY-MM-DD HH:MM:SS")
+            .format("YYYY-MM-DD HH:mm:ss"),
+        moment().format("YYYY-MM-DD HH:mm:ss")
     ]);
 
     useEffect(() => {
-        async function fetchData() {
-            let res = await axios({
-                method: "post",
+        const fetchData = async () => {
+            setLoading(true);
+            const res = await axios({
+                method: "POST",
                 url: "http://localhost:4040/group",
                 data: {
                     id: id,
@@ -28,100 +36,49 @@ const Group = () => {
                     now: dateRange[1]
                 }
             });
-            console.log(res);
-            let reverse = res.data.logs;
+            const reverse = res.data.logs;
             reverse.reverse();
             await setMessages(reverse);
             await setGroup(res.data.chat);
             await setUsers(res.data.users);
-        }
+            setLoading(false);
+        };
         fetchData();
     }, [dateRange, id]);
+
+    // Get Current Messages
+    const indexOfLastMessage = currentPage * messagesPerPage;
+    const indexOfFirstMessage = indexOfLastMessage - messagesPerPage;
+    const currentMessage = messages.slice(
+        indexOfFirstMessage,
+        indexOfLastMessage
+    );
+
+    // Change Page
+    const paginate = pageNumber => setCurrentPage(pageNumber);
 
     return (
         <>
             <h1>
                 {group ? group.chat_name : <HashLoader color={"#d4af37"} />}
             </h1>
-            <div>
-                <Button
-                    onClick={() => {
-                        setDateRange([
-                            moment()
-                                .subtract(1, "day")
-                                .format("YYYY-MM-DD HH:MM:SS"),
-                            moment().format("YYYY-MM-DD HH:MM:SS")
-                        ]);
-                    }}
-                >
-                    Last 24 Hours
-                </Button>
-                <Button
-                    onClick={() => {
-                        setDateRange([
-                            moment()
-                                .subtract(7, "day")
-                                .format("YYYY-MM-DD HH:MM:SS"),
-                            moment().format("YYYY-MM-DD HH:MM:SS")
-                        ]);
-                    }}
-                >
-                    Last 7 Days
-                </Button>
-                <Button
-                    onClick={() => {
-                        setDateRange([
-                            moment()
-                                .subtract(30, "day")
-                                .format("YYYY-MM-DD HH:MM:SS"),
-                            moment().format("YYYY-MM-DD HH:MM:SS")
-                        ]);
-                    }}
-                >
-                    Last 30 Days
-                </Button>
-                <Button
-                    onClick={() => {
-                        setDateRange([
-                            moment()
-                                .subtract(2, "year")
-                                .format("YYYY-MM-DD HH:MM:SS"),
-                            moment().format("YYYY-MM-DD HH:MM:SS")
-                        ]);
-                    }}
-                >
-                    All Time
-                </Button>
-            </div>
-            {messages.length > 0 ? (
-                messages.map((message, index) => {
-                    return (
-                        <div key={index}>
-                            <ul>
-                                <li>{message.text}</li>
-                                <li>
-                                    Sent by{" "}
-                                    {users
-                                        ? users.find(
-                                              ({ telegram_id }) =>
-                                                  telegram_id ===
-                                                  message.telegram_id
-                                          ).username
-                                        : ""}
-                                </li>
-                                <li>
-                                    Sent at:{" "}
-                                    {moment(message.created_at).format(
-                                        "DD MMMM YYYY HH:MM:SS"
-                                    )}
-                                </li>
-                            </ul>
-                        </div>
-                    );
-                })
+            {group ? (
+                <GroupStats group={group} messages={messages} />
             ) : (
                 <HashLoader color={"#d4af37"} />
             )}
+            <GroupSize />
+            <Dates setDateRange={setDateRange} />
+            <Messages
+                messages={currentMessage}
+                loading={loading}
+                users={users}
+            />
+            <Pagination
+                messagesPerPage={messagesPerPage}
+                totalMessages={messages.length}
+                paginate={paginate}
+            />
         </>
     );
 };

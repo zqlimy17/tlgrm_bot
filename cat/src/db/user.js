@@ -5,7 +5,6 @@ const { Op } = require("sequelize");
 
 class DbUsers {
     async users() {
-        console.log("working");
         let users = await User.findAll();
         if (users) {
             users = users.map(user => {
