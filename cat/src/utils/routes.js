@@ -54,9 +54,11 @@ router.post("/group", async (req, res) => {
     let { id, then, now } = req.body;
     let logs = await new DbLogs().group_logs(id, then, now);
     let chat = await new DbChats().chat(id);
+    let users = await new DbUsers().users();
     let data = {
         chat,
-        logs
+        logs,
+        users
     };
     res.send(data).status(200);
 });

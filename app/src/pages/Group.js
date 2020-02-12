@@ -9,20 +9,21 @@ const Group = () => {
     let { id } = useParams();
     const [messages, setMessages] = useState([]);
     const [group, setGroup] = useState();
+    const [users, setUsers] = useState(null);
     const [dateRange, setDateRange] = useState([
         moment()
             .subtract(30, "day")
             .format("YYYY-MM-DD HH:MM:SS"),
         moment().format("YYYY-MM-DD HH:MM:SS")
     ]);
-    const [calendar, setCalendar] = useState([]);
+
     useEffect(() => {
         async function fetchData() {
             let res = await axios({
                 method: "post",
                 url: "http://localhost:4040/group",
                 data: {
-                    id,
+                    id: id,
                     then: dateRange[0],
                     now: dateRange[1]
                 }
@@ -32,9 +33,11 @@ const Group = () => {
             reverse.reverse();
             await setMessages(reverse);
             await setGroup(res.data.chat);
+            await setUsers(res.data.users);
         }
         fetchData();
-    }, [dateRange]);
+    }, [dateRange, id]);
+
     return (
         <>
             <h1>
@@ -91,10 +94,28 @@ const Group = () => {
                 </Button>
             </div>
             {messages.length > 0 ? (
-                messages.map(message => {
+                messages.map((message, index) => {
                     return (
-                        <div>
-                            <p>{message.text}</p>
+                        <div key={index}>
+                            <ul>
+                                <li>{message.text}</li>
+                                <li>
+                                    Sent by{" "}
+                                    {users
+                                        ? users.find(
+                                              ({ telegram_id }) =>
+                                                  telegram_id ===
+                                                  message.telegram_id
+                                          ).username
+                                        : ""}
+                                </li>
+                                <li>
+                                    Sent at:{" "}
+                                    {moment(message.created_at).format(
+                                        "DD MMMM YYYY HH:MM:SS"
+                                    )}
+                                </li>
+                            </ul>
                         </div>
                     );
                 })

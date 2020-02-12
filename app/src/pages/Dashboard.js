@@ -13,7 +13,7 @@ const Dashboard = () => {
             setChats(res.data.user_chats);
             console.log(res.data.user_chats);
         });
-    }, []);
+    }, [user]);
     return (
         <>
             <h1>Dashboard Goes here</h1>
