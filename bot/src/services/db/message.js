@@ -18,15 +18,15 @@ class Message {
     async telegram_chat_update(data) {
         let chat = await Chat.findOne({
             where: {
-                chat_id: JSON.stringify(data)
+                chat_id: JSON.stringify(this.chat.id)
             }
         });
         if (chat) {
-            chat.chat_id = this.chat.id;
+            chat.chat_id = data;
             if (this.chat.username) chat.chat_user = this.chat.username;
             chat.chat_type = this.chat.type;
             await chat.save();
-            Utils.log(`Chat updated from ${data} to ${chat.chat_id}`);
+            Utils.log(`Chat updated from ${this.chat.id} to ${chat.chat_id}`);
             return;
         }
     }
@@ -53,8 +53,8 @@ class Message {
                     `chat_id--> ${data.chat_id}`,
                     `telegram_id--> ${data.telegram_id}`
                 );
-                return;
             }
+            return;
         }
     }
 
@@ -72,31 +72,48 @@ class Message {
         return;
     }
 
-    async telegram_update_chat_member() {
-        let user = await new Telegram(this.chat).get_chat_member(this.user.id);
-        let chat_user = await ChatUsers.findOne({
-            where: {
-                chat_id: JSON.stringify(this.chat.id),
-                telegram_id: this.user.id
-            }
-        });
-        if (chat_user) {
-            if (chat_user.chat_user_status !== user.result.status) {
-                chat_user.chat_user_status = user.result.status;
+    async telegram_update_chat_member(migrate) {
+        if (migrate) {
+            let chat_users = await ChatUsers.findAll({
+                where: {
+                    chat_id: JSON.stringify(this.chat.id)
+                }
+            });
+            chat_users.map(async chat_user => {
+                chat_user.chat_id = migrate;
                 chat_user.save();
-                Utils.log(`[ChatUsers updated]`, `user --> ${this.user.id}`);
-            }
-            return;
+                Utils.log(
+                    `[ChatUsers updated]`,
+                    `user -> ${chat_user.telegram_id}`,
+                    `migrate from ${this.chat.id} to ${chat_user.chat_id}`
+                );
+            });
         } else {
-            Utils.log(`[ChatUsers dont exist] creating ChatUsers`);
-            let data = {};
-            data.chat_id = this.chat.id;
-            data.telegram_id = this.user.id;
-            data.chat_user_status = user.result.status;
-            ChatUsers.create(data);
-            Utils.log(`[ChatUsers created]`, `user --> ${this.user.id}`);
-            return;
+            let user = await new Telegram(this.chat).get_chat_member(this.user.id);
+            let chat_user = await ChatUsers.findOne({
+                where: {
+                    chat_id: JSON.stringify(this.chat.id),
+                    telegram_id: this.user.id
+                }
+            });
+            if (chat_user) {
+                if (chat_user.chat_user_status !== user.result.status) {
+                    chat_user.chat_user_status = user.result.status;
+                    chat_user.save();
+                    Utils.log(`[ChatUsers updated]`, `user --> ${this.user.id}`);
+                }
+                return;
+            } else {
+                Utils.log(`[ChatUsers dont exist] creating ChatUsers`);
+                let data = {};
+                data.chat_id = this.chat.id;
+                data.telegram_id = this.user.id;
+                data.chat_user_status = user.result.status;
+                ChatUsers.create(data);
+                Utils.log(`[ChatUsers created]`, `user --> ${this.user.id}`);
+            }
         }
+        return;
     }
 
     async telegram_document(document) {
@@ -199,39 +216,42 @@ class Message {
     }
 
     async additional_props(payload) {
-        if (payload.hasOwnProperty("migrate_from_chat_id")) {
-            Utils.log(`Message has properties of "migrate_from_chat_id"`);
-            let migrate_chat = payload.migrate_from_chat_id;
-            await this.telegram_chat_update(migrate_chat);
+        if (payload.group_chat_created) {
             return;
-        } else if (payload.hasOwnProperty("new_chat_member")) {
+        } else if (payload.migrate_to_chat_id) {
+            Utils.log(`Message has properties of "migrate_to_chat_id"`);
+            await this.telegram_chat_update(payload.migrate_to_chat_id);
+            await this.telegram_update_chat_member(payload.migrate_to_chat_id);
+        } else if (payload.new_chat_member) {
             Utils.log(`Message has properties of "new_chat_member"`);
             await this.telegram_chat_new_member(payload.new_chat_member);
-            return;
-        } else if (payload.hasOwnProperty("left_chat_member")) {
+            await this.telegram_update_chat_member();
+        } else if (payload.left_chat_member) {
             Utils.log(`Message has properties of "left_chat_member"`);
             await this.telegram_chat_left_member(payload.left_chat_member);
             return;
-        } else if (payload.hasOwnProperty("document")) {
+        } else if (payload.document) {
             Utils.log(`Message has properties of "document"`);
             await this.telegram_document(payload.document);
-            return;
-        } else if (payload.hasOwnProperty("photo")) {
+            await this.telegram_update_chat_member();
+        } else if (payload.photo) {
             Utils.log(`Message has properties of "photo"`);
             await this.telegram_media("image", payload);
-            return;
-        } else if (payload.hasOwnProperty("voice")) {
+            await this.telegram_update_chat_member();
+        } else if (payload.voice) {
             Utils.log(`Message has properties of "voice"`);
             await this.telegram_media("voice", payload);
-            return;
-        } else if (payload.hasOwnProperty("video_note")) {
+            await this.telegram_update_chat_member();
+        } else if (payload.video_note) {
             Utils.log(`Message has properties of "video note"`);
             await this.telegram_media("video_note", payload);
-            return;
-        } else if (payload.hasOwnProperty("location")) {
+            await this.telegram_update_chat_member();
+        } else if (payload.location) {
             Utils.log(`Message has properties of "location"`);
             await this.telegram_location(payload.location);
-            return;
+            await this.telegram_update_chat_member();
+        } else {
+            await this.telegram_update_chat_member();
         }
         return;
     }

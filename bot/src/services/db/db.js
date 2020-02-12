@@ -3,7 +3,6 @@ const Chat = require("../models/chat");
 const Log = require("../models/log");
 const Utils = require("../../utils/utils");
 const Telegram = require("../telegram");
-const Message = require("./message");
 
 class Db {
     constructor(from, chat, text) {
@@ -42,7 +41,6 @@ class Db {
             }
             Utils.log("[User exist]", user.telegram_id);
         }
-        new Message(this.user, this.chat).telegram_update_chat_member();
         return user.get();
     }
 
@@ -60,11 +58,11 @@ class Db {
             return;
         }
         if (!chat) {
-            let creator, chat_size;
+            let founding_members, chat_size, creator;
             if (this.chat.type !== "private") {
-                creator = await new Telegram(this.chat).get_chat_creator();
-                let index = creator.result.findIndex(c => c.status === "creator");
-                creator = creator.result[index];
+                founding_members = await new Telegram(this.chat).get_chat_creator();
+                creator = founding_members.result.filter(c => c.status === "creator");
+                creator = creator[0];
                 creator = await this.telegram_user(creator.user);
                 chat_size = await new Telegram(this.chat).get_chat_members_count();
             }
@@ -77,7 +75,6 @@ class Db {
                 chat_owner: creator ? creator.telegram_id : this.chat.id
             };
             chat = await Chat.create(data);
-            new Telegram(this.chat).get_chat_creator();
             Utils.log("[Chat created]", chat.chat_id);
         } else {
             if (chat.username !== this.chat.username) {
