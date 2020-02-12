@@ -4,6 +4,23 @@ const DbChats = require("./chat");
 const { Op } = require("sequelize");
 
 class DbUsers {
+    constructor(telegram_id) {
+        this.telegram_id = telegram_id;
+    }
+
+    async user() {
+        let user = await User.findOne({
+            where: {
+                telegram_id: this.telegram_id
+            }
+        });
+        if (user) {
+            user = user.get();
+            return user;
+        }
+        return;
+    }
+
     async users() {
         let users = await User.findAll();
         if (users) {

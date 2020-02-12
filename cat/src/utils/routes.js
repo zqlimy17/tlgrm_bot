@@ -13,10 +13,12 @@ router.get("/users/logs", async (req, res) => {
     }
 });
 
-router.get("/users/:id", async (req, res) => {
-    let user_chats = await new DbChats(req.params.id).chats();
-    if (user_chats) {
-        res.send({ user_chats }).status(200);
+router.get("/user/:id/groups", async (req, res) => {
+    let user = await new DbUsers(req.params.id).user();
+    if (user) {
+        let user_chats = await new DbChats(req.params.id).chats();
+        user[`user_chats`] = user_chats;
+        res.send(user).status(200);
     } else {
         res.sendStatus(404);
     }
