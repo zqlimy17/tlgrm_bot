@@ -39,7 +39,7 @@ const Group = () => {
             const reverse = res.data.logs;
             reverse.reverse();
             await setMessages(reverse);
-            await setGroup(res.data.chat);
+            await setGroup(res.data.chat[0]);
             await setUsers(res.data.users);
             setLoading(false);
         };
