@@ -8,15 +8,15 @@ class DbChats {
     }
 
     async chats() {
+        let chat_users = await ChatUsers.findAll({
+            where: { telegram_id: this.telegram_id }
+        });
         let chats = await Chat.findAll({
             where: {
                 chat_type: {
                     [Op.not]: "private"
                 }
             }
-        });
-        let chat_users = await ChatUsers.findAll({
-            where: { telegram_id: this.telegram_id }
         });
         chat_users = chat_users.map(chat_user => {
             let chat = chats.filter(e => e.chat_id == chat_user.chat_id);

@@ -13,12 +13,17 @@ router.get("/users/logs", async (req, res) => {
     }
 });
 
-router.get("/user/:id/groups", async (req, res) => {
+router.get("/user/:id", async (req, res) => {
+    let data = {};
+    data.telegram_id = req.params.id;
     let user = await new DbUsers(req.params.id).user();
     if (user) {
+        data.user = user;
         let user_chats = await new DbChats(req.params.id).chats();
-        user[`user_chats`] = user_chats;
-        res.send(user).status(200);
+        data.user_chats = user_chats;
+        let user_logs = await new DbLogs(req.params.id).logs();
+        data.user_logs = user_logs;
+        res.send(data).status(200);
     } else {
         res.sendStatus(404);
     }
