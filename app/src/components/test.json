@@ -1,0 +1,49 @@
+{
+    "id": "1",
+    "telegram_id": "738282366",
+    "first_name": "Quacky McQuackface",
+    "username": "zqlimy",
+    "last_name": null,
+    "is_bot": false,
+    "language": "en",
+    "created_at": "2020-02-08T14:47:48.790Z",
+    "updated_at": "2020-02-13T11:58:53.123Z",
+    "deleted_at": null,
+    "user_chats": [{
+        "id": "1",
+        "chat_id": "-1001389166922",
+        "chat_name": "Bishan",
+        "chat_type": "supergroup",
+        "chat_username": "bishannn",
+        "chat_size": "4",
+        "chat_owner": "738282366",
+        "created_at": "2020-02-08T14:47:51.410Z",
+        "updated_at": "2020-02-08T14:47:51.410Z",
+        "deleted_at": null,
+        "user_status": "creator"
+    }, {
+        "id": "2",
+        "chat_id": "-1001379113313",
+        "chat_name": "Gudbye Lullabye",
+        "chat_type": "supergroup",
+        "chat_username": null,
+        "chat_size": "9",
+        "chat_owner": "171281689",
+        "created_at": "2020-02-09T14:02:20.778Z",
+        "updated_at": "2020-02-09T14:02:20.778Z",
+        "deleted_at": null,
+        "user_status": "administrator"
+    }, {
+        "id": "2",
+        "chat_id": "-1001379113313",
+        "chat_name": "Gudbye Lullabye",
+        "chat_type": "supergroup",
+        "chat_username": null,
+        "chat_size": "9",
+        "chat_owner": "171281689",
+        "created_at": "2020-02-09T14:02:20.778Z",
+        "updated_at": "2020-02-09T14:02:20.778Z",
+        "deleted_at": null,
+        "user_status": "administrator"
+    }]
+}

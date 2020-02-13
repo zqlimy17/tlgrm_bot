@@ -9,7 +9,7 @@ const Dashboard = () => {
     const [chats, setChats] = useState([]);
     useEffect(() => {
         axios.get(`http://localhost:4040/users/${user[0]}`).then(res => {
-            setChats(res.data.user_chats);
+            setChats(res.data.chats);
         });
     }, [user]);
     return (

@@ -29,16 +29,6 @@ class DbChats {
         chat_users = chat_users.filter(e => !!e);
         return chat_users;
     }
-
-    async chat(chat_id) {
-        let chat = await Chat.findOne({
-            where: {
-                chat_id
-            }
-        });
-        if (chat) return chat;
-        return;
-    }
 }
 
 module.exports = DbChats;

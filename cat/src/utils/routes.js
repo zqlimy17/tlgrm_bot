@@ -4,47 +4,13 @@ const DbUsers = require("../db/user");
 const DbChats = require("../db/chat");
 const DbLogs = require("../db/log");
 
-router.get("/users/logs", async (req, res) => {
-    let users_logs = await new DbUsers().users_logs();
-    if (users_logs) {
-        res.send({ users_logs }).status(200);
-    } else {
-        res.sendStatus(404);
-    }
-});
-
-router.get("/user/:id", async (req, res) => {
-    let data = {};
-    data.telegram_id = req.params.id;
-    let user = await new DbUsers(req.params.id).user();
-    if (user) {
-        data.user = user;
-        let user_chats = await new DbChats(req.params.id).chats();
-        data.user_chats = user_chats;
-        let user_logs = await new DbLogs(req.params.id).logs();
-        data.user_logs = user_logs;
-        res.send(data).status(200);
-    } else {
-        res.sendStatus(404);
-    }
-});
-
-router.get("/users/chats", async (req, res) => {
-    let users_chats = await new DbUsers().users_chats();
-    if (users_chats) {
-        res.send({ users_chats }).status(200);
-    } else {
-        res.sendStatus(404);
-    }
-});
-
-router.get("/users", async (req, res) => {
-    let users = await new DbUsers().users();
-    if (users) {
-        res.send({ users }).status(200);
-    } else {
-        res.sendStatus(404);
-    }
+router.get("/users/:id", async (req, res) => {
+    let chats = await new DbChats(req.params.id).chats();
+    console.log(chats);
+    let data = {
+        chats
+    };
+    res.send(data).status(200);
 });
 
 router.post("/group", async (req, res) => {
