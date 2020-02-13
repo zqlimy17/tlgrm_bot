@@ -28,7 +28,7 @@ const Group = () => {
         const fetchData = async () => {
             setLoading(true);
             const res = await axios({
-                method: "POST",
+                method: "post",
                 url: "http://localhost:4040/group",
                 data: {
                     id: id,

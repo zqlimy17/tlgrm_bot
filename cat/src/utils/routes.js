@@ -23,16 +23,8 @@ router.post("/group", async (req, res) => {
         logs,
         users
     };
-    res.send(data).status(200);
-});
-
-router.get("/group/:id", async (req, res) => {
-    let logs = await new DbLogs().group_logs(req.params.id);
-    let chat = await new DbChats().chat(req.params.id);
-    let data = {
-        chat,
-        logs
-    };
+    console.log("USERS IS:");
+    console.log(users);
     res.send(data).status(200);
 });
 

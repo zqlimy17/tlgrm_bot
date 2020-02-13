@@ -7,6 +7,15 @@ class DbChats {
         this.telegram_id = telegram_id;
     }
 
+    // GETTING INFO FOR 1 CHAT
+    async chat(id) {
+        let chat = await Chat.findAll({
+            where: { chat_id: id }
+        });
+        return chat;
+    }
+
+    // GETTING INFO OF MULTIPLE CHATS
     async chats() {
         let chat_users = await ChatUsers.findAll({
             where: { telegram_id: this.telegram_id }
