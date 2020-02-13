@@ -47,6 +47,19 @@ router.get("/users", async (req, res) => {
     }
 });
 
+router.post("/group", async (req, res) => {
+    let { id, then, now } = req.body;
+    let logs = await new DbLogs().group_logs(id, then, now);
+    let chat = await new DbChats().chat(id);
+    let users = await new DbUsers().users();
+    let data = {
+        chat,
+        logs,
+        users
+    };
+    res.send(data).status(200);
+});
+
 router.get("/group/:id", async (req, res) => {
     let logs = await new DbLogs().group_logs(req.params.id);
     let chat = await new DbChats().chat(req.params.id);

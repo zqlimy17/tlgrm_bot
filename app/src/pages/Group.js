@@ -1,34 +1,84 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router";
 import axios from "axios";
+import { HashLoader } from "react-spinners";
+import moment from "moment";
+import Messages from "../components/Messages";
+import Pagination from "../components/Pagination";
+import Dates from "../components/Dates";
+import GroupSize from "../components/Bar";
+import GroupStats from "../components/GroupStats";
 
 const Group = () => {
     let { id } = useParams();
     const [messages, setMessages] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [messagesPerPage] = useState(20);
     const [group, setGroup] = useState();
-    useEffect(async () => {
-        console.log(`http://localhost:4040/group/${id}`);
-        let res = await axios.get(`http://localhost:4040/group/${id}`);
-        let reverse = res.data.logs;
-        reverse.reverse();
-        await setMessages(reverse);
-        await setGroup(res.data.chat);
-        console.log("RES DATA CHAT IS", res.data.chat);
-    }, []);
+    const [users, setUsers] = useState(null);
+    const [dateRange, setDateRange] = useState([
+        moment()
+            .subtract(30, "day")
+            .format("YYYY-MM-DD HH:mm:ss"),
+        moment().format("YYYY-MM-DD HH:mm:ss")
+    ]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            setLoading(true);
+            const res = await axios({
+                method: "POST",
+                url: "http://localhost:4040/group",
+                data: {
+                    id: id,
+                    then: dateRange[0],
+                    now: dateRange[1]
+                }
+            });
+            const reverse = res.data.logs;
+            reverse.reverse();
+            await setMessages(reverse);
+            await setGroup(res.data.chat);
+            await setUsers(res.data.users);
+            setLoading(false);
+        };
+        fetchData();
+    }, [dateRange, id]);
+
+    // Get Current Messages
+    const indexOfLastMessage = currentPage * messagesPerPage;
+    const indexOfFirstMessage = indexOfLastMessage - messagesPerPage;
+    const currentMessage = messages.slice(
+        indexOfFirstMessage,
+        indexOfLastMessage
+    );
+
+    // Change Page
+    const paginate = pageNumber => setCurrentPage(pageNumber);
+
     return (
         <>
-            <h1>{group ? group.chat_name : ""}</h1>
-            {console.log(
-                "messages is: ",
-                messages.length > 0 ? messages[0].created_at : ""
+            <h1>
+                {group ? group.chat_name : <HashLoader color={"#d4af37"} />}
+            </h1>
+            {group ? (
+                <GroupStats group={group} messages={messages} />
+            ) : (
+                <HashLoader color={"#d4af37"} />
             )}
-            {messages.slice(0, 20).map(message => {
-                return (
-                    <div>
-                        <p>{message.text}</p>
-                    </div>
-                );
-            })}
+            <GroupSize />
+            <Dates setDateRange={setDateRange} />
+            <Messages
+                messages={currentMessage}
+                loading={loading}
+                users={users}
+            />
+            <Pagination
+                messagesPerPage={messagesPerPage}
+                totalMessages={messages.length}
+                paginate={paginate}
+            />
         </>
     );
 };

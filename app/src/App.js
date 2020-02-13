@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import ReactDOM from "react-dom";
+import React from "react";
+// import ReactDOM from "react-dom";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -11,19 +11,6 @@ import Dashboard from "./pages/Dashboard";
 import Group from "./pages/Group";
 
 function App() {
-    useEffect(() => {
-        fetch("https://ec4fae08.ngrok.io/", {
-            method: "get",
-            headers: { "Content-Type": "application/json" }
-        })
-            .then(async c => {
-                return c.json();
-            })
-            .then(data => {
-                console.log(data);
-            });
-    }, []);
-
     return (
         <Router>
             <div className="App">
