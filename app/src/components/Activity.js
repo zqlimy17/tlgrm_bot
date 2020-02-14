@@ -2,27 +2,41 @@ import React, { useState, useEffect } from "react";
 import { Line } from "react-chartjs-2";
 import moment from "moment";
 
-const Activity = ({ media, dateRange }) => {
+const Activity = ({ media }) => {
     const { logs, images, videos, docs, locations, voices } = media;
     const [dates, setDates] = useState([]);
     useEffect(() => {
-        console.log(
+        setDates(
             moment(logs[0].created_at).diff(
                 moment(logs[logs.length - 1].created_at),
                 "days"
             )
         );
-    }, [media, dateRange]);
+    }, [media]);
+
+    let xAxis = [];
+    if (dates <= 30) {
+        for (let i = dates; i >= 0; i--) {
+            xAxis.push(
+                moment()
+                    .subtract(i, "days")
+                    .format("DD MMMM")
+            );
+        }
+    } else {
+        let x = Math.ceil(dates / 30.25);
+        for (let i = x; i >= 0; i--) {
+            xAxis.push(
+                moment()
+                    .subtract(i, "months")
+                    .format("MMMM YYYY")
+            );
+        }
+    }
+    console.log(xAxis);
+
     const data = {
-        labels: [
-            "January",
-            "February",
-            "March",
-            "April",
-            "May",
-            "June",
-            "July"
-        ],
+        labels: xAxis,
         datasets: [
             {
                 label: "My First dataset",

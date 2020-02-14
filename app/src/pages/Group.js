@@ -69,8 +69,13 @@ const Group = () => {
             <h1>
                 {group ? group.chat_name : <HashLoader color={"#d4af37"} />}
             </h1>
+            {group ? (
+                <Dates setDateRange={setDateRange} messages={messages} />
+            ) : (
+                <HashLoader color={"#d4af37"} />
+            )}
             {media ? (
-                <Activity media={media} dateRange={dateRange} />
+                <Activity media={media} />
             ) : (
                 <HashLoader color={"#d4af37"} />
             )}
@@ -85,11 +90,7 @@ const Group = () => {
             ) : (
                 <HashLoader color={"#d4af37"} />
             )}
-            {group ? (
-                <Dates setDateRange={setDateRange} messages={messages} />
-            ) : (
-                <HashLoader color={"#d4af37"} />
-            )}
+
             <Messages
                 messages={currentMessage}
                 loading={loading}
