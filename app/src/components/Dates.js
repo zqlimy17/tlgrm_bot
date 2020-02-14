@@ -2,7 +2,7 @@ import React from "react";
 import { Button } from "react-bootstrap";
 import moment from "moment";
 
-const Dates = params => {
+const Dates = (params, messages) => {
     return (
         <div>
             <Button
@@ -43,12 +43,7 @@ const Dates = params => {
             </Button>
             <Button
                 onClick={() => {
-                    params.setDateRange([
-                        moment()
-                            .subtract(2, "year")
-                            .format("YYYY-MM-DD HH:mm:ss"),
-                        moment().format("YYYY-MM-DD HH:mm:ss")
-                    ]);
+                    params.setDateRange([null, null]);
                 }}
             >
                 All Time

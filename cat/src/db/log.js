@@ -8,34 +8,47 @@ const ChatVoices = require("../services/models/chat_user_voice");
 const { Op } = require("sequelize");
 
 class DbLogs {
-    constructor(telegram_id) {
-        this.telegram_id = telegram_id;
+    constructor(id, then, now) {
+        this.chat_id = id;
+        this.then = then ? then : null;
+        this.now = now ? now : null;
     }
 
-    async group_logs(id, then, now) {
-        let logs = await Log.findAll({
-            where: {
-                chat_id: id,
-                created_at: {
-                    [Op.between]: [then, now]
-                }
-            }
-        });
+    async group_logs() {
+        let logs;
+        if (!this.then && !this.now) {
+            logs = await Log.findAll({
+                where: {
+                    chat_id: this.chat_id
+                },
+                order: [["created_at", "ASC"]]
+            });
+        } else {
+            logs = await Log.findAll({
+                where: {
+                    chat_id: this.chat_id,
+                    created_at: {
+                        [Op.between]: [this.then, this.now]
+                    }
+                },
+                order: [["created_at", "ASC"]]
+            });
+        }
 
         let videos = await ChatVideos.findAll({
-            where: { chat_id: id }
+            where: { chat_id: this.chat_id }
         });
         let voices = await ChatVoices.findAll({
-            where: { chat_id: id }
+            where: { chat_id: this.chat_id }
         });
         let docs = await ChatDocs.findAll({
-            where: { chat_id: id }
+            where: { chat_id: this.chat_id }
         });
         let images = await ChatImages.findAll({
-            where: { chat_id: id }
+            where: { chat_id: this.chat_id }
         });
         let locations = await ChatLocations.findAll({
-            where: { chat_id: id }
+            where: { chat_id: this.chat_id }
         });
         let media = {
             logs,
@@ -45,7 +58,6 @@ class DbLogs {
             images,
             locations
         };
-
         return media;
     }
 }

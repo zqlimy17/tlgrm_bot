@@ -17,7 +17,7 @@ router.get("/users/:id", async (req, res) => {
 // Getting group info
 router.post("/group", async (req, res) => {
     let { id, then, now } = req.body;
-    let media = await new DbLogs().group_logs(id, then, now);
+    let media = await new DbLogs(id, then, now).group_logs();
     let chat = await new DbChats().chat(id);
     let users = await new DbUsers().users();
     let data = {
