@@ -6,12 +6,16 @@ import moment from "moment";
 import Messages from "../components/Messages";
 import Pagination from "../components/Pagination";
 import Dates from "../components/Dates";
-import GroupSize from "../components/Bar";
 import GroupStats from "../components/GroupStats";
 
 const Group = () => {
     let { id } = useParams();
     const [messages, setMessages] = useState([]);
+    const [images, setImages] = useState([]);
+    const [docs, setDocs] = useState([]);
+    const [videos, setVideos] = useState([]);
+    const [locations, setLocations] = useState([]);
+    const [voices, setVoices] = useState([]);
     const [loading, setLoading] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
     const [messagesPerPage] = useState(20);
@@ -36,11 +40,17 @@ const Group = () => {
                     now: dateRange[1]
                 }
             });
-            const reverse = res.data.logs;
+            console.log(res.data);
+            const reverse = res.data.media.logs;
             reverse.reverse();
             await setMessages(reverse);
             await setGroup(res.data.chat[0]);
             await setUsers(res.data.users);
+            await setLocations(res.data.media.locations);
+            await setVoices(res.data.media.voices);
+            await setDocs(res.data.media.docs);
+            await setImages(res.data.media.images);
+            await setVideos(res.data.media.videos);
             setLoading(false);
         };
         fetchData();
@@ -62,12 +72,23 @@ const Group = () => {
             <h1>
                 {group ? group.chat_name : <HashLoader color={"#d4af37"} />}
             </h1>
+            <h2>Total Activity Line Chart Goes Here</h2>
+
+            <h2>Pie/Doughnut Chart of medias goes here</h2>
+            <h2>Media Goes here</h2>
             {group ? (
-                <GroupStats group={group} messages={messages} />
+                <GroupStats
+                    group={group}
+                    messages={messages}
+                    videos={videos}
+                    voices={voices}
+                    locations={locations}
+                    images={images}
+                    docs={docs}
+                />
             ) : (
                 <HashLoader color={"#d4af37"} />
             )}
-            <GroupSize />
             <Dates setDateRange={setDateRange} />
             <Messages
                 messages={currentMessage}

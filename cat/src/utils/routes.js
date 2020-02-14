@@ -4,6 +4,7 @@ const DbUsers = require("../db/user");
 const DbChats = require("../db/chat");
 const DbLogs = require("../db/log");
 
+// Getting all chats as a User
 router.get("/users/:id", async (req, res) => {
     let chats = await new DbChats(req.params.id).chats();
     console.log(chats);
@@ -13,14 +14,15 @@ router.get("/users/:id", async (req, res) => {
     res.send(data).status(200);
 });
 
+// Getting group info
 router.post("/group", async (req, res) => {
     let { id, then, now } = req.body;
-    let logs = await new DbLogs().group_logs(id, then, now);
+    let media = await new DbLogs().group_logs(id, then, now);
     let chat = await new DbChats().chat(id);
     let users = await new DbUsers().users();
     let data = {
         chat,
-        logs,
+        media,
         users
     };
     console.log("USERS IS:");

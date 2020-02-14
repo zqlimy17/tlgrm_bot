@@ -1,10 +1,23 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Row, Col } from "react-bootstrap";
 
-const GroupStats = ({ group, messages }) => {
-    useEffect(() => {
-        console.log(group);
-    }, []);
+const GroupStats = ({
+    group,
+    messages,
+    voices,
+    docs,
+    videos,
+    images,
+    locations
+}) => {
+    let totalMedia =
+        messages.length +
+        voices.length +
+        docs.length +
+        videos.length +
+        images.length +
+        locations.length;
+
     return (
         <div>
             <Row>
@@ -12,7 +25,7 @@ const GroupStats = ({ group, messages }) => {
                     <h2>Chat Size: {group.chat_size}</h2>
                 </Col>
                 <Col sm>
-                    <h2>Total Messages: {messages.length}</h2>
+                    <h2>Total Messages: {totalMedia}</h2>
                 </Col>
             </Row>
         </div>
