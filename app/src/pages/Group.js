@@ -10,7 +10,9 @@ import GroupStats from "../components/GroupStats";
 import MediaTypes from "../components/MediaTypes";
 import Activity from "../components/Activity";
 import UsersTable from "../components/UsersTable";
+import ActiveTime from "../components/ActiveTime";
 import UsersMessagePie from "../components/UsersMessagePie";
+import ActiveDays from "../components/ActiveDays";
 
 const Group = () => {
     let { id } = useParams();
@@ -89,6 +91,16 @@ const Group = () => {
             )}
             {media ? (
                 <Activity media={media} showDate={showDate} />
+            ) : (
+                <HashLoader color={"#d4af37"} />
+            )}
+            {media ? (
+                <ActiveDays media={media} />
+            ) : (
+                <HashLoader color={"#d4af37"} />
+            )}
+            {media ? (
+                <ActiveTime media={media} />
             ) : (
                 <HashLoader color={"#d4af37"} />
             )}
