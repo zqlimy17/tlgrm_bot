@@ -1,7 +1,7 @@
 import React from "react";
 import { Doughnut } from "react-chartjs-2";
 
-const Users = ({ users }) => {
+const UsersMessagePie = ({ users }) => {
     const donutLabels = [];
     const donutValues = [];
     const color = [];
@@ -45,4 +45,4 @@ const Users = ({ users }) => {
     );
 };
 
-export default Users;
+export default UsersMessagePie;

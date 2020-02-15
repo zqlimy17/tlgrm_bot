@@ -41,34 +41,43 @@ class DbUsers {
                     }
                 });
 
-                let l = await new DbLogs().logs(user.telegram_id);
+                let l = await new DbLogs().logs(id, user.telegram_id);
                 l = l.map(log => {
                     return log.get;
                 });
 
                 let video = await ChatVideos.findAll({
                     where: {
+                        chat_id: id,
                         telegram_id: user.telegram_id
                     }
                 });
 
                 let voice = await ChatVoices.findAll({
                     where: {
+                        chat_id: id,
+
                         telegram_id: user.telegram_id
                     }
                 });
                 let doc = await ChatDocs.findAll({
                     where: {
+                        chat_id: id,
+
                         telegram_id: user.telegram_id
                     }
                 });
                 let image = await ChatImages.findAll({
                     where: {
+                        chat_id: id,
+
                         telegram_id: user.telegram_id
                     }
                 });
                 let loc = await ChatLocations.findAll({
                     where: {
+                        chat_id: id,
+
                         telegram_id: user.telegram_id
                     }
                 });

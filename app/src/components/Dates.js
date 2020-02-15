@@ -2,11 +2,12 @@ import React from "react";
 import { Button } from "react-bootstrap";
 import moment from "moment";
 
-const Dates = (params, messages) => {
+const Dates = (params, setShowDate) => {
     return (
         <div>
             <Button
                 onClick={() => {
+                    params.setShowDate(1);
                     params.setDateRange([
                         moment()
                             .subtract(1, "day")
@@ -19,6 +20,7 @@ const Dates = (params, messages) => {
             </Button>
             <Button
                 onClick={() => {
+                    params.setShowDate(7);
                     params.setDateRange([
                         moment()
                             .subtract(7, "day")
@@ -31,6 +33,7 @@ const Dates = (params, messages) => {
             </Button>
             <Button
                 onClick={() => {
+                    params.setShowDate(30);
                     params.setDateRange([
                         moment()
                             .subtract(30, "day")
@@ -43,6 +46,7 @@ const Dates = (params, messages) => {
             </Button>
             <Button
                 onClick={() => {
+                    params.setShowDate(null);
                     params.setDateRange([null, null]);
                 }}
             >

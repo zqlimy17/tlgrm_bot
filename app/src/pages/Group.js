@@ -10,12 +10,13 @@ import GroupStats from "../components/GroupStats";
 import MediaTypes from "../components/MediaTypes";
 import Activity from "../components/Activity";
 import UsersTable from "../components/UsersTable";
-import Users from "../components/Users";
+import UsersMessagePie from "../components/UsersMessagePie";
 
 const Group = () => {
     let { id } = useParams();
     const [group, setGroup] = useState();
     const [users, setUsers] = useState(null);
+    const [showDate, setShowDate] = useState(30);
 
     // Media
     const [media, setMedia] = useState();
@@ -49,9 +50,9 @@ const Group = () => {
             logs.reverse();
             await setGroup(res.data.chat[0]);
             await setUsers(res.data.users);
-            console.log(res.data.users);
             await setMessages(logs);
             setLoading(false);
+            console.log(res.data.media);
         };
         fetchData();
     }, [dateRange, id]);
@@ -78,12 +79,16 @@ const Group = () => {
                 <HashLoader color={"#d4af37"} />
             )}
             {group ? (
-                <Dates setDateRange={setDateRange} messages={messages} />
+                <Dates
+                    setDateRange={setDateRange}
+                    setShowDate={setShowDate}
+                    messages={messages}
+                />
             ) : (
                 <HashLoader color={"#d4af37"} />
             )}
             {media ? (
-                <Activity media={media} />
+                <Activity media={media} showDate={showDate} />
             ) : (
                 <HashLoader color={"#d4af37"} />
             )}
@@ -98,7 +103,11 @@ const Group = () => {
             ) : (
                 <HashLoader color={"#d4af37"} />
             )}
-            {users ? <Users users={users} /> : <HashLoader color={"#d4af37"} />}
+            {users ? (
+                <UsersMessagePie users={users} />
+            ) : (
+                <HashLoader color={"#d4af37"} />
+            )}
 
             <Messages
                 messages={currentMessage}

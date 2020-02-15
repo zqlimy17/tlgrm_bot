@@ -1,9 +1,6 @@
-import React, { useEffect } from "react";
+import React from "react";
 
 const UsersTable = ({ users }) => {
-    useEffect(() => {
-        console.log();
-    }, []);
     return (
         <div>
             {users.map((user, index) => {
