@@ -29,9 +29,19 @@ class DbUsers {
             }
         });
         if (users) {
-            users = users.map(user => {
-                return user.get();
+            users = users.map(async user => {
+                let x = await User.findOne({
+                    where: {
+                        telegram_id: user.telegram_id
+                    }
+                });
+                user = user.get();
+                user[`first_name`] = x.first_name;
+                user[`last_name`] = x.last_name;
+                user[`username`] = x.username;
+                return user;
             });
+            users = await Promise.all(users);
         }
         return users;
     }

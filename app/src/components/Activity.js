@@ -79,6 +79,7 @@ const Activity = ({ media }) => {
         <div>
             <Bar
                 data={data}
+                height={500}
                 options={{
                     maintainAspectRatio: false
                 }}

@@ -4,7 +4,13 @@ const UsersTable = ({ users }) => {
     useEffect(() => {
         console.log(users);
     }, []);
-    return <div></div>;
+    return (
+        <div>
+            {users.map(user => {
+                return <p>{user.telegram_id}</p>;
+            })}
+        </div>
+    );
 };
 
 export default UsersTable;
