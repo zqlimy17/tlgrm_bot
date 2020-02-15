@@ -10,6 +10,7 @@ import GroupStats from "../components/GroupStats";
 import MediaTypes from "../components/MediaTypes";
 import Activity from "../components/Activity";
 import UsersTable from "../components/UsersTable";
+import Users from "../components/Users";
 
 const Group = () => {
     let { id } = useParams();
@@ -97,6 +98,7 @@ const Group = () => {
             ) : (
                 <HashLoader color={"#d4af37"} />
             )}
+            {users ? <Users users={users} /> : <HashLoader color={"#d4af37"} />}
 
             <Messages
                 messages={currentMessage}

@@ -2,6 +2,11 @@ const User = require("../services/models/user");
 const DbLogs = require("./log");
 const DbChats = require("./chat");
 const ChatUsers = require("../services/models/chat_users");
+const ChatVideos = require("../services/models/chat_user_video");
+const ChatDocs = require("../services/models/chat_user_doc");
+const ChatImages = require("../services/models/chat_user_image");
+const ChatLocations = require("../services/models/chat_user_location");
+const ChatVoices = require("../services/models/chat_user_voice");
 const { Op } = require("sequelize");
 
 class DbUsers {
@@ -30,15 +35,54 @@ class DbUsers {
         });
         if (users) {
             users = users.map(async user => {
-                let x = await User.findOne({
+                let u = await User.findOne({
                     where: {
                         telegram_id: user.telegram_id
                     }
                 });
+
+                let l = await new DbLogs().logs(user.telegram_id);
+                l = l.map(log => {
+                    return log.get;
+                });
+
+                let video = await ChatVideos.findAll({
+                    where: {
+                        telegram_id: user.telegram_id
+                    }
+                });
+
+                let voice = await ChatVoices.findAll({
+                    where: {
+                        telegram_id: user.telegram_id
+                    }
+                });
+                let doc = await ChatDocs.findAll({
+                    where: {
+                        telegram_id: user.telegram_id
+                    }
+                });
+                let image = await ChatImages.findAll({
+                    where: {
+                        telegram_id: user.telegram_id
+                    }
+                });
+                let loc = await ChatLocations.findAll({
+                    where: {
+                        telegram_id: user.telegram_id
+                    }
+                });
+
                 user = user.get();
-                user[`first_name`] = x.first_name;
-                user[`last_name`] = x.last_name;
-                user[`username`] = x.username;
+                user[`first_name`] = u.first_name;
+                user[`last_name`] = u.last_name;
+                user[`username`] = u.username;
+                user[`log_count`] = l.length;
+                user[`video_count`] = video.length;
+                user[`voice_count`] = voice.length;
+                user[`location_count`] = loc.length;
+                user[`image_count`] = image.length;
+                user[`doc_count`] = doc.length;
                 return user;
             });
             users = await Promise.all(users);

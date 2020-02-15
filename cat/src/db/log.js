@@ -14,6 +14,15 @@ class DbLogs {
         this.now = now ? now : null;
     }
 
+    async logs(telegram_id) {
+        let logs = Log.findAll({
+            where: {
+                telegram_id: telegram_id
+            }
+        });
+        return logs;
+    }
+
     async group_logs() {
         let logs;
         if (!this.then && !this.now) {
