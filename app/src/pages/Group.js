@@ -9,6 +9,7 @@ import Dates from "../components/Dates";
 import GroupStats from "../components/GroupStats";
 import MediaTypes from "../components/MediaTypes";
 import Activity from "../components/Activity";
+import UsersTable from "../components/UsersTable";
 
 const Group = () => {
     let { id } = useParams();
@@ -69,6 +70,11 @@ const Group = () => {
             <h1>
                 {group ? group.chat_name : <HashLoader color={"#d4af37"} />}
             </h1>
+            {users ? (
+                <UsersTable users={users} />
+            ) : (
+                <HashLoader color={"#d4af37"} />
+            )}
             {group ? (
                 <Dates setDateRange={setDateRange} messages={messages} />
             ) : (

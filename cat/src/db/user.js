@@ -1,6 +1,7 @@
 const User = require("../services/models/user");
 const DbLogs = require("./log");
 const DbChats = require("./chat");
+const ChatUsers = require("../services/models/chat_users");
 const { Op } = require("sequelize");
 
 class DbUsers {
@@ -21,8 +22,12 @@ class DbUsers {
         return;
     }
 
-    async users() {
-        let users = await User.findAll();
+    async users(id) {
+        let users = await ChatUsers.findAll({
+            where: {
+                chat_id: id
+            }
+        });
         if (users) {
             users = users.map(user => {
                 return user.get();

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Line } from "react-chartjs-2";
+import { Bar } from "react-chartjs-2";
 import moment from "moment";
 
 const Activity = ({ media }) => {
@@ -15,56 +15,74 @@ const Activity = ({ media }) => {
     }, [media]);
 
     let xAxis = [];
-    if (dates <= 30) {
-        for (let i = dates; i >= 0; i--) {
-            xAxis.push(
-                moment()
-                    .subtract(i, "days")
-                    .format("DD MMMM")
-            );
+    let yAxis = [];
+    const constructGraph = async () => {
+        if (dates <= 30) {
+            for (let i = dates; i >= 0; i--) {
+                yAxis.push(0);
+                xAxis.push(
+                    moment()
+                        .subtract(i, "days")
+                        .format("DD MMMM")
+                );
+                logs.forEach(log => {
+                    if (
+                        moment(log.created_at).format("DD MMMM") ===
+                        moment()
+                            .subtract(i, "days")
+                            .format("DD MMMM")
+                    ) {
+                        yAxis[dates - i]++;
+                    }
+                });
+            }
+        } else {
+            let x = Math.ceil(dates / 30.25);
+            for (let i = x; i >= 0; i--) {
+                yAxis.push(0);
+                xAxis.push(
+                    moment()
+                        .subtract(i, "months")
+                        .format("MMMM YYYY")
+                );
+                logs.forEach(log => {
+                    if (
+                        moment(log.created_at).format("MMMM YYYY") ===
+                        moment()
+                            .subtract(i, "months")
+                            .format("MMMM YYYY")
+                    ) {
+                        yAxis[x - i]++;
+                    }
+                });
+            }
         }
-    } else {
-        let x = Math.ceil(dates / 30.25);
-        for (let i = x; i >= 0; i--) {
-            xAxis.push(
-                moment()
-                    .subtract(i, "months")
-                    .format("MMMM YYYY")
-            );
-        }
-    }
-    console.log(xAxis);
+        return;
+    };
+    constructGraph();
 
     const data = {
         labels: xAxis,
         datasets: [
             {
                 label: "My First dataset",
-                fill: false,
-                lineTension: 0.05,
-                backgroundColor: "rgba(75,192,192,0.4)",
-                borderColor: "rgba(75,192,192,1)",
-                borderCapStyle: "butt",
-                borderDash: [],
-                borderDashOffset: 0.0,
-                borderJoinStyle: "miter",
-                pointBorderColor: "rgba(75,192,192,1)",
-                pointBackgroundColor: "#fff",
-                pointBorderWidth: 1,
-                pointHoverRadius: 5,
-                pointHoverBackgroundColor: "rgba(75,192,192,1)",
-                pointHoverBorderColor: "rgba(220,220,220,1)",
-                pointHoverBorderWidth: 2,
-                pointRadius: 1,
-                pointHitRadius: 10,
-                data: [65, 59, 80, 81, 56, 55, 40]
+                backgroundColor: "rgba(255,99,132,0.2)",
+                borderColor: "rgba(255,99,132,1)",
+                borderWidth: 1,
+                hoverBackgroundColor: "rgba(255,99,132,0.4)",
+                hoverBorderColor: "rgba(255,99,132,1)",
+                data: yAxis
             }
         ]
     };
     return (
         <div>
-            <h2>Line Example</h2>
-            <Line data={data} />
+            <Bar
+                data={data}
+                options={{
+                    maintainAspectRatio: false
+                }}
+            />{" "}
         </div>
     );
 };
