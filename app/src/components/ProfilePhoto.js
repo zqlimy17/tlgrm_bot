@@ -7,7 +7,7 @@ const ProfilePhoto = ({ id }) => {
         console.log(id);
         const fetchData = async () => {
             let res = await axios.get(
-                `http://localhost:4040/user/${id}/profile-photo`
+                `https://tlgrm-analytics-server.herokuapp.com/user/${id}/profile-photo`
             );
             setUrl(res.data.photo_url);
         };

@@ -10,7 +10,9 @@ const Dashboard = () => {
     useEffect(() => {
         const fecthData = async () => {
             await axios
-                .get(`http://localhost:4040/users/${user[0]}`)
+                .get(
+                    `https://tlgrm-analytics-server.herokuapp.com/users/${user[0]}`
+                )
                 .then(res => {
                     setChats(res.data.chats);
                 });
