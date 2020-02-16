@@ -1,5 +1,6 @@
 import React from "react";
 import { Nav, Navbar } from "react-bootstrap";
+import TelegramLogin from "./TelegramLogin";
 
 const Navigation = () => {
     return (
@@ -9,6 +10,7 @@ const Navigation = () => {
                 <Nav.Link href="/dashboard/">Dashboard</Nav.Link>
                 <Nav.Link href="/login/">Login</Nav.Link>
                 <Nav.Link href="/logout/">Logout</Nav.Link>
+                <TelegramLogin />
             </Nav>
         </Navbar>
     );
