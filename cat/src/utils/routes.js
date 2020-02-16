@@ -3,6 +3,7 @@ const router = express.Router();
 const DbUsers = require("../db/user");
 const DbChats = require("../db/chat");
 const DbLogs = require("../db/log");
+const Telegram = require("../services/telegram");
 
 // Getting all chats as a User
 router.get("/users/:id", async (req, res) => {
@@ -11,6 +12,15 @@ router.get("/users/:id", async (req, res) => {
     let data = {
         chats
     };
+    res.send(data).status(200);
+});
+
+// getting profile photo
+router.get("/user/:id/profile-photo", async (req, res) => {
+    let photo = await new Telegram().chat_profile(req.params.id);
+    console.log(photo);
+    let photo_url = `https://api.telegram.org/file/bot997286944:AAHOONG3DMu6CGEdZliBZj_PR2NA9Tz-KZg/${photo}`;
+    let data = { photo_url };
     res.send(data).status(200);
 });
 
@@ -25,8 +35,6 @@ router.post("/group", async (req, res) => {
         media,
         users
     };
-    console.log("USERS IS:");
-    console.log(users);
     res.send(data).status(200);
 });
 

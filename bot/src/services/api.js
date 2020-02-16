@@ -5,7 +5,9 @@ class API {
     constructor(payload, user) {
         this.name = user.username ? `@${user.username}` : user.first_name;
         this.chat_id = user.id;
-        this.message_id = payload.message ? payload.message.message_id : payload.message_id;
+        this.message_id = payload.message
+            ? payload.message.message_id
+            : payload.message_id;
     }
 
     async delete_message(menu_message_id) {
