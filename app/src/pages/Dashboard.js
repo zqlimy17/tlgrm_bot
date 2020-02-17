@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Card, Button } from "react-bootstrap";
 import axios from "axios";
-import { HashLoader } from "react-spinners";
+import { ScaleLoader } from "react-spinners";
 
 const Dashboard = () => {
     const user = useState("738282366");
@@ -49,7 +49,7 @@ const Dashboard = () => {
                     );
                 })
             ) : (
-                <HashLoader color={"#d4af37"} />
+                <ScaleLoader color={"#e37400"} />
             )}
         </>
     );

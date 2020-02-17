@@ -85,7 +85,7 @@ const ActiveTime = ({ media }) => {
     };
     return (
         <div>
-            <Bar data={data} />
+            <Bar data={data} id="ActiveTime" />
         </div>
     );
 };

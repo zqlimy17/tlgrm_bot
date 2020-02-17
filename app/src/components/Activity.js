@@ -95,7 +95,7 @@ const Activity = ({ media, showDate }) => {
 
     return (
         <div>
-            <Line data={data} />
+            <Line data={data} id="Activity" />
         </div>
     );
 };

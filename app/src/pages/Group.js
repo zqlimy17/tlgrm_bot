@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router";
 import axios from "axios";
-import { HashLoader } from "react-spinners";
+import { ScaleLoader } from "react-spinners";
 import moment from "moment";
 import Messages from "../components/Messages";
 import Pagination from "../components/Pagination";
@@ -74,13 +74,13 @@ const Group = () => {
     return (
         <>
             <h1>
-                {group ? group.chat_name : <HashLoader color={"#d4af37"} />}
+                {group ? group.chat_name : <ScaleLoader color={"#e37400"} />}
             </h1>
             <ProfilePhoto id={id} />
             {users ? (
                 <UsersTable users={users} />
             ) : (
-                <HashLoader color={"#d4af37"} />
+                <ScaleLoader color={"#e37400"} />
             )}
             {group ? (
                 <Dates
@@ -89,38 +89,38 @@ const Group = () => {
                     messages={messages}
                 />
             ) : (
-                <HashLoader color={"#d4af37"} />
+                <ScaleLoader color={"#e37400"} />
             )}
             {media ? (
                 <Activity media={media} showDate={showDate} />
             ) : (
-                <HashLoader color={"#d4af37"} />
+                <ScaleLoader color={"#e37400"} />
             )}
             {media ? (
                 <ActiveDays media={media} />
             ) : (
-                <HashLoader color={"#d4af37"} />
+                <ScaleLoader color={"#e37400"} />
             )}
             {media ? (
                 <ActiveTime media={media} />
             ) : (
-                <HashLoader color={"#d4af37"} />
+                <ScaleLoader color={"#e37400"} />
             )}
             {group ? (
                 <MediaTypes media={media} dateRange={dateRange} />
             ) : (
-                <HashLoader color={"#d4af37"} />
+                <ScaleLoader color={"#e37400"} />
             )}
             <h2>Media Goes here</h2>
             {group ? (
                 <GroupStats group={group} media={media} />
             ) : (
-                <HashLoader color={"#d4af37"} />
+                <ScaleLoader color={"#e37400"} />
             )}
             {users ? (
                 <UsersMessagePie users={users} />
             ) : (
-                <HashLoader color={"#d4af37"} />
+                <ScaleLoader color={"#e37400"} />
             )}
 
             <Messages

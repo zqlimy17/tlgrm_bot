@@ -43,7 +43,7 @@ const MediaTypes = ({ media }) => {
     };
     return (
         <div>
-            <Pie data={data} />
+            <Pie data={data} id="MediaTypes" />
         </div>
     );
 };

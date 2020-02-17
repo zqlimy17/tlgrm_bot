@@ -50,9 +50,24 @@ const ActiveDays = ({ media }) => {
             }
         ]
     };
+
+    const download = () => {
+        var link = document.createElement("a");
+        link.download = "ActiveDays.png";
+        link.href = document.getElementById("active-days").toDataURL();
+        link.click();
+    };
+
     return (
         <div>
-            <Bar data={data} />
+            <Bar data={data} id="active-days" />
+            <button
+                onClick={() => {
+                    download();
+                }}
+            >
+                Download
+            </button>
         </div>
     );
 };

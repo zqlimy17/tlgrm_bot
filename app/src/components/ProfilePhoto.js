@@ -21,6 +21,7 @@ const ProfilePhoto = ({ id }) => {
                     onError={event => {
                         event.target.src = `https://via.placeholder.com/150`;
                     }}
+                    alt="Profile"
                 />
             ) : (
                 ""

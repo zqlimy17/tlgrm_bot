@@ -1,10 +1,10 @@
 import React from "react";
-import { HashLoader } from "react-spinners";
+import { ScaleLoader } from "react-spinners";
 import moment from "moment";
 
 const Messages = ({ messages, loading, users }) => {
     if (loading) {
-        return <HashLoader />;
+        return <ScaleLoader color={"#e37400"} />;
     }
 
     return (
