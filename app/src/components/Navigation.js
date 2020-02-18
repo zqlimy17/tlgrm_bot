@@ -23,22 +23,6 @@ const Navigation = currentUser => {
                                 Dashboard
                             </Link>
                         </li>
-                        {currentUser ? (
-                            <li className="nav-item px-1">
-                                <Link className="nav-link " to="/">
-                                    Logout
-                                </Link>
-                            </li>
-                        ) : (
-                            <li className="nav-item px-1">
-                                <Link
-                                    className="nav-link btn btn-outline-warning btn-md "
-                                    to="#"
-                                >
-                                    Login
-                                </Link>
-                            </li>
-                        )}
                     </ul>
                 </div>
             </nav>
