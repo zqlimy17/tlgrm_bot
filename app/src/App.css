@@ -1,125 +1,141 @@
 * {
-  --primary: #e37400;
-  --secondary: #fab41d;
-  font-family: 'Montserrat', sans-serif;
-  box-sizing: border-box;
-  /* outline: 1px dotted red;
-  outline-offset: -1px; */
+    --primary: brown;
+    --secondary: #fab41d;
+    font-family: "Montserrat", sans-serif;
+    box-sizing: border-box;
 }
 
 *:before,
 *:after {
-  box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 .testt {
-  background-color: black;
-  color: white;
-  outline: 2px dashed red;
-  outline-offset: -2px
+    background-color: black;
+    color: white;
+    outline: 2px dashed red;
+    outline-offset: -2px;
 }
 
+p {
+    line-height: 1.5;
+}
 html,
 body {
-  height: 100%;
-  position: relative;
+    height: 100%;
+    position: relative;
 }
 
 body {
-  min-height: 100vh;
-  color: black;
+    min-height: 100vh;
+    color: black;
 }
 
 .container {
-  min-height: 100vh;
-  display: block;
-  position: relative;
-  padding-bottom: 56px;
+    min-height: 100vh;
+    display: block;
+    position: relative;
+    padding-bottom: 56px;
+}
+
+.custom-nav {
+    background-color: white;
+    height: 100%;
+    border-bottom: 1px solid var(--primary);
 }
 
 .navbar-brand {
-  color: orange;
-  font-family: "Alatsi", sans-serif;
+    color: orange;
+    font-family: "Alatsi", sans-serif;
 }
 
 .navbar-brand:hover {
-  color: darkorange;
+    color: darkorange;
 }
 
 footer {
-  bottom: 0;
-  width: 100%;
+    bottom: 0;
+    width: 100%;
 }
 
 a {
-  color: gold !important;
+    color: var(--primary) !important;
 }
 
 a:hover {
-  text-decoration: underline;
+    text-decoration: underline;
 }
 
 .nav-link {
-  color: var(--secondary)
+    color: var(--primary);
 }
 
 .nav-link:hover {
-  color: var(--primary)
+    color: var(--primary);
 }
 
 .hide {
-  display: none;
-  visibility: hidden;
+    display: none;
+    visibility: hidden;
 }
 
 .home {
-  height: 100vh;
-  width: 100%;
-  position: relative;
+    height: 100vh;
+    width: 100%;
+    position: relative;
 }
 
 .home::after {
-  content: "";
-  opacity: 0.4;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  position: absolute;
-  z-index: -1;
-  background: url("/img/funnel.jpg") no-repeat center center;
-  background-size: cover;
-
+    content: "";
+    opacity: 0.4;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    position: absolute;
+    z-index: -1;
+    background: url("/img/funnel.jpg") no-repeat center center;
+    background-size: cover;
 }
-
-.feature-header {
-  background-color: rgba(247, 171, 0, 0.8);
-  border-top-left-radius: 50px;
-  border-top-right-radius: 50px;
-  ;
-}
-
 .feature {
-  border: 5px solid whitesmoke;
+    border: 5px solid whitesmoke;
+}
+.feature-header {
+    background-color: rgba(247, 171, 0, 0.8);
+    border-top-left-radius: 50px;
+    border-top-right-radius: 50px;
+}
 
+.feature-icon {
+    height: 2em;
 }
 
 .how-it-works {
-  background-color: whitesmoke;
+    background-color: whitesmoke;
 }
 
 .how-it-works-text {
-  background-color: var(--primary);
-  color: white;
-  border-radius: 15px 0 0 15px;
+    background-color: var(--secondary);
+    color: black;
+    border-radius: 15px 0 0 15px;
 }
 
 .pricing {
-  border: 5px solid whitesmoke;
+    border: 5px solid whitesmoke;
+    border-radius: 15px;
+}
+
+.pricing-pro {
+    border-radius: 15px;
+    background-color: var(--secondary);
+    color: whitesmoke;
+}
+
+.try-cta {
+    background-color: whitesmoke;
 }
 
 footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
+    background-color: var(--primary);
+    color: var(--secondary);
 }

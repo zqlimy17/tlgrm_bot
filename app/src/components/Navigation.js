@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 const Navigation = currentUser => {
     currentUser = false;
     return (
-        <div>
-            <nav className="navbar navbar-expand-lg">
+        <div className="sticky-top">
+            <nav className="navbar custom-nav navbar-expand-lg">
                 <Link className="navbar-brand" to="/">
                     <img
                         src="/img/logo192.png"
