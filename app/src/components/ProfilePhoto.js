@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { ScaleLoader } from "react-spinners";
 import axios from "axios";
 
 const ProfilePhoto = ({ id }) => {
@@ -14,7 +15,7 @@ const ProfilePhoto = ({ id }) => {
         fetchData();
     }, [id]);
     return (
-        <div>
+        <React.Fragment>
             {url ? (
                 <img
                     src={url}
@@ -22,11 +23,12 @@ const ProfilePhoto = ({ id }) => {
                         event.target.src = `https://via.placeholder.com/150`;
                     }}
                     alt="Profile"
+                    className="profile-photo img-fluid"
                 />
             ) : (
-                ""
+                <ScaleLoader color={"#e37400"} />
             )}
-        </div>
+        </React.Fragment>
     );
 };
 

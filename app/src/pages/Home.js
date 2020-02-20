@@ -1,11 +1,15 @@
 import React from "react";
-import { Jumbotron, Row, Col, Button } from "react-bootstrap";
+import { Row, Col, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
     faCheckCircle,
     faChartArea,
     faCogs,
-    faArrowRight
+    faArrowRight,
+    faDiceOne,
+    faDiceTwo,
+    faDiceThree,
+    faDiceFour
 } from "@fortawesome/free-solid-svg-icons";
 
 const Home = () => {
@@ -110,7 +114,6 @@ const Home = () => {
                         </div>
                     </div>
                 </div>
-
                 <Row className="how-it-works my-4 py-5">
                     <div className="col-sm-4 p-3">
                         <h1 className="text-center mt-4">
@@ -129,6 +132,53 @@ const Home = () => {
                         </p>
                     </div>
                 </Row>
+                <Row className="container m-auto">
+                    <div className="col-md-4 offset-md-1">
+                        <img className="img-fluid" src="/img/tlgrm-plane.png" />
+                    </div>
+                    <div className="col py-4">
+                        <p className="how-it-works-steps align-items-center lead d-flex">
+                            <FontAwesomeIcon
+                                icon={faDiceOne}
+                                className="mx-3"
+                                size="2x"
+                                color="#fab41d"
+                            />
+                            Log into Telegram
+                        </p>
+                        <p className="how-it-works-steps align-items-center lead d-flex">
+                            <FontAwesomeIcon
+                                icon={faDiceTwo}
+                                className="mx-3"
+                                size="2x"
+                                color="#fab41d"
+                            />
+                            Invite @tlgrm_ga into your group
+                        </p>
+                        <p className="how-it-works-steps align-items-center lead d-flex">
+                            <FontAwesomeIcon
+                                icon={faDiceThree}
+                                className="mx-3"
+                                size="2x"
+                                color="#fab41d"
+                            />
+                            Set @tlgrm_ga as an Administrator
+                        </p>
+                        <p className="how-it-works-steps align-items-center lead d-flex">
+                            <FontAwesomeIcon
+                                icon={faDiceFour}
+                                className="mx-3"
+                                size="2x"
+                                color="#fab41d"
+                            />
+                            Watch your data grow!
+                        </p>
+                    </div>
+                    <Button className="px-5 my-5 btn-lg btn-block btn-warning">
+                        TRY FREE NOW{" "}
+                        <FontAwesomeIcon icon={faArrowRight} className="mx-3" />
+                    </Button>
+                </Row>
                 <div className="px-5">
                     <div className="px-5">
                         <Row className="m-auto text-center container-fluid py-3">
@@ -143,7 +193,7 @@ const Home = () => {
                                         </h2>
                                         <hr />
                                         <h3>Free</h3>
-                                        <div className="text-left ml-5">
+                                        <div className="text-left">
                                             <FontAwesomeIcon
                                                 icon={faCheckCircle}
                                                 className="mx-3"
@@ -163,7 +213,7 @@ const Home = () => {
                                         </h2>
                                         <hr />
                                         <h3>$10 /month</h3>
-                                        <div className="text-left ml-5">
+                                        <div className="text-left">
                                             <FontAwesomeIcon
                                                 icon={faCheckCircle}
                                                 className="mx-3"
@@ -195,7 +245,7 @@ const Home = () => {
                                         </h2>
                                         <hr />
                                         <h3>$50 /month</h3>
-                                        <div className="text-left ml-5">
+                                        <div className="text-left">
                                             <FontAwesomeIcon
                                                 icon={faCheckCircle}
                                                 className="mx-3"
@@ -244,7 +294,7 @@ const Home = () => {
                             Enhance your data with TLGRM Analytics today!
                         </div>
                         <Button className="px-5 btn-lg btn-block btn-warning">
-                            TRY FOR FREE{" "}
+                            TRY FREE NOW{" "}
                             <FontAwesomeIcon
                                 icon={faArrowRight}
                                 className="mx-3"

@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { Card, Button } from "react-bootstrap";
+import { Row, Button } from "react-bootstrap";
 import axios from "axios";
 import { ScaleLoader } from "react-spinners";
+
+import DashboardCard from "../components/DashboardCard";
 
 const Dashboard = () => {
     const user = useState("738282366");
@@ -15,42 +16,39 @@ const Dashboard = () => {
                 )
                 .then(res => {
                     setChats(res.data.chats);
+                    console.log(res.data.chats);
                 });
         };
         fecthData();
-    }, [user]);
+    }, []);
     return (
         <>
-            <h1>Dashboard Goes here</h1>
-            {chats.length > 0 ? (
-                chats.map((chat, index) => {
-                    return (
-                        <div key={index}>
-                            <Link to={"/group/" + chat.chat_id}>
-                                <Card style={{ width: "18rem" }}>
-                                    <Card.Img
-                                        variant="top"
-                                        src="holder.js/100px180"
-                                    />
-                                    <Card.Body>
-                                        <Card.Title>
-                                            Group Name: {chat.chat_name}
-                                        </Card.Title>
-                                        <Card.Text>
-                                            Chat Size: {chat.chat_size}
-                                        </Card.Text>
-                                        <Button variant="primary">
-                                            Go somewhere
-                                        </Button>
-                                    </Card.Body>
-                                </Card>
-                            </Link>
+            <div className="container-fluid">
+                <Row>
+                    <div className="col-3 profile-column">
+                        <p>DP goes here</p>
+                        <p>Name Goes here</p>
+                        <p>Username Goes here</p>
+                        <p>Logout Goes here</p>
+                    </div>
+                    <div className="col offset-3">
+                        <div className="pr-5">
+                            {chats.length > 0 ? (
+                                chats.map((chat, index) => {
+                                    return (
+                                        <DashboardCard
+                                            chat={chat}
+                                            key={index}
+                                        />
+                                    );
+                                })
+                            ) : (
+                                <ScaleLoader color={"#e37400"} />
+                            )}
                         </div>
-                    );
-                })
-            ) : (
-                <ScaleLoader color={"#e37400"} />
-            )}
+                    </div>
+                </Row>
+            </div>
         </>
     );
 };
