@@ -5,6 +5,17 @@ const DbChats = require("../db/chat");
 const DbLogs = require("../db/log");
 const Telegram = require("../services/telegram");
 
+// Getting single user info
+
+router.get("/user/:id", async (req, res) => {
+    let user = await new DbUsers(req.params.id).user();
+    console.table(user);
+    let data = {
+        user
+    };
+    res.send(data).status(200);
+});
+
 // Getting all chats as a User
 router.get("/users/:id", async (req, res) => {
     let chats = await new DbChats(req.params.id).chats();
@@ -23,6 +34,7 @@ router.get("/group/:id/profile-photo", async (req, res) => {
     let data = { photo_url };
     res.send(data).status(200);
 });
+
 router.get("/user/:id/profile-photo", async (req, res) => {
     let photo = await new Telegram().user_profile(req.params.id);
     console.log("PHOTO IS", photo);

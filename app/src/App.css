@@ -170,6 +170,20 @@ a:hover {
     border: 1px solid grey;
 }
 
+.planey {
+    position: fixed;
+    display: block;
+    bottom: 0;
+    left: 0;
+    width: 200px;
+    opacity: 0.6;
+}
+
+.grid {
+    display: grid;
+    min-height: 90vh;
+    place-items: center;
+}
 
 footer {
     background-color: var(--primary);

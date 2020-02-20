@@ -16,12 +16,12 @@ const GroupPhoto = ({ id }) => {
         fetchData();
     }, [id]);
     return (
-        <React.Fragment>
+        <>
             {url ? (
                 <img
                     src={url}
                     onError={event => {
-                        event.target.src = `https://via.placeholder.com/150`;
+                        event.target.src = `https://dummyimage.com/300.png/fab41d&text=TA`;
                     }}
                     alt="Profile"
                     className="profile-photo img-fluid"
@@ -31,7 +31,7 @@ const GroupPhoto = ({ id }) => {
                     <ScaleLoader color={"#e37400"} />
                 </div>
             )}
-        </React.Fragment>
+        </>
     );
 };
 

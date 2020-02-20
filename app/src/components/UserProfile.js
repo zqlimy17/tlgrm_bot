@@ -1,37 +1,48 @@
-import React, { useState, useEffect } from "react";
-import { ScaleLoader } from "react-spinners";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
+import UserContext from "../context/UserContext";
 
-const UserProfile = ({ id }) => {
+const UserProfile = () => {
+    const user = useContext(UserContext);
+    const fallback = () => {
+        if (user.first_name) {
+            return user.first_name.charAt(0).toUpperCase();
+        } else if (user.username) {
+            return user.username.charAt(0).toUpperCase();
+        } else {
+            return user.last_name.charAt(0).toUpperCase();
+        }
+    };
+
     let [url, setUrl] = useState();
     useEffect(() => {
-        console.log(id);
         const fetchData = async () => {
             let res = await axios.get(
-                `https://tlgrm-analytics-server.herokuapp.com/user/${id}/profile-photo`
+                `https://tlgrm-analytics-server.herokuapp.com/user/${user.telegram_id}/profile-photo`,
+                { timeout: 8000 }
             );
-            console.log("RES IS", res.data);
             setUrl(res.data.photo_url);
         };
         fetchData();
-    }, [id]);
+    }, [user]);
     return (
-        <React.Fragment>
+        <>
             {url ? (
                 <img
                     src={url}
                     onError={event => {
-                        event.target.src = `https://via.placeholder.com/150`;
+                        event.target.src = `https://dummyimage.com/250.png/fab41d&text=${fallback()}`;
                     }}
                     alt="Profile"
                     className="profile-photo img-fluid"
                 />
             ) : (
-                <div className="d-flex align-items-center justify-content-center h-100">
-                    <ScaleLoader color={"#e37400"} />
-                </div>
+                <img
+                    className="profile-photo img-fluid"
+                    src={`https://dummyimage.com/500.png/fab41d&text=${fallback()}`}
+                />
             )}
-        </React.Fragment>
+        </>
     );
 };
 
