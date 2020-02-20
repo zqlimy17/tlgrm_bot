@@ -16,9 +16,16 @@ router.get("/users/:id", async (req, res) => {
 });
 
 // getting profile photo
-router.get("/user/:id/profile-photo", async (req, res) => {
+router.get("/group/:id/profile-photo", async (req, res) => {
     let photo = await new Telegram().chat_profile(req.params.id);
     console.log(photo);
+    let photo_url = `https://api.telegram.org/file/bot997286944:AAHOONG3DMu6CGEdZliBZj_PR2NA9Tz-KZg/${photo}`;
+    let data = { photo_url };
+    res.send(data).status(200);
+});
+router.get("/user/:id/profile-photo", async (req, res) => {
+    let photo = await new Telegram().user_profile(req.params.id);
+    console.log("PHOTO IS", photo);
     let photo_url = `https://api.telegram.org/file/bot997286944:AAHOONG3DMu6CGEdZliBZj_PR2NA9Tz-KZg/${photo}`;
     let data = { photo_url };
     res.send(data).status(200);

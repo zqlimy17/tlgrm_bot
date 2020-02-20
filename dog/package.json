@@ -1,22 +1,22 @@
 {
-  "name": "cat",
-  "version": "1.0.0",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "config": "^3.2.5",
-    "cors": "^2.8.5",
-    "express": "^4.17.1",
-    "moment": "^2.24.0",
-    "node-fetch": "^2.6.0",
-    "pg": "^7.18.1",
-    "pg-hstore": "^2.3.3",
-    "sequelize": "^5.21.4"
-  },
-  "devDependencies": {},
-  "description": ""
+    "name": "cat",
+    "version": "1.0.0",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "config": "^3.2.5",
+        "cors": "^2.8.5",
+        "express": "^4.17.1",
+        "moment": "^2.24.0",
+        "node-fetch": "^2.6.0",
+        "pg": "^7.18.1",
+        "pg-hstore": "^2.3.3",
+        "sequelize": "^5.21.4"
+    },
+    "devDependencies": {},
+    "description": ""
 }

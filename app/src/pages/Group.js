@@ -13,7 +13,7 @@ import UsersTable from "../components/UsersTable";
 import ActiveTime from "../components/ActiveTime";
 import UsersMessagePie from "../components/UsersMessagePie";
 import ActiveDays from "../components/ActiveDays";
-import ProfilePhoto from "../components/ProfilePhoto";
+import GroupPhoto from "../components/GroupPhoto";
 
 const Group = () => {
     let { id } = useParams();
@@ -76,7 +76,7 @@ const Group = () => {
             <h1>
                 {group ? group.chat_name : <ScaleLoader color={"#e37400"} />}
             </h1>
-            <ProfilePhoto id={id} />
+            <GroupPhoto id={id} />
             {users ? (
                 <UsersTable users={users} />
             ) : (

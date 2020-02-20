@@ -45,6 +45,26 @@ class Telegram {
             return resp;
         }
     }
+    async user_profile(user_id) {
+        let data = {
+            user_id
+        };
+        let resp = await this.execute_post("/getuserprofilephotos", data);
+        console.log("RESPONSE IS");
+        console.log(resp.result.photos[0][2].file_id);
+        if (resp.result.photos) {
+            data = {
+                file_id: resp.result.photos[0][2].file_id
+            };
+            let photo_url = await this.execute_post("/getfile", data);
+            resp = photo_url.result.file_path;
+            console.table("PHTO URL IS");
+            console.log(resp);
+            return resp;
+        } else {
+            return resp;
+        }
+    }
 
     async execute_post(path, data) {
         let resp = await fetch(`${config.get("default_API")}${path}`, {

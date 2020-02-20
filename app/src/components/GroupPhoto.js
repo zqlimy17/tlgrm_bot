@@ -2,14 +2,15 @@ import React, { useState, useEffect } from "react";
 import { ScaleLoader } from "react-spinners";
 import axios from "axios";
 
-const ProfilePhoto = ({ id }) => {
+const GroupPhoto = ({ id }) => {
     let [url, setUrl] = useState();
     useEffect(() => {
         console.log(id);
         const fetchData = async () => {
             let res = await axios.get(
-                `https://tlgrm-analytics-server.herokuapp.com/user/${id}/profile-photo`
+                `https://tlgrm-analytics-server.herokuapp.com/group/${id}/profile-photo`
             );
+            console.log("RES IS", res.data);
             setUrl(res.data.photo_url);
         };
         fetchData();
@@ -26,10 +27,12 @@ const ProfilePhoto = ({ id }) => {
                     className="profile-photo img-fluid"
                 />
             ) : (
-                <ScaleLoader color={"#e37400"} />
+                <div className="d-flex align-items-center justify-content-center h-100">
+                    <ScaleLoader color={"#e37400"} />
+                </div>
             )}
         </React.Fragment>
     );
 };
 
-export default ProfilePhoto;
+export default GroupPhoto;

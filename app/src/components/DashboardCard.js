@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Row, Button } from "react-bootstrap";
-import ProfilePhoto from "../components/ProfilePhoto";
+import GroupPhoto from "../components/GroupPhoto";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 
@@ -12,9 +12,9 @@ const DashboardCard = ({ chat }) => {
     return (
         <div className="p-2">
             <Row className="group-card">
-                <div className="col-sm-6 col-md-4 col-lg-2 profile-photo-backround">
+                <div className="col-sm-2 profile-photo-backround py-3">
                     <Link to={"/group/" + chat.chat_id}>
-                        <ProfilePhoto id={chat.chat_id} />
+                        <GroupPhoto id={chat.chat_id} />
                     </Link>
                 </div>
                 <div className="col py-3">
@@ -37,20 +37,6 @@ const DashboardCard = ({ chat }) => {
                     </Link>
                 </div>
             </Row>
-            <h1>Yeet</h1>
-            <h1>Yeet</h1>
-            <h1>Yeet</h1>
-            <h1>Yeet</h1>
-            <h1>Yeet</h1>
-            <h1>Yeet</h1>
-            <h1>Yeet</h1>
-            <h1>Yeet</h1>
-            <h1>Yeet</h1>
-            <h1>Yeet</h1>
-            <h1>Yeet</h1>
-            <h1>Yeet</h1>
-            <h1>Yeet</h1>
-            <h1>Yeet</h1>
         </div>
     );
 };

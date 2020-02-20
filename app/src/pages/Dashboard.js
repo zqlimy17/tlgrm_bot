@@ -1,18 +1,20 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Row, Button } from "react-bootstrap";
 import axios from "axios";
 import { ScaleLoader } from "react-spinners";
-
+import GroupPhoto from "../components/GroupPhoto";
 import DashboardCard from "../components/DashboardCard";
+import UserContext from "../context/UserContext";
 
 const Dashboard = () => {
-    const user = useState("738282366");
+    const user = useContext(UserContext);
     const [chats, setChats] = useState([]);
     useEffect(() => {
+        console.log(user);
         const fecthData = async () => {
             await axios
                 .get(
-                    `https://tlgrm-analytics-server.herokuapp.com/users/${user[0]}`
+                    `https://tlgrm-analytics-server.herokuapp.com/users/${user}`
                 )
                 .then(res => {
                     setChats(res.data.chats);
@@ -26,7 +28,7 @@ const Dashboard = () => {
             <div className="container-fluid">
                 <Row>
                     <div className="col-3 profile-column">
-                        <p>DP goes here</p>
+                        <GroupPhoto id={"738282366"} />
                         <p>Name Goes here</p>
                         <p>Username Goes here</p>
                         <p>Logout Goes here</p>

@@ -16,6 +16,10 @@
     top: 60px;
 }
 
+.loader {
+    display: inline-block;
+}
+
 .testt {
     background-color: black;
     color: white;
@@ -163,7 +167,7 @@ a:hover {
 .group-card {
     background-color: whitesmoke;
     border-radius: 15px;
-
+    border: 1px solid grey;
 }
 
 
