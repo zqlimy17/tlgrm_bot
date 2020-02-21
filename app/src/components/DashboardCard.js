@@ -4,11 +4,9 @@ import { Row, Button } from "react-bootstrap";
 import GroupPhoto from "../components/GroupPhoto";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import TotalMedia from "../components/TotalMedia";
 
 const DashboardCard = ({ chat }) => {
-    useEffect(() => {
-        console.log(chat);
-    });
     return (
         <div className="p-2">
             <Row className="group-card">
@@ -19,11 +17,14 @@ const DashboardCard = ({ chat }) => {
                 </div>
                 <div className="col py-3">
                     <Link to={"/group/" + chat.chat_id}>
-                        <h2>{chat.chat_name}</h2>
+                        <h2>{chat.chat_name} </h2>
                     </Link>
                     <p>
-                        <strong>ID: {chat.chat_id}</strong> | Size:{" "}
-                        {chat.chat_size}
+                        <span className="badge badge-secondary text-uppercase">
+                            {chat.chat_type}
+                        </span>{" "}
+                        ||<strong> ID: {chat.chat_id}</strong> || Size:{" "}
+                        {chat.chat_size} || <TotalMedia id={chat.chat_id} />
                     </p>
                     <hr />
                     <Link to={"/group/" + chat.chat_id}>
@@ -31,7 +32,7 @@ const DashboardCard = ({ chat }) => {
                             View Analytics
                             <FontAwesomeIcon
                                 icon={faArrowRight}
-                                className="mx-3"
+                                className="ml-2"
                             />
                         </Button>
                     </Link>

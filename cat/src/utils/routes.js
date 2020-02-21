@@ -57,4 +57,10 @@ router.post("/group", async (req, res) => {
     res.send(data).status(200);
 });
 
+router.get("/group/:id", async (req, res) => {
+    let count = await new DbLogs().group_media_length(req.params.id);
+    let data = { count };
+    res.send(data).status(200);
+});
+
 module.exports = router;
