@@ -15,6 +15,8 @@ import UsersMessagePie from "../components/UsersMessagePie";
 import ActiveDays from "../components/ActiveDays";
 import GroupPhoto from "../components/GroupPhoto";
 
+import { Row } from "react-bootstrap";
+
 const Group = () => {
     let { id } = useParams();
     const [group, setGroup] = useState();
@@ -41,7 +43,7 @@ const Group = () => {
             setLoading(true);
             const res = await axios({
                 method: "post",
-                url: "https://tlgrm-analytics-server.herokuapp.com/group",
+                url: "http://localhost:8080/group",
                 data: {
                     id: id,
                     then: dateRange[0],
@@ -72,25 +74,47 @@ const Group = () => {
     const paginate = pageNumber => setCurrentPage(pageNumber);
 
     return (
-        <>
-            <h1>
-                {group ? group.chat_name : <ScaleLoader color={"#e37400"} />}
-            </h1>
-            <GroupPhoto id={id} />
+        <div className="container-fluid">
+            <div className="py-2 px-5">
+                <Row className="">
+                    <div className="col">
+                        <Row className="d-flex align-items-center">
+                            <div className="group-page-photo">
+                                <GroupPhoto id={id} />
+                            </div>
+                            <div className="col">
+                                <h1 className="m-0">
+                                    {group ? group.chat_name : ""}
+                                </h1>
+                            </div>
+                        </Row>
+                    </div>
+
+                    <div className="d-flex align-content-end flex-wrap">
+                        {group ? (
+                            <Dates
+                                setDateRange={setDateRange}
+                                setShowDate={setShowDate}
+                                messages={messages}
+                            />
+                        ) : (
+                            <div className="d-flex align-items-center justify-content-center h-100">
+                                <ScaleLoader color={"#e37400"} />
+                            </div>
+                        )}
+                    </div>
+                </Row>
+                <hr className="pt-0" />
+            </div>
+
             {users ? (
                 <UsersTable users={users} />
             ) : (
-                <ScaleLoader color={"#e37400"} />
+                <div className="d-flex align-items-center justify-content-center h-100">
+                    <ScaleLoader color={"#e37400"} />
+                </div>
             )}
-            {group ? (
-                <Dates
-                    setDateRange={setDateRange}
-                    setShowDate={setShowDate}
-                    messages={messages}
-                />
-            ) : (
-                <ScaleLoader color={"#e37400"} />
-            )}
+
             {media ? (
                 <Activity media={media} showDate={showDate} />
             ) : (
@@ -133,7 +157,7 @@ const Group = () => {
                 totalMessages={messages.length}
                 paginate={paginate}
             />
-        </>
+        </div>
     );
 };
 

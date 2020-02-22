@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import UserContext from "../context/UserContext";
 
 const Navigation = currentUser => {
+    const { user } = useContext(UserContext);
     currentUser = false;
     return (
         <div className="sticky-top">
@@ -15,15 +17,19 @@ const Navigation = currentUser => {
                     />
                     TLGRM Analytics
                 </Link>
-                <div className="collapse navbar-collapse">
-                    <ul className="navbar-nav ml-auto">
-                        <li className="nav-item px-1">
-                            <Link className="nav-link" to="/dashboard">
-                                Dashboard
-                            </Link>
-                        </li>
-                    </ul>
-                </div>
+                {user ? (
+                    <div className="collapse navbar-collapse">
+                        <ul className="navbar-nav ml-auto">
+                            <li className="nav-item px-1">
+                                <Link className="nav-link" to="/dashboard">
+                                    Dashboard
+                                </Link>
+                            </li>
+                        </ul>
+                    </div>
+                ) : (
+                    ""
+                )}
             </nav>
         </div>
     );

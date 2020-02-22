@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Row, Col, Button } from "react-bootstrap";
+import { Redirect } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
     faCheckCircle,
@@ -12,17 +13,17 @@ import {
     faDiceFour
 } from "@fortawesome/free-solid-svg-icons";
 import Login from "../components/Login";
+import UserContext from "../context/UserContext";
 
 const Home = () => {
+    const { user } = useContext(UserContext);
     return (
         <>
+            {user ? <Redirect to="/dashboard" /> : ""}
             <div className="container-fluid home">
                 <div className="px-5">
                     <div className="px-5">
                         <div className="px-5">
-                            <Row>
-                                <Login />
-                            </Row>
                             <Row className="py-5">
                                 <Col sm className="py-5">
                                     <div className="py-5">
@@ -38,9 +39,9 @@ const Home = () => {
                                                 potential of group chats with
                                                 TLGRM Analytics.
                                             </h6>
-                                            <Button className="px-5 btn-lg btn-warning">
-                                                START
-                                            </Button>
+                                            <span className="login">
+                                                <Login />
+                                            </span>
                                         </div>
                                     </div>
                                 </Col>

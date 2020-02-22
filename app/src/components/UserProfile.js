@@ -3,25 +3,29 @@ import axios from "axios";
 import UserContext from "../context/UserContext";
 
 const UserProfile = () => {
-    const user = useContext(UserContext);
+    const { user } = useContext(UserContext);
     const fallback = () => {
-        if (user.first_name) {
-            return user.first_name.charAt(0).toUpperCase();
-        } else if (user.username) {
-            return user.username.charAt(0).toUpperCase();
-        } else {
-            return user.last_name.charAt(0).toUpperCase();
+        if (user) {
+            if (user.first_name) {
+                return user.first_name.charAt(0).toUpperCase();
+            } else if (user.username) {
+                return user.username.charAt(0).toUpperCase();
+            } else {
+                return user.last_name.charAt(0).toUpperCase();
+            }
         }
     };
 
     let [url, setUrl] = useState();
     useEffect(() => {
         const fetchData = async () => {
-            let res = await axios.get(
-                `https://tlgrm-analytics-server.herokuapp.com/user/${user.telegram_id}/profile-photo`,
-                { timeout: 8000 }
-            );
-            setUrl(res.data.photo_url);
+            if (user) {
+                let res = await axios.get(
+                    `http://localhost:8080/user/${user.telegram_id}/profile-photo`,
+                    { timeout: 8000 }
+                );
+                setUrl(res.data.photo_url);
+            }
         };
         fetchData();
     }, [user]);

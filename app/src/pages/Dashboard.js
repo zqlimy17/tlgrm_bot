@@ -9,16 +9,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 
 const Dashboard = setUser => {
-    const user = useContext(UserContext);
+    const { user, setCurrentUserId } = useContext(UserContext);
     const [chats, setChats] = useState([]);
     useEffect(() => {
         console.log(user);
         console.log(chats);
         const fecthData = async () => {
             await axios
-                .get(
-                    `https://tlgrm-analytics-server.herokuapp.com/users/${user.telegram_id}`
-                )
+                .get(`http://localhost:8080/users/${user.telegram_id}`)
                 .then(res => {
                     setChats(res.data.chats);
                     console.log(res.data.chats);
@@ -46,7 +44,7 @@ const Dashboard = setUser => {
                                 <a href="/">
                                     <Button
                                         onClick={() => {
-                                            setUser(null);
+                                            setCurrentUserId(null);
                                         }}
                                         className="btn btn-danger"
                                     >

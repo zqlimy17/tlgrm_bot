@@ -9,26 +9,31 @@ import Home from "./pages/Home";
 import Dashboard from "./pages/Dashboard";
 import Group from "./pages/Group";
 import UserContext from "./context/UserContext";
-import Axios from "axios";
+import axios from "axios";
 
 function App() {
-    const x = 738282366;
+    const [currentUserId, setCurrentUserId] = useState(738282366);
     const [user, setUser] = useState(null);
 
     useEffect(() => {
+        console.log("<<<<<<<<<<<< CURRENT USER IS >>>>>>>>>>>>>");
+        console.table(currentUserId);
+        if (currentUserId === null) {
+            setUser(null);
+        }
         const fecthData = async () => {
-            await Axios.get(
-                `https://tlgrm-analytics-server.herokuapp.com/user/${x}`
-            ).then(res => {
-                setUser(res.data.user);
-            });
+            await axios
+                .get(`http://localhost:8080/user/${currentUserId}`)
+                .then(res => {
+                    setUser(res.data.user);
+                });
         };
         fecthData();
-    }, []);
+    }, [currentUserId]);
 
     return (
         <Router>
-            <UserContext.Provider value={user}>
+            <UserContext.Provider value={{ user, setCurrentUserId }}>
                 <div className="App">
                     <Navigation />
                     <Switch>
