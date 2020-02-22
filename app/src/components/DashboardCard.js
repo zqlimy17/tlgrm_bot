@@ -11,12 +11,12 @@ const DashboardCard = ({ chat }) => {
         <div className="p-2">
             <Row className="group-card">
                 <div className="col-sm-2 profile-photo-backround py-3">
-                    <Link to={"/group/" + chat.chat_id}>
+                    <Link to={"/group/" + chat.chat_id + "/overview"}>
                         <GroupPhoto id={chat.chat_id} />
                     </Link>
                 </div>
                 <div className="col py-3">
-                    <Link to={"/group/" + chat.chat_id}>
+                    <Link to={"/group/" + chat.chat_id + "/overview"}>
                         <h2>{chat.chat_name} </h2>
                     </Link>
                     <p>
@@ -27,7 +27,7 @@ const DashboardCard = ({ chat }) => {
                         {chat.chat_size} || <TotalMedia id={chat.chat_id} />
                     </p>
                     <hr />
-                    <Link to={"/group/" + chat.chat_id}>
+                    <Link to={"/group/" + chat.chat_id + "/overview"}>
                         <Button className="btn-warning">
                             View Analytics
                             <FontAwesomeIcon
