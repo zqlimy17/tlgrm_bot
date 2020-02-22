@@ -8,11 +8,10 @@ const Navigation = currentUser => {
             <nav className="navbar custom-nav navbar-expand-lg">
                 <Link className="navbar-brand" to="/">
                     <img
-                        src="/img/logo192.png"
+                        src="/img/tlgrm-plane.png"
                         alt="Logo"
-                        width="30"
                         height="30"
-                        className="mr-3"
+                        className="mr-2"
                     />
                     TLGRM Analytics
                 </Link>

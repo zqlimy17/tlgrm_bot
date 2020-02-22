@@ -11,6 +11,7 @@ import {
     faDiceThree,
     faDiceFour
 } from "@fortawesome/free-solid-svg-icons";
+import Login from "../components/Login";
 
 const Home = () => {
     return (
@@ -19,6 +20,9 @@ const Home = () => {
                 <div className="px-5">
                     <div className="px-5">
                         <div className="px-5">
+                            <Row>
+                                <Login />
+                            </Row>
                             <Row className="py-5">
                                 <Col sm className="py-5">
                                     <div className="py-5">
