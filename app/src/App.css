@@ -26,6 +26,7 @@
     top: 60px;
 }
 
+
 .loader {
     display: inline-block;
 }
@@ -210,10 +211,25 @@ a:hover {
 }
 
 .group-page-photo {
-    max-width: 65px;
+    max-width: 200px;
 }
+
+.pagination {
+    position: fixed;
+    bottom: 0;
+    z-index: 50;
+    background-color: white;
+    margin: 0px
+}
+
 
 footer {
     background-color: var(--primary);
     color: white;
+}
+
+.yeet {
+    position: fixed;
+    z-index: 200;
+    right: 0;
 }

@@ -21,14 +21,14 @@ function App() {
         if (currentUserId === null) {
             setUser(null);
         }
-        const fecthData = async () => {
+        const fetchData = async () => {
             await axios
                 .get(`http://localhost:8080/user/${currentUserId}`)
                 .then(res => {
                     setUser(res.data.user);
                 });
         };
-        fecthData();
+        fetchData();
     }, [currentUserId]);
 
     return (

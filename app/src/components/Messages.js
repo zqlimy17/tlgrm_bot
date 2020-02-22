@@ -8,30 +8,45 @@ const Messages = ({ messages, loading, users }) => {
     }
 
     return (
-        <React.Fragment>
-            {messages.map(message => {
+        <div className="py-3 mb-4">
+            <h1>Messages</h1>
+            {messages.map((message, index) => {
                 return (
-                    <ul key={message.id} className="list-group mb-4">
-                        <li className="list-group-item">{message.text}</li>
-                        <li className="list-group-item">
-                            Sent by{" "}
-                            {users
-                                ? users.find(
-                                      ({ telegram_id }) =>
-                                          telegram_id === message.telegram_id
-                                  ).username
-                                : ""}
+                    <ul key={index} className="list-group mb-4">
+                        <li
+                            className={
+                                index % 2
+                                    ? "list-group-item list-group-item-secondary pb-0"
+                                    : "list-group-item pb-0"
+                            }
+                        >
+                            <strong>{message.text}</strong>
                         </li>
-                        <li className="list-group-item">
-                            Sent at:{" "}
-                            {moment(message.created_at).format(
-                                "DD MMMM YYYY HH:mm:ss"
-                            )}
+                        <li
+                            className={
+                                index % 2
+                                    ? "list-group-item list-group-item-secondary pt-0"
+                                    : "list-group-item pt-0"
+                            }
+                        >
+                            <small>
+                                {users
+                                    ? users.find(
+                                          ({ telegram_id }) =>
+                                              telegram_id ===
+                                              message.telegram_id
+                                      ).username
+                                    : ""}{" "}
+                                ||{" "}
+                                {moment(message.created_at).format(
+                                    "DD MMMM YYYY HH:mm:ss"
+                                )}
+                            </small>
                         </li>
                     </ul>
                 );
             })}
-        </React.Fragment>
+        </div>
     );
 };
 

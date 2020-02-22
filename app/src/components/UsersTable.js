@@ -2,7 +2,8 @@ import React from "react";
 
 const UsersTable = ({ users }) => {
     return (
-        <div className="container-fluid px-5">
+        <div className="py-3 mb-4">
+            <h1>Members</h1>
             <table className="table table-hover">
                 <thead>
                     <tr>
@@ -19,7 +20,17 @@ const UsersTable = ({ users }) => {
                         return (
                             <tr key={index}>
                                 <td>{user.telegram_id}</td>
-                                <td>{user.username}</td>
+                                <td>
+                                    {user.username ? (
+                                        <a
+                                            href={`https://t.me/${user.username}`}
+                                        >
+                                            @{user.username}
+                                        </a>
+                                    ) : (
+                                        "-"
+                                    )}
+                                </td>
                                 <td>{user.first_name}</td>
                                 <td>{user.last_name}</td>
                                 <td>{user.chat_user_status}</td>

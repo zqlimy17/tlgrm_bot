@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+
 import { useParams } from "react-router";
 import axios from "axios";
 import { ScaleLoader } from "react-spinners";
@@ -30,7 +32,7 @@ const Group = () => {
     // Pagination
     const [loading, setLoading] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
-    const [messagesPerPage] = useState(20);
+    const [messagesPerPage] = useState(10);
     const [dateRange, setDateRange] = useState([
         moment()
             .subtract(30, "day")
@@ -75,7 +77,85 @@ const Group = () => {
 
     return (
         <div className="container-fluid">
-            <div className="py-2 px-5">
+            <Row>
+                <div className="col-2 profile-column">
+                    {group ? (
+                        <div>
+                            <div className="text-center">
+                                <div className="px-3 py-2 group-page-photo">
+                                    <GroupPhoto id={id} />
+                                </div>
+                                <p className="lead">
+                                    <strong>
+                                        {group ? group.chat_name : ""}
+                                    </strong>
+                                </p>
+                            </div>
+                            <hr />
+                            <Link to={`/group/${id}/overview`}>
+                                <p>Overview</p>
+                            </Link>
+                            <Link to={`/group/${id}/members`}>
+                                <p>Members</p>
+                            </Link>
+                            <Link to={`/group/${id}/messages`}>
+                                <p>Messages</p>
+                            </Link>
+                            <Link to={`/group/${id}/pictures`}>
+                                <p>Pictures</p>
+                            </Link>
+                            <Link to={`/group/${id}/videos`}>
+                                <p>Videos</p>
+                            </Link>
+                        </div>
+                    ) : (
+                        <div className="grid">
+                            <ScaleLoader color={"#e37400"} />
+                        </div>
+                    )}
+                </div>
+                <div className="col offset-2">
+                    <Row className="pt-2 yeet">
+                        <div className="col">
+                            {group ? (
+                                <Dates
+                                    setDateRange={setDateRange}
+                                    setShowDate={setShowDate}
+                                    messages={messages}
+                                />
+                            ) : (
+                                <div className="grid">
+                                    <ScaleLoader color={"#e37400"} />
+                                </div>
+                            )}
+                        </div>
+                    </Row>
+                    <Route path="/group/:id/overview"></Route>
+                    <Route path="/group/:id/members">
+                        {users ? (
+                            <UsersTable users={users} />
+                        ) : (
+                            <div className="d-flex align-items-center justify-content-center h-100">
+                                <ScaleLoader color={"#e37400"} />
+                            </div>
+                        )}
+                    </Route>
+                    <Route path="/group/:id/messages">
+                        <Messages
+                            messages={currentMessage}
+                            loading={loading}
+                            users={users}
+                        />
+                        <Pagination
+                            messagesPerPage={messagesPerPage}
+                            totalMessages={messages.length}
+                            paginate={paginate}
+                            className="pagination"
+                        />
+                    </Route>
+                </div>
+            </Row>
+            {/* <div className="py-2 px-5 stickytop">
                 <Row className="">
                     <div className="col">
                         <Row className="d-flex align-items-center">
@@ -104,7 +184,7 @@ const Group = () => {
                         )}
                     </div>
                 </Row>
-                <hr className="pt-0" />
+                <hr className="p-0 mb-0" />
             </div>
 
             {users ? (
@@ -156,7 +236,7 @@ const Group = () => {
                 messagesPerPage={messagesPerPage}
                 totalMessages={messages.length}
                 paginate={paginate}
-            />
+            /> */}
         </div>
     );
 };

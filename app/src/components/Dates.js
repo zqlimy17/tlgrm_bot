@@ -5,15 +5,9 @@ import moment from "moment";
 const Dates = (params, setShowDate) => {
     return (
         <div>
-            <div
-                // class="btn-group d-flex flex-row-reverse"
-                // role="group"
-                // aria-label="Basic example"
-                className="d-flex"
-            >
+            <div className="d-flex float-right">
                 <p
                     className="px-3 pt-1 date-buttons m-0"
-                    // className="btn-warning"
                     onClick={() => {
                         params.setShowDate(1);
                         params.setDateRange([
@@ -28,7 +22,6 @@ const Dates = (params, setShowDate) => {
                 </p>
                 <p
                     className="px-3 pt-1 date-buttons m-0"
-                    // className="btn-warning"
                     onClick={() => {
                         params.setShowDate(7);
                         params.setDateRange([
@@ -43,7 +36,6 @@ const Dates = (params, setShowDate) => {
                 </p>
                 <p
                     className="px-3 pt-1 date-buttons m-0"
-                    // className="btn-warning"
                     onClick={() => {
                         params.setShowDate(30);
                         params.setDateRange([
@@ -58,7 +50,6 @@ const Dates = (params, setShowDate) => {
                 </p>
                 <p
                     className="px-3 pt-1 date-buttons m-0"
-                    // className="btn-warning"
                     onClick={() => {
                         params.setShowDate(null);
                         params.setDateRange([null, null]);

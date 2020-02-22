@@ -14,7 +14,7 @@ const Dashboard = setUser => {
     useEffect(() => {
         console.log(user);
         console.log(chats);
-        const fecthData = async () => {
+        const fetchData = async () => {
             await axios
                 .get(`http://localhost:8080/users/${user.telegram_id}`)
                 .then(res => {
@@ -23,7 +23,7 @@ const Dashboard = setUser => {
                 });
         };
         if (user) {
-            fecthData();
+            fetchData();
         }
     }, [user]);
     return (
