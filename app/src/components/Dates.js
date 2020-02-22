@@ -1,14 +1,18 @@
-import React from "react";
-import { Button } from "react-bootstrap";
+import React, { useState } from "react";
 import moment from "moment";
 
 const Dates = (params, setShowDate) => {
+    const [selectedDate, setSelectedDate] = useState(3);
     return (
         <div>
             <div className="d-flex float-right">
                 <p
-                    className="px-3 pt-1 date-buttons m-0"
+                    className={
+                        (selectedDate === 1 ? "active " : "") +
+                        "mx-1 btn-outline-warning btn"
+                    }
                     onClick={() => {
+                        setSelectedDate(1);
                         params.setShowDate(1);
                         params.setDateRange([
                             moment()
@@ -21,8 +25,12 @@ const Dates = (params, setShowDate) => {
                     Last 24 Hours
                 </p>
                 <p
-                    className="px-3 pt-1 date-buttons m-0"
+                    className={
+                        (selectedDate === 2 ? "active " : "") +
+                        "mx-1 btn-outline-warning btn"
+                    }
                     onClick={() => {
+                        setSelectedDate(2);
                         params.setShowDate(7);
                         params.setDateRange([
                             moment()
@@ -35,8 +43,12 @@ const Dates = (params, setShowDate) => {
                     Last 7 Days
                 </p>
                 <p
-                    className="px-3 pt-1 date-buttons m-0"
+                    className={
+                        (selectedDate === 3 ? "active " : "") +
+                        "mx-1 btn-outline-warning btn"
+                    }
                     onClick={() => {
+                        setSelectedDate(3);
                         params.setShowDate(30);
                         params.setDateRange([
                             moment()
@@ -49,8 +61,12 @@ const Dates = (params, setShowDate) => {
                     Last 30 Days
                 </p>
                 <p
-                    className="px-3 pt-1 date-buttons m-0"
+                    className={
+                        (selectedDate === 4 ? "active " : "") +
+                        "mx-1 btn-outline-warning btn"
+                    }
                     onClick={() => {
+                        setSelectedDate(4);
                         params.setShowDate(null);
                         params.setDateRange([null, null]);
                     }}
