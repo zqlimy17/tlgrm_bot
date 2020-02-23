@@ -16,6 +16,7 @@ import ActiveTime from "../components/ActiveTime";
 import UsersMessagePie from "../components/UsersMessagePie";
 import ActiveDays from "../components/ActiveDays";
 import GroupPhoto from "../components/GroupPhoto";
+import MediaPicture from "../components/MediaPicture";
 
 import { Row } from "react-bootstrap";
 
@@ -53,6 +54,8 @@ const Group = () => {
                 }
             });
             await setMedia(res.data.media);
+            console.log("<<<<<<<<<<<<<< RES DATA MEDIA >>>>>>>>>>>>>>>>>");
+            console.table(res.data.media);
             const { logs } = res.data.media;
             logs.reverse();
             await setGroup(res.data.chat[0]);
@@ -152,6 +155,18 @@ const Group = () => {
                             paginate={paginate}
                             className="pagination"
                         />
+                    </Route>
+                    <Route path="/group/:id/pictures">
+                        {media
+                            ? media.images.map((image, index) => {
+                                  return (
+                                      <MediaPicture
+                                          id={image.file_id}
+                                          key={index}
+                                      />
+                                  );
+                              })
+                            : ""}
                     </Route>
                 </div>
             </Row>

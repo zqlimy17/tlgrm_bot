@@ -32,14 +32,12 @@ class Telegram {
             chat_id
         };
         let resp = await this.execute_post("/getchat", data);
-        console.log(resp);
         if (resp.result.photo) {
             data = {
                 file_id: resp.result.photo.big_file_id
             };
             let photo_url = await this.execute_post("/getfile", data);
             resp = photo_url.result.file_path;
-            console.log(photo_url);
             return resp;
         } else {
             return resp;
@@ -50,20 +48,32 @@ class Telegram {
             user_id
         };
         let resp = await this.execute_post("/getuserprofilephotos", data);
-        console.log("RESPONSE IS");
-        console.log(resp.result.photos[0][2].file_id);
         if (resp.result.photos) {
             data = {
                 file_id: resp.result.photos[0][2].file_id
             };
             let photo_url = await this.execute_post("/getfile", data);
             resp = photo_url.result.file_path;
-            console.table("PHTO URL IS");
-            console.log(resp);
             return resp;
         } else {
             return resp;
         }
+    }
+
+    async media_image(id) {
+        let resp = await this.execute_get(`/getFile?file_id=${id}`);
+        return resp.result.file_path;
+        // if (resp.result.photo) {
+        //     data = {
+        //         file_id: resp.result.photo.big_file_id
+        //     };
+        //     let photo_url = await this.execute_post("/getfile", data);
+        //     resp = photo_url.result.file_path;
+        //     console.log(photo_url);
+        //     return resp;
+        // } else {
+        //     return resp;
+        // }
     }
 
     async execute_post(path, data) {
@@ -71,6 +81,13 @@ class Telegram {
             method: "post",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(data)
+        });
+        return resp.json();
+    }
+
+    async execute_get(path) {
+        let resp = await fetch(`${config.get("default_API")}${path}`, {
+            method: "get"
         });
         return resp.json();
     }

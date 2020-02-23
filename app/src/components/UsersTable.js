@@ -1,4 +1,6 @@
 import React from "react";
+import GroupPhoto from "../components/GroupPhoto";
+import UserTablePhoto from "./UserTablePhoto";
 
 const UsersTable = ({ users }) => {
     return (
@@ -7,6 +9,7 @@ const UsersTable = ({ users }) => {
             <table className="table table-hover">
                 <thead>
                     <tr>
+                        <th style={{ width: "8%" }}>Profile</th>
                         <th>ID</th>
                         <th>Username</th>
                         <th>First Name</th>
@@ -19,8 +22,13 @@ const UsersTable = ({ users }) => {
                     {users.map((user, index) => {
                         return (
                             <tr key={index}>
-                                <td>{user.telegram_id}</td>
-                                <td>
+                                <td className="align-middle">
+                                    <UserTablePhoto user={user} />
+                                </td>
+                                <td className="align-middle">
+                                    {user.telegram_id}
+                                </td>
+                                <td className="align-middle">
                                     {user.username ? (
                                         <a
                                             href={`https://t.me/${user.username}`}
@@ -31,10 +39,16 @@ const UsersTable = ({ users }) => {
                                         "-"
                                     )}
                                 </td>
-                                <td>{user.first_name}</td>
-                                <td>{user.last_name}</td>
-                                <td>{user.chat_user_status}</td>
-                                <td>
+                                <td className="align-middle">
+                                    {user.first_name}
+                                </td>
+                                <td className="align-middle">
+                                    {user.last_name}
+                                </td>
+                                <td className="align-middle">
+                                    {user.chat_user_status}
+                                </td>
+                                <td className="align-middle">
                                     {user.log_count +
                                         user.video_count +
                                         user.voice_count +
