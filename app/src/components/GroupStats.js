@@ -1,5 +1,16 @@
 import React from "react";
 import { Row, Col, Modal } from "react-bootstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+    faComment,
+    faUsers,
+    faComments,
+    faImages,
+    faVideo,
+    faFile,
+    faMapMarkedAlt,
+    faMicrophoneAlt
+} from "@fortawesome/free-solid-svg-icons";
 
 const GroupStats = ({ group, media }) => {
     const { logs, voices, docs, videos, images, locations } = media;
@@ -21,9 +32,13 @@ const GroupStats = ({ group, media }) => {
                             </h1>
                         </Modal.Header>
                         <Modal.Footer>
-                            <h4>
+                            <h5>
+                                <FontAwesomeIcon
+                                    icon={faUsers}
+                                    className="mx-2"
+                                />{" "}
                                 <strong>Chat Size</strong>
-                            </h4>
+                            </h5>
                         </Modal.Footer>
                     </Modal.Dialog>
                 </Col>
@@ -35,9 +50,13 @@ const GroupStats = ({ group, media }) => {
                             </h1>
                         </Modal.Header>
                         <Modal.Footer>
-                            <h4>
+                            <h5>
+                                <FontAwesomeIcon
+                                    icon={faComments}
+                                    className="mx-2"
+                                />{" "}
                                 <strong>Total Messages</strong>
-                            </h4>
+                            </h5>
                         </Modal.Footer>
                     </Modal.Dialog>
                 </Col>
@@ -49,9 +68,13 @@ const GroupStats = ({ group, media }) => {
                             </h1>
                         </Modal.Header>
                         <Modal.Footer>
-                            <h4>
+                            <h5>
+                                <FontAwesomeIcon
+                                    icon={faComment}
+                                    className="mx-2"
+                                />{" "}
                                 <strong>Text Messages</strong>
-                            </h4>
+                            </h5>
                         </Modal.Footer>
                     </Modal.Dialog>
                 </Col>
@@ -63,9 +86,13 @@ const GroupStats = ({ group, media }) => {
                             </h1>
                         </Modal.Header>
                         <Modal.Footer>
-                            <h4>
+                            <h5>
+                                <FontAwesomeIcon
+                                    icon={faImages}
+                                    className="mx-2"
+                                />{" "}
                                 <strong>Images</strong>
-                            </h4>
+                            </h5>
                         </Modal.Footer>
                     </Modal.Dialog>
                 </Col>
@@ -79,9 +106,13 @@ const GroupStats = ({ group, media }) => {
                             </h1>
                         </Modal.Header>
                         <Modal.Footer>
-                            <h4>
+                            <h5>
+                                <FontAwesomeIcon
+                                    icon={faVideo}
+                                    className="mx-2"
+                                />{" "}
                                 <strong>Videos</strong>
-                            </h4>
+                            </h5>
                         </Modal.Footer>
                     </Modal.Dialog>
                 </Col>
@@ -93,9 +124,13 @@ const GroupStats = ({ group, media }) => {
                             </h1>
                         </Modal.Header>
                         <Modal.Footer>
-                            <h4>
+                            <h5>
+                                <FontAwesomeIcon
+                                    icon={faFile}
+                                    className="mx-2"
+                                />{" "}
                                 <strong>Docs</strong>
-                            </h4>
+                            </h5>
                         </Modal.Footer>
                     </Modal.Dialog>
                 </Col>
@@ -107,9 +142,13 @@ const GroupStats = ({ group, media }) => {
                             </h1>
                         </Modal.Header>
                         <Modal.Footer>
-                            <h4>
+                            <h5>
+                                <FontAwesomeIcon
+                                    icon={faMapMarkedAlt}
+                                    className="mx-2"
+                                />{" "}
                                 <strong>Locations</strong>
-                            </h4>
+                            </h5>
                         </Modal.Footer>
                     </Modal.Dialog>
                 </Col>
@@ -121,9 +160,13 @@ const GroupStats = ({ group, media }) => {
                             </h1>
                         </Modal.Header>
                         <Modal.Footer>
-                            <h4>
+                            <h5>
+                                <FontAwesomeIcon
+                                    icon={faMicrophoneAlt}
+                                    className="mx-2"
+                                />{" "}
                                 <strong>Voice Messages</strong>
-                            </h4>
+                            </h5>
                         </Modal.Footer>
                     </Modal.Dialog>
                 </Col>

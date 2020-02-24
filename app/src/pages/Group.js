@@ -154,9 +154,7 @@ const Group = () => {
                                     messages={messages}
                                 />
                             ) : (
-                                <div className="grid">
-                                    <ScaleLoader color={"#e37400"} />
-                                </div>
+                                ""
                             )}
                         </div>
                     </Row>
