@@ -187,13 +187,30 @@ const Group = () => {
                             </div>
                             <hr />
                             <div className="px-3">
-                                {media ? (
-                                    <ActiveDays media={media} />
-                                ) : (
-                                    <div className="d-flex align-items-center justify-content-center h-100">
-                                        <ScaleLoader color={"#e37400"} />
+                                <Row>
+                                    <div className="col-md-6">
+                                        {media ? (
+                                            <ActiveDays media={media} />
+                                        ) : (
+                                            <div className="d-flex align-items-center justify-content-center h-100">
+                                                <ScaleLoader
+                                                    color={"#e37400"}
+                                                />
+                                            </div>
+                                        )}
                                     </div>
-                                )}
+                                    <div className="col-md-6">
+                                        {media ? (
+                                            <ActiveTime media={media} />
+                                        ) : (
+                                            <div className="d-flex align-items-center justify-content-center h-100">
+                                                <ScaleLoader
+                                                    color={"#e37400"}
+                                                />
+                                            </div>
+                                        )}
+                                    </div>
+                                </Row>
                             </div>
                         </div>
                     </Route>

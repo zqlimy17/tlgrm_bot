@@ -1,6 +1,7 @@
 import React from "react";
 import { Bar } from "react-chartjs-2";
 import moment from "moment";
+import { Modal } from "react-bootstrap";
 
 const ActiveTime = ({ media }) => {
     const { logs } = media;
@@ -73,7 +74,7 @@ const ActiveTime = ({ media }) => {
         labels: xAxis,
         datasets: [
             {
-                label: "My First dataset",
+                label: "Activity [Hours]",
                 backgroundColor: "rgba(255,99,132,0.2)",
                 borderColor: "rgba(255,99,132,1)",
                 borderWidth: 1,
@@ -83,9 +84,40 @@ const ActiveTime = ({ media }) => {
             }
         ]
     };
+
+    const options = {
+        legend: {
+            display: false
+        }
+    };
+
+    const download = () => {
+        var link = document.createElement("a");
+        link.download = "ActiveDays.png";
+        link.href = document.getElementById("active-days").toDataURL();
+        link.click();
+    };
+
     return (
         <div>
-            <Bar data={data} id="ActiveTime" />
+            <Modal.Dialog size="xl">
+                <Modal.Header>
+                    <h3>
+                        <strong>Activity [Hours]</strong>
+                    </h3>
+                    <button
+                        className="btn btn-outline-dark pull-right"
+                        onClick={() => {
+                            download();
+                        }}
+                    >
+                        Export as PNG
+                    </button>
+                </Modal.Header>
+                <Modal.Body>
+                    <Bar data={data} id="ActiveTime" options={options} />
+                </Modal.Body>
+            </Modal.Dialog>
         </div>
     );
 };
