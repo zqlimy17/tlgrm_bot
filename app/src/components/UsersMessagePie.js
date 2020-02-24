@@ -1,5 +1,6 @@
 import React from "react";
 import { Doughnut } from "react-chartjs-2";
+import { Modal } from "react-bootstrap";
 
 const UsersMessagePie = ({ users }) => {
     const donutLabels = [];
@@ -37,10 +38,41 @@ const UsersMessagePie = ({ users }) => {
             }
         ]
     };
+
+    const options = {
+        legend: { position: "left" }
+    };
+
+    const download = () => {
+        var link = document.createElement("a");
+        link.download = "MessagersPerUser.png";
+        link.href = document.getElementById("messages-per-user").toDataURL();
+        link.click();
+    };
     return (
         <div>
-            <h1>YEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEET</h1>
-            <Doughnut data={data} />
+            <Modal.Dialog size="xl">
+                <Modal.Header>
+                    <h3>
+                        <strong>Messages per User</strong>
+                    </h3>
+                    <button
+                        className="btn btn-outline-dark pull-right"
+                        onClick={() => {
+                            download();
+                        }}
+                    >
+                        Export as PNG
+                    </button>
+                </Modal.Header>
+                <Modal.Body>
+                    <Doughnut
+                        data={data}
+                        options={options}
+                        id="messages-per-user"
+                    />
+                </Modal.Body>
+            </Modal.Dialog>
         </div>
     );
 };

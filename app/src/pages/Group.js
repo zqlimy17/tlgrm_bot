@@ -210,6 +210,36 @@ const Group = () => {
                                     </div>
                                 </Row>
                             </div>
+                            <hr />
+                            <div className="px-3">
+                                <Row>
+                                    <div className="col-md-6">
+                                        {users ? (
+                                            <UsersMessagePie users={users} />
+                                        ) : (
+                                            <div className="d-flex align-items-center justify-content-center h-100">
+                                                <ScaleLoader
+                                                    color={"#e37400"}
+                                                />
+                                            </div>
+                                        )}
+                                    </div>
+                                    <div className="col-md-6">
+                                        {group ? (
+                                            <MediaTypes
+                                                media={media}
+                                                dateRange={dateRange}
+                                            />
+                                        ) : (
+                                            <div className="d-flex align-items-center justify-content-center h-100">
+                                                <ScaleLoader
+                                                    color={"#e37400"}
+                                                />
+                                            </div>
+                                        )}
+                                    </div>
+                                </Row>
+                            </div>
                         </div>
                     </Route>
                     <Route path="/group/:id/members">
@@ -258,88 +288,6 @@ const Group = () => {
                     </Route>
                 </div>
             </Row>
-            {/* <div className="py-2 px-5 stickytop">
-                <Row className="">
-                    <div className="col">
-                        <Row className="d-flex align-items-center">
-                            <div className="group-page-photo">
-                                <GroupPhoto id={id} />
-                            </div>
-                            <div className="col">
-                                <h1 className="m-0">
-                                    {group ? group.chat_name : ""}
-                                </h1>
-                            </div>
-                        </Row>
-                    </div>
-
-                    <div className="d-flex align-content-end flex-wrap">
-                        {group ? (
-                            <Dates
-                                setDateRange={setDateRange}
-                                setShowDate={setShowDate}
-                                messages={messages}
-                            />
-                        ) : (
-                            <div className="d-flex align-items-center justify-content-center h-100">
-                                <ScaleLoader color={"#e37400"} />
-                            </div>
-                        )}
-                    </div>
-                </Row>
-                <hr className="p-0 mb-0" />
-            </div>
-
-            {users ? (
-                <UsersTable users={users} />
-            ) : (
-                <div className="d-flex align-items-center justify-content-center h-100">
-                    <ScaleLoader color={"#e37400"} />
-                </div>
-            )}
-
-            {media ? (
-                <Activity media={media} showDate={showDate} />
-            ) : (
-                <ScaleLoader color={"#e37400"} />
-            )}
-            {media ? (
-                <ActiveDays media={media} />
-            ) : (
-                <ScaleLoader color={"#e37400"} />
-            )}
-            {media ? (
-                <ActiveTime media={media} />
-            ) : (
-                <ScaleLoader color={"#e37400"} />
-            )}
-            {group ? (
-                <MediaTypes media={media} dateRange={dateRange} />
-            ) : (
-                <ScaleLoader color={"#e37400"} />
-            )}
-            <h2>Media Goes here</h2>
-            {group ? (
-                <GroupStats group={group} media={media} />
-            ) : (
-                <ScaleLoader color={"#e37400"} />
-            )}
-            {users ? (
-                <UsersMessagePie users={users} />
-            ) : (
-                <ScaleLoader color={"#e37400"} />
-            )}
-
-            <Messages
-                messages={currentMessage}
-                loading={loading}
-                users={users}
-            />
-            <Pagination
-                messagesPerPage={messagesPerPage}
-                totalMessages={messages.length}
-                paginate={paginate}
-            /> */}
         </div>
     );
 };

@@ -93,8 +93,8 @@ const ActiveTime = ({ media }) => {
 
     const download = () => {
         var link = document.createElement("a");
-        link.download = "ActiveDays.png";
-        link.href = document.getElementById("active-days").toDataURL();
+        link.download = "ActivityHours.png";
+        link.href = document.getElementById("activity-hours").toDataURL();
         link.click();
     };
 
@@ -115,7 +115,7 @@ const ActiveTime = ({ media }) => {
                     </button>
                 </Modal.Header>
                 <Modal.Body>
-                    <Bar data={data} id="ActiveTime" options={options} />
+                    <Bar data={data} id="activity-hours" options={options} />
                 </Modal.Body>
             </Modal.Dialog>
         </div>

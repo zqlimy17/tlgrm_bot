@@ -14,6 +14,8 @@
         "chart.js": "^2.9.3",
         "cors": "^2.8.5",
         "font-awesome": "^4.7.0",
+        "html2canvas": "^1.0.0-rc.5",
+        "jspdf": "^1.5.3",
         "moment": "^2.24.0",
         "react": "^16.12.0",
         "react-bootstrap": "^1.0.0-beta.16",
@@ -45,5 +47,10 @@
             "last 1 firefox version",
             "last 1 safari version"
         ]
+    },
+    "devDependencies": {
+        "@babel/core": "^7.8.4",
+        "@babel/node": "^7.8.4",
+        "puppeteer": "^2.1.1"
     }
 }

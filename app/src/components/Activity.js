@@ -101,8 +101,8 @@ const Activity = ({ media, showDate }) => {
     };
     const download = () => {
         var link = document.createElement("a");
-        link.download = "ActiveDays.png";
-        link.href = document.getElementById("active-days").toDataURL();
+        link.download = "MessagesSent.png";
+        link.href = document.getElementById("messages-sent").toDataURL();
         link.click();
     };
 
@@ -122,7 +122,7 @@ const Activity = ({ media, showDate }) => {
                 </button>
             </Modal.Header>
             <Modal.Body className="container-fluid">
-                <Line data={data} id="Activity" options={options} />
+                <Line data={data} id="messages-sent" options={options} />
             </Modal.Body>
         </Modal.Dialog>
     );

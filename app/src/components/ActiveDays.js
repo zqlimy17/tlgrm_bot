@@ -59,7 +59,7 @@ const ActiveDays = ({ media }) => {
 
     const download = () => {
         var link = document.createElement("a");
-        link.download = "ActiveDays.png";
+        link.download = "ActivityDays.png";
         link.href = document.getElementById("active-days").toDataURL();
         link.click();
     };
