@@ -144,7 +144,7 @@ const Group = () => {
                         </div>
                     )}
                 </div>
-                <div className="col offset-2">
+                <div className="col offset-2 main-display">
                     <Row className="pt-2 yeet">
                         <div className="col">
                             {group ? (
@@ -160,7 +160,21 @@ const Group = () => {
                             )}
                         </div>
                     </Row>
-                    <Route path="/group/:id/overview"></Route>
+                    <Route path="/group/:id/overview">
+                        <div className="py-3 mb-4">
+                            <h1>Overview</h1>
+                            <div className="px-3">
+                                {media ? (
+                                    <Activity
+                                        media={media}
+                                        showDate={showDate}
+                                    />
+                                ) : (
+                                    <ScaleLoader color={"#e37400"} />
+                                )}
+                            </div>
+                        </div>
+                    </Route>
                     <Route path="/group/:id/members">
                         {users ? (
                             <UsersTable users={users} />
@@ -186,7 +200,7 @@ const Group = () => {
                     <Route path="/group/:id/pictures">
                         <div className="py-3 mb-4">
                             <h1>Pictures</h1>
-                            <Row>
+                            <Row className="px-2">
                                 {media
                                     ? media.images.map((image, index) => {
                                           return (

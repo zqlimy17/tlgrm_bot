@@ -52,6 +52,16 @@ body {
     color: black;
 }
 
+.main-display {
+    background-color: whitesmoke;
+    min-height: 95vh;
+}
+
+.chart-box {
+    background-color: white;
+    box-shadow: 0 0 5px black;
+}
+
 .custom-nav {
     background-color: white;
     height: 100%;
@@ -156,7 +166,7 @@ a:hover {
 }
 
 .profile-column {
-    background-color: whitesmoke;
+    background-color: lightgray;
     border-right: 2px solid black;
     min-height: 100vh;
     position: fixed !important;
@@ -243,7 +253,7 @@ th {
     padding-bottom: 100%;
     background-size: cover;
     background-position: center;
-    border: 1px solid black;
+    border: 1px solid grey;
     position: relative;
 }
 
