@@ -160,10 +160,13 @@ const Group = () => {
                                 {media
                                     ? media.images.map((image, index) => {
                                           return (
-                                              <div className="p-2 col-2">
+                                              <div
+                                                  className="p-2 col-2"
+                                                  key={index}
+                                              >
                                                   <MediaPicture
-                                                      id={image.file_id}
-                                                      index={index}
+                                                      users={users}
+                                                      image={image}
                                                   />
                                               </div>
                                           );

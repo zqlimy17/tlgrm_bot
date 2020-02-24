@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Modal, Button } from "react-bootstrap";
+import { Modal } from "react-bootstrap";
 import { ScaleLoader } from "react-spinners";
+import moment from "moment";
 
-const MediaPicture = ({ id, index }) => {
+const MediaPicture = ({ image, users }) => {
     const [modalShow, setModalShow] = React.useState(false);
 
     const ImageLightbox = props => {
@@ -28,11 +29,13 @@ const MediaPicture = ({ id, index }) => {
     let [url, setUrl] = useState();
     useEffect(() => {
         const fetchData = async () => {
-            let res = await axios.get(`http://localhost:8080/media/${id}`);
+            let res = await axios.get(
+                `http://localhost:8080/media/${image.file_id}`
+            );
             setUrl(res.data.photo_url);
         };
         fetchData();
-    }, [id]);
+    }, [image]);
     return (
         <>
             {url ? (
@@ -43,7 +46,20 @@ const MediaPicture = ({ id, index }) => {
                             backgroundImage: `url('${url}')`
                         }}
                         onClick={() => setModalShow(true)}
-                    />
+                    >
+                        <small className="image-text-overlay pb-2 pl-1">
+                            {users
+                                ? users.find(
+                                      ({ telegram_id }) =>
+                                          telegram_id === image.telegram_id
+                                  ).username
+                                : ""}
+                            <br />
+                            {moment(image.created_at).format(
+                                "DD MMM YY HH:mm:ss"
+                            )}
+                        </small>
+                    </div>
                     <ImageLightbox
                         show={modalShow}
                         onHide={() => setModalShow(false)}
