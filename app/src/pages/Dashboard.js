@@ -12,14 +12,11 @@ const Dashboard = setUser => {
     const { user, setCurrentUserId } = useContext(UserContext);
     const [chats, setChats] = useState([]);
     useEffect(() => {
-        console.log(user);
-        console.log(chats);
         const fetchData = async () => {
             await axios
                 .get(`http://localhost:8080/users/${user.telegram_id}`)
                 .then(res => {
                     setChats(res.data.chats);
-                    console.log(res.data.chats);
                 });
         };
         if (user) {

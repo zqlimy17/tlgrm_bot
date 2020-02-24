@@ -16,8 +16,6 @@ function App() {
     const [user, setUser] = useState(null);
 
     useEffect(() => {
-        console.log("<<<<<<<<<<<< CURRENT USER IS >>>>>>>>>>>>>");
-        console.table(currentUserId);
         if (currentUserId === null) {
             setUser(null);
         }

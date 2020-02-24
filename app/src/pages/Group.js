@@ -54,15 +54,12 @@ const Group = () => {
                 }
             });
             await setMedia(res.data.media);
-            console.log("<<<<<<<<<<<<<< RES DATA MEDIA >>>>>>>>>>>>>>>>>");
-            console.table(res.data.media);
             const { logs } = res.data.media;
             logs.reverse();
             await setGroup(res.data.chat[0]);
             await setUsers(res.data.users);
             await setMessages(logs);
             setLoading(false);
-            console.log(res.data.media);
         };
         fetchData();
     }, [dateRange, id]);
@@ -157,16 +154,23 @@ const Group = () => {
                         />
                     </Route>
                     <Route path="/group/:id/pictures">
-                        {media
-                            ? media.images.map((image, index) => {
-                                  return (
-                                      <MediaPicture
-                                          id={image.file_id}
-                                          key={index}
-                                      />
-                                  );
-                              })
-                            : ""}
+                        <div className="py-3 mb-4">
+                            <h1>Pictures</h1>
+                            <Row>
+                                {media
+                                    ? media.images.map((image, index) => {
+                                          return (
+                                              <div className="p-2 col-2">
+                                                  <MediaPicture
+                                                      id={image.file_id}
+                                                      index={index}
+                                                  />
+                                              </div>
+                                          );
+                                      })
+                                    : ""}
+                            </Row>
+                        </div>
                     </Route>
                 </div>
             </Row>

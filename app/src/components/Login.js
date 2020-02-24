@@ -5,10 +5,6 @@ import UserContext from "../context/UserContext";
 const Login = () => {
     const { setCurrentUserId } = useContext(UserContext);
     const handleTelegramResponse = response => {
-        console.log("<<<<<<<<<<< LOGIN RESPONSE >>>>>>>>>>");
-        console.table(response);
-        console.log("<<<<<<<<<<< LOGIN RESPONSE >>>>>>>>>>");
-
         setCurrentUserId(response.id);
     };
 

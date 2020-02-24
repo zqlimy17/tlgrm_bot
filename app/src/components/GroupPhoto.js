@@ -5,12 +5,10 @@ import axios from "axios";
 const GroupPhoto = ({ id }) => {
     let [url, setUrl] = useState();
     useEffect(() => {
-        console.log(id);
         const fetchData = async () => {
             let res = await axios.get(
                 `http://localhost:8080/group/${id}/profile-photo`
             );
-            console.log("RES IS", res.data);
             setUrl(res.data.photo_url);
         };
         fetchData();

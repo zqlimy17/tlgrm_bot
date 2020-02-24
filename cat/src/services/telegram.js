@@ -63,17 +63,6 @@ class Telegram {
     async media_image(id) {
         let resp = await this.execute_get(`/getFile?file_id=${id}`);
         return resp.result.file_path;
-        // if (resp.result.photo) {
-        //     data = {
-        //         file_id: resp.result.photo.big_file_id
-        //     };
-        //     let photo_url = await this.execute_post("/getfile", data);
-        //     resp = photo_url.result.file_path;
-        //     console.log(photo_url);
-        //     return resp;
-        // } else {
-        //     return resp;
-        // }
     }
 
     async execute_post(path, data) {
