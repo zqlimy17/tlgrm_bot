@@ -99,6 +99,12 @@ const Activity = ({ media, showDate }) => {
             display: false
         }
     };
+    const download = () => {
+        var link = document.createElement("a");
+        link.download = "ActiveDays.png";
+        link.href = document.getElementById("active-days").toDataURL();
+        link.click();
+    };
 
     return (
         <Modal.Dialog size="xl">
@@ -106,6 +112,14 @@ const Activity = ({ media, showDate }) => {
                 <p className="h3">
                     <strong>Messages Sent</strong>
                 </p>
+                <button
+                    className="btn btn-outline-dark pull-right"
+                    onClick={() => {
+                        download();
+                    }}
+                >
+                    Export as PNG
+                </button>
             </Modal.Header>
             <Modal.Body className="container-fluid">
                 <Line data={data} id="Activity" options={options} />

@@ -6,7 +6,7 @@ const Dates = (params, setShowDate) => {
     return (
         <div>
             <div className="d-flex float-right">
-                <p
+                {/* <p
                     className={
                         (selectedDate === 1 ? "active " : "") +
                         "mx-1 btn-outline-warning btn"
@@ -23,11 +23,11 @@ const Dates = (params, setShowDate) => {
                     }}
                 >
                     Last 24 Hours
-                </p>
+                </p> */}
                 <p
                     className={
                         (selectedDate === 2 ? "active " : "") +
-                        "mx-1 btn-outline-warning btn"
+                        "mx-1 btn-outline-dark btn"
                     }
                     onClick={() => {
                         setSelectedDate(2);
@@ -45,7 +45,7 @@ const Dates = (params, setShowDate) => {
                 <p
                     className={
                         (selectedDate === 3 ? "active " : "") +
-                        "mx-1 btn-outline-warning btn"
+                        "mx-1 btn-outline-dark btn"
                     }
                     onClick={() => {
                         setSelectedDate(3);
@@ -63,7 +63,7 @@ const Dates = (params, setShowDate) => {
                 <p
                     className={
                         (selectedDate === 4 ? "active " : "") +
-                        "mx-1 btn-outline-warning btn"
+                        "mx-1 btn-outline-dark btn"
                     }
                     onClick={() => {
                         setSelectedDate(4);

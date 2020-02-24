@@ -145,7 +145,7 @@ const Group = () => {
                     )}
                 </div>
                 <div className="col offset-2 main-display">
-                    <Row className="pt-2 yeet">
+                    <Row className="pt-2 fix-date">
                         <div className="col">
                             {group ? (
                                 <Dates
@@ -170,7 +170,29 @@ const Group = () => {
                                         showDate={showDate}
                                     />
                                 ) : (
-                                    <ScaleLoader color={"#e37400"} />
+                                    <div className="d-flex align-items-center justify-content-center h-100">
+                                        <ScaleLoader color={"#e37400"} />
+                                    </div>
+                                )}
+                            </div>
+                            <hr />
+                            <div className="px-3">
+                                {group ? (
+                                    <GroupStats group={group} media={media} />
+                                ) : (
+                                    <div className="d-flex align-items-center justify-content-center h-100">
+                                        <ScaleLoader color={"#e37400"} />
+                                    </div>
+                                )}
+                            </div>
+                            <hr />
+                            <div className="px-3">
+                                {media ? (
+                                    <ActiveDays media={media} />
+                                ) : (
+                                    <div className="d-flex align-items-center justify-content-center h-100">
+                                        <ScaleLoader color={"#e37400"} />
+                                    </div>
                                 )}
                             </div>
                         </div>

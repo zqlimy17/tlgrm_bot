@@ -1,4 +1,5 @@
 import React from "react";
+import { Modal } from "react-bootstrap";
 import { Bar } from "react-chartjs-2";
 import moment from "moment";
 
@@ -40,15 +41,20 @@ const ActiveDays = ({ media }) => {
         ],
         datasets: [
             {
-                label: "My First dataset",
-                backgroundColor: "rgba(255,99,132,0.2)",
-                borderColor: "rgba(255,99,132,1)",
+                label: "Activity [Days]",
+                backgroundColor: "rgba(249,171,0,0.2)",
+                borderColor: "rgba(249,171,0,1)",
                 borderWidth: 1,
-                hoverBackgroundColor: "rgba(255,99,132,0.4)",
-                hoverBorderColor: "rgba(255,99,132,1)",
+                hoverBackgroundColor: "rgba(227,116,0,1)",
+                hoverBorderColor: "rgba(220,220,220,1)",
                 data: yAxis
             }
         ]
+    };
+    const options = {
+        legend: {
+            display: false
+        }
     };
 
     const download = () => {
@@ -60,14 +66,24 @@ const ActiveDays = ({ media }) => {
 
     return (
         <div>
-            <Bar data={data} id="active-days" />
-            <button
-                onClick={() => {
-                    download();
-                }}
-            >
-                Download
-            </button>
+            <Modal.Dialog size="xl">
+                <Modal.Header>
+                    <h3>
+                        <strong>Activity [Days]</strong>
+                    </h3>
+                    <button
+                        className="btn btn-outline-dark pull-right"
+                        onClick={() => {
+                            download();
+                        }}
+                    >
+                        Export as PNG
+                    </button>
+                </Modal.Header>
+                <Modal.Body>
+                    <Bar data={data} options={options} id="active-days" />
+                </Modal.Body>
+            </Modal.Dialog>
         </div>
     );
 };

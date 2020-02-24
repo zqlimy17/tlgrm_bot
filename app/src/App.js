@@ -12,7 +12,7 @@ import UserContext from "./context/UserContext";
 import axios from "axios";
 
 function App() {
-    const [currentUserId, setCurrentUserId] = useState(738282366);
+    const [currentUserId, setCurrentUserId] = useState(119940355);
     const [user, setUser] = useState(null);
 
     useEffect(() => {
