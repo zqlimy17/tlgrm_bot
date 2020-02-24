@@ -244,6 +244,7 @@ th {
     background-size: cover;
     background-position: center;
     border: 1px solid black;
+    position: relative;
 }
 
 .modal-content {
@@ -252,8 +253,10 @@ th {
 }
 
 .image-text-overlay {
-    width: 100%;
     position: absolute;
-    background-color: rgba(255, 255, 255, 0.8);
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    margin: 0;
     bottom: 0;
+    width: 100%;
 }

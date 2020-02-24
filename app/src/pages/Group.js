@@ -18,6 +18,14 @@ import ActiveDays from "../components/ActiveDays";
 import GroupPhoto from "../components/GroupPhoto";
 import MediaPicture from "../components/MediaPicture";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+    faTable,
+    faUsers,
+    faComments,
+    faImages
+} from "@fortawesome/free-solid-svg-icons";
+
 import { Row } from "react-bootstrap";
 
 const Group = () => {
@@ -93,19 +101,41 @@ const Group = () => {
                             </div>
                             <hr />
                             <Link to={`/group/${id}/overview`}>
-                                <p>Overview</p>
+                                <p>
+                                    <FontAwesomeIcon
+                                        icon={faTable}
+                                        className="mx-2"
+                                    />
+                                    Overview
+                                </p>
                             </Link>
                             <Link to={`/group/${id}/members`}>
-                                <p>Members</p>
+                                <p>
+                                    <FontAwesomeIcon
+                                        icon={faUsers}
+                                        className="mx-2"
+                                    />
+                                    Members
+                                </p>
                             </Link>
                             <Link to={`/group/${id}/messages`}>
-                                <p>Messages</p>
+                                <p>
+                                    <FontAwesomeIcon
+                                        icon={faComments}
+                                        className="mx-2"
+                                    />
+                                    Messages
+                                </p>
                             </Link>
                             <Link to={`/group/${id}/pictures`}>
-                                <p>Pictures</p>
-                            </Link>
-                            <Link to={`/group/${id}/videos`}>
-                                <p>Videos</p>
+                                <p>
+                                    {" "}
+                                    <FontAwesomeIcon
+                                        icon={faImages}
+                                        className="mx-2"
+                                    />
+                                    Pictures
+                                </p>
                             </Link>
                         </div>
                     ) : (

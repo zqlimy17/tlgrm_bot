@@ -22,6 +22,22 @@ const MediaPicture = ({ image, users }) => {
                         style={{ maxHeight: "600px", display: "block" }}
                     />
                 </Modal.Body>
+                <Modal.Footer>
+                    <small>
+                        <strong>
+                            {users
+                                ? users.find(
+                                      ({ telegram_id }) =>
+                                          telegram_id === image.telegram_id
+                                  ).username
+                                : ""}{" "}
+                            ||{" "}
+                            {moment(image.created_at).format(
+                                "DD MMM YY HH:mm:ss"
+                            )}
+                        </strong>
+                    </small>
+                </Modal.Footer>
             </Modal>
         );
     };
@@ -47,17 +63,19 @@ const MediaPicture = ({ image, users }) => {
                         }}
                         onClick={() => setModalShow(true)}
                     >
-                        <small className="image-text-overlay pb-2 pl-1">
-                            {users
-                                ? users.find(
-                                      ({ telegram_id }) =>
-                                          telegram_id === image.telegram_id
-                                  ).username
-                                : ""}
-                            <br />
-                            {moment(image.created_at).format(
-                                "DD MMM YY HH:mm:ss"
-                            )}
+                        <small className="image-text-overlay p-1">
+                            <strong>
+                                {users
+                                    ? users.find(
+                                          ({ telegram_id }) =>
+                                              telegram_id === image.telegram_id
+                                      ).username
+                                    : ""}
+                                <br />
+                                {moment(image.created_at).format(
+                                    "DD MMM YY HH:mm:ss"
+                                )}
+                            </strong>
                         </small>
                     </div>
                     <ImageLightbox
