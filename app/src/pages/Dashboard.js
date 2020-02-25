@@ -14,7 +14,9 @@ const Dashboard = setUser => {
     useEffect(() => {
         const fetchData = async () => {
             await axios
-                .get(`http://localhost:8080/users/${user.telegram_id}`)
+                .get(
+                    `https://tlgrm-analytics-server.herokuapp.com/users/${user.telegram_id}`
+                )
                 .then(res => {
                     setChats(res.data.chats);
                 });

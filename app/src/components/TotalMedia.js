@@ -14,7 +14,9 @@ const TotalMedia = ({ id }) => {
     //     locations.length;
     useEffect(() => {
         const fetchData = async () => {
-            const res = await axios.get(`http://localhost:8080/group/${id}`);
+            const res = await axios.get(
+                `https://tlgrm-analytics-server.herokuapp.com/group/${id}`
+            );
             await setTotalMedia(res.data.count);
         };
         fetchData();

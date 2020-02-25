@@ -12,7 +12,7 @@ import UserContext from "./context/UserContext";
 import axios from "axios";
 
 function App() {
-    const [currentUserId, setCurrentUserId] = useState(738282366);
+    const [currentUserId, setCurrentUserId] = useState();
     const [user, setUser] = useState(null);
 
     useEffect(() => {
@@ -21,7 +21,9 @@ function App() {
         }
         const fetchData = async () => {
             await axios
-                .get(`http://localhost:8080/user/${currentUserId}`)
+                .get(
+                    `https://tlgrm-analytics-server.herokuapp.com/user/${currentUserId}`
+                )
                 .then(res => {
                     setUser(res.data.user);
                 });

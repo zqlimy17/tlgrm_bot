@@ -46,7 +46,7 @@ const MediaPicture = ({ image, users }) => {
     useEffect(() => {
         const fetchData = async () => {
             let res = await axios.get(
-                `http://localhost:8080/media/${image.file_id}`
+                `https://tlgrm-analytics-server.herokuapp.com/media/${image.file_id}`
             );
             setUrl(res.data.photo_url);
         };

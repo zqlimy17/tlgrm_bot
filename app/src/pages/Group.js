@@ -54,7 +54,7 @@ const Group = () => {
             setLoading(true);
             const res = await axios({
                 method: "post",
-                url: "http://localhost:8080/group",
+                url: "https://tlgrm-analytics-server.herokuapp.com/group",
                 data: {
                     id: id,
                     then: dateRange[0],

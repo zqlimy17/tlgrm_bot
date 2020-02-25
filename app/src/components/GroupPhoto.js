@@ -7,7 +7,7 @@ const GroupPhoto = ({ id }) => {
     useEffect(() => {
         const fetchData = async () => {
             let res = await axios.get(
-                `http://localhost:8080/group/${id}/profile-photo`
+                `https://tlgrm-analytics-server.herokuapp.com/group/${id}/profile-photo`
             );
             setUrl(res.data.photo_url);
         };

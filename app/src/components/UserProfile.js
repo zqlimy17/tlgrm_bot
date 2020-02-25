@@ -21,7 +21,7 @@ const UserProfile = () => {
         const fetchData = async () => {
             if (user) {
                 let res = await axios.get(
-                    `http://localhost:8080/user/${user.telegram_id}/profile-photo`,
+                    `https://tlgrm-analytics-server.herokuapp.com/user/${user.telegram_id}/profile-photo`,
                     { timeout: 8000 }
                 );
                 setUrl(res.data.photo_url);
