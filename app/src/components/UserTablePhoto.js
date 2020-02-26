@@ -1,6 +1,5 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import UserContext from "../context/UserContext";
 
 const UserTablePhoto = ({ user }) => {
     const fallback = () => {
@@ -39,6 +38,7 @@ const UserTablePhoto = ({ user }) => {
                 />
             ) : (
                 <img
+                    alt="fallback"
                     className="user-table-photo img-fluid"
                     src={`https://dummyimage.com/500.png/fab41d&text=${fallback()}`}
                 />

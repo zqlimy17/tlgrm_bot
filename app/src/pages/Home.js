@@ -21,12 +21,12 @@ const Home = () => {
         <>
             {user ? <Redirect to="/dashboard" /> : ""}
             <div className="container-fluid home">
-                <div className="px-5">
-                    <div className="px-5">
-                        <div className="px-5">
-                            <Row className="py-5">
-                                <Col sm className="py-5">
-                                    <div className="py-5">
+                <div className="px-1">
+                    <div className="px-md-5">
+                        <div className="px-lg-5">
+                            <Row className="py-md-5">
+                                <Col sm className="py-md-5">
+                                    <div className="py-xl-5">
                                         <div className="py-5">
                                             <div className="display-4">
                                                 Hello, this is <br />
@@ -125,15 +125,16 @@ const Home = () => {
                             <strong>HOW IT WORKS</strong>
                         </h1>
                     </div>
-                    <div className="col-sm-8 how-it-works-text">
-                        <p className="lead pt-3 px-3 mr-5">
-                            TLGRM Analytics uses our <a href="#">@tlgrm_ga</a>{" "}
+                    <div className="col-sm-8 how-it-works-text ml-2 ml-md-0">
+                        <p className="lead pt-3 px-3 mr-md-5">
+                            TLGRM Analytics uses our{" "}
+                            <a href="https://t.me/tlgrm_ga_bot">@tlgrm_ga</a>{" "}
                             bot that keeps track of data such as text messages,
                             images, videos, voice messages, locations,
                             documents, and more.
                         </p>
                         <p className="pl-3">
-                            Read our Privacy Policy <a href="#">here</a>.
+                            Read our Privacy Policy <a href="/">here</a>.
                         </p>
                     </div>
                 </Row>
@@ -141,6 +142,7 @@ const Home = () => {
                     <Row className="container m-auto">
                         <div className="col-md-4 offset-md-1">
                             <img
+                                alt="tlgrm logo plane"
                                 className="img-fluid"
                                 src="/img/tlgrm-plane.png"
                             />
@@ -196,15 +198,20 @@ const Home = () => {
                         </Button>
                     </Row>
                 </Row>
-                <div className="px-5">
-                    <div className="px-5">
+                <div className="px-lg-5">
+                    <div className="px-md-5">
                         <Row className="m-auto text-center container-fluid py-3">
                             <Col>
-                                <div className="display-4">
-                                    <strong>PRICING</strong>
+                                <div>
+                                    <h2>
+                                        <strong>PRICING</strong>
+                                    </h2>
                                 </div>
                                 <Row className="py-3">
-                                    <Col sm className="pricing mx-3 py-3">
+                                    <Col
+                                        sm
+                                        className="pricing mx-md-3 py-3 mb-3"
+                                    >
                                         <h2 className="pricing-header">
                                             <strong>Basic</strong>
                                         </h2>
@@ -226,7 +233,7 @@ const Home = () => {
                                     </Col>
                                     <Col
                                         sm
-                                        className="pricing-pro mx-3 py-3 font-weight-bold"
+                                        className="pricing-pro mx-md-3 py-3 font-weight-bold mb-3"
                                     >
                                         <h2 className="pricing-header">
                                             <strong>Pro</strong>
@@ -259,7 +266,10 @@ const Home = () => {
                                             White-Labelling
                                         </div>
                                     </Col>
-                                    <Col sm className="pricing mx-3 py-3">
+                                    <Col
+                                        sm
+                                        className="pricing mx-md-3 py-3 mb-3"
+                                    >
                                         <h2 className="pricing-header">
                                             <strong>Enterprise</strong>
                                         </h2>
@@ -308,10 +318,12 @@ const Home = () => {
                         </Row>
                     </div>
                 </div>
-                <Row className="try-cta p-5 ">
-                    <Col className="text-center p-5 mx-5">
-                        <div className="display-2 pb-5">
-                            Enhance your data with TLGRM Analytics today!
+                <Row className="try-cta p-md-5 ">
+                    <Col className="text-center p-5 mx-md-5">
+                        <div className="pb-5">
+                            <h1>
+                                Enhance your data with TLGRM Analytics today!
+                            </h1>
                         </div>
                         <Button className="px-5 btn-lg btn-block btn-warning">
                             TRY FREE NOW{" "}

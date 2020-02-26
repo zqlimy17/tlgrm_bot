@@ -1,5 +1,4 @@
 const Log = require("../services/models/log");
-// const ChatUsers = require("../services/models/chat_users");
 const ChatVideos = require("../services/models/chat_user_video");
 const ChatDocs = require("../services/models/chat_user_doc");
 const ChatImages = require("../services/models/chat_user_image");
@@ -26,11 +25,34 @@ class DbLogs {
 
     async group_logs() {
         let logs;
+        let videos;
+        let voices;
+        let docs;
+        let locations;
+        let images;
         if (!this.then && !this.now) {
             logs = await Log.findAll({
-                where: {
-                    chat_id: this.chat_id
-                },
+                where: { chat_id: this.chat_id },
+                order: [["created_at", "ASC"]]
+            });
+            videos = await ChatVideos.findAll({
+                where: { chat_id: this.chat_id },
+                order: [["created_at", "ASC"]]
+            });
+            voices = await ChatVoices.findAll({
+                where: { chat_id: this.chat_id },
+                order: [["created_at", "ASC"]]
+            });
+            docs = await ChatDocs.findAll({
+                where: { chat_id: this.chat_id },
+                order: [["created_at", "ASC"]]
+            });
+            images = await ChatImages.findAll({
+                where: { chat_id: this.chat_id },
+                order: [["created_at", "ASC"]]
+            });
+            locations = await ChatLocations.findAll({
+                where: { chat_id: this.chat_id },
                 order: [["created_at", "ASC"]]
             });
         } else {
@@ -43,23 +65,52 @@ class DbLogs {
                 },
                 order: [["created_at", "ASC"]]
             });
+            videos = await ChatVideos.findAll({
+                where: {
+                    chat_id: this.chat_id,
+                    created_at: {
+                        [Op.between]: [this.then, this.now]
+                    }
+                },
+                order: [["created_at", "ASC"]]
+            });
+            voices = await ChatVoices.findAll({
+                where: {
+                    chat_id: this.chat_id,
+                    created_at: {
+                        [Op.between]: [this.then, this.now]
+                    }
+                },
+                order: [["created_at", "ASC"]]
+            });
+            docs = await ChatDocs.findAll({
+                where: {
+                    chat_id: this.chat_id,
+                    created_at: {
+                        [Op.between]: [this.then, this.now]
+                    }
+                },
+                order: [["created_at", "ASC"]]
+            });
+            images = await ChatImages.findAll({
+                where: {
+                    chat_id: this.chat_id,
+                    created_at: {
+                        [Op.between]: [this.then, this.now]
+                    }
+                },
+                order: [["created_at", "ASC"]]
+            });
+            locations = await ChatLocations.findAll({
+                where: {
+                    chat_id: this.chat_id,
+                    created_at: {
+                        [Op.between]: [this.then, this.now]
+                    }
+                },
+                order: [["created_at", "ASC"]]
+            });
         }
-
-        let videos = await ChatVideos.findAll({
-            where: { chat_id: this.chat_id }
-        });
-        let voices = await ChatVoices.findAll({
-            where: { chat_id: this.chat_id }
-        });
-        let docs = await ChatDocs.findAll({
-            where: { chat_id: this.chat_id }
-        });
-        let images = await ChatImages.findAll({
-            where: { chat_id: this.chat_id }
-        });
-        let locations = await ChatLocations.findAll({
-            where: { chat_id: this.chat_id }
-        });
         let media = {
             logs,
             videos,
@@ -70,6 +121,7 @@ class DbLogs {
         };
         return media;
     }
+
     async group_media_length(id) {
         let logs = await Log.count({
             where: { chat_id: id }

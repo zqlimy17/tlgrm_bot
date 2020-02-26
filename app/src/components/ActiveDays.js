@@ -18,13 +18,14 @@ const ActiveDays = ({ media }) => {
 
     let yAxis = [0, 0, 0, 0, 0, 0, 0];
     const constructGraph = async () => {
-        for (let i = 0; i < logs.length; i++) {
+        for (let i = 0; i < 6; i++) {
             logs.forEach(log => {
                 if (moment(log.created_at).format("dddd") === xAxis[i]) {
                     yAxis[i]++;
                 }
             });
         }
+
         return;
     };
     constructGraph();

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { Row, Button } from "react-bootstrap";
 import GroupPhoto from "../components/GroupPhoto";
@@ -19,13 +19,13 @@ const DashboardCard = ({ chat }) => {
                     <Link to={"/group/" + chat.chat_id + "/overview"}>
                         <h2>{chat.chat_name} </h2>
                     </Link>
-                    <p>
+                    <div>
                         <span className="badge badge-secondary text-uppercase">
                             {chat.chat_type}
                         </span>{" "}
                         ||<strong> ID: {chat.chat_id}</strong> || Size:{" "}
                         {chat.chat_size} || <TotalMedia id={chat.chat_id} />
-                    </p>
+                    </div>
                     <hr />
                     <Link to={"/group/" + chat.chat_id + "/overview"}>
                         <Button className="btn-warning">

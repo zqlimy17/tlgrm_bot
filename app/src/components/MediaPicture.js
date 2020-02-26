@@ -17,6 +17,7 @@ const MediaPicture = ({ image, users }) => {
             >
                 <Modal.Body className="container-fluid">
                     <img
+                        alt="tlgrm"
                         src={url}
                         className="img img-fluid mx-auto"
                         style={{ maxHeight: "600px", display: "block" }}

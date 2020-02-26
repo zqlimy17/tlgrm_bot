@@ -4,14 +4,6 @@ import { BeatLoader } from "react-spinners";
 
 const TotalMedia = ({ id }) => {
     const [TotalMedia, setTotalMedia] = useState();
-    // const { logs, voices, docs, videos, images, locations } = TotalMedia;
-    // let totalMediaSize =
-    //     logs.length +
-    //     voices.length +
-    //     docs.length +
-    //     videos.length +
-    //     images.length +
-    //     locations.length;
     useEffect(() => {
         const fetchData = async () => {
             const res = await axios.get(
@@ -28,9 +20,9 @@ const TotalMedia = ({ id }) => {
                 {TotalMedia ? (
                     TotalMedia
                 ) : (
-                    <div className="d-inline-block">
+                    <span className="d-inline-block">
                         <BeatLoader color={"#e37400"} size={5} />
-                    </div>
+                    </span>
                 )}
             </span>
         </Fragment>

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-// import ReactDOM from "react-dom";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -12,7 +11,7 @@ import UserContext from "./context/UserContext";
 import axios from "axios";
 
 function App() {
-    const [currentUserId, setCurrentUserId] = useState();
+    const [currentUserId, setCurrentUserId] = useState(738282366);
     const [user, setUser] = useState(null);
 
     useEffect(() => {

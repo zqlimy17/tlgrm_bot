@@ -1,5 +1,4 @@
 import React from "react";
-import GroupPhoto from "../components/GroupPhoto";
 import UserTablePhoto from "./UserTablePhoto";
 
 const UsersTable = ({ users }) => {

@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import React, { useState, useEffect, useContext } from "react";
+import { BrowserRouter as Redirect, Route, Link } from "react-router-dom";
 
 import { useParams } from "react-router";
 import axios from "axios";
@@ -17,8 +17,10 @@ import UsersMessagePie from "../components/UsersMessagePie";
 import ActiveDays from "../components/ActiveDays";
 import GroupPhoto from "../components/GroupPhoto";
 import MediaPicture from "../components/MediaPicture";
+import UserContext from "../context/UserContext";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 import {
     faTable,
     faUsers,
@@ -26,9 +28,11 @@ import {
     faImages
 } from "@fortawesome/free-solid-svg-icons";
 
-import { Row } from "react-bootstrap";
+import { Row, Col } from "react-bootstrap";
 
 const Group = () => {
+    const { user } = useContext(UserContext);
+
     let { id } = useParams();
     const [group, setGroup] = useState();
     const [users, setUsers] = useState(null);
@@ -84,211 +88,204 @@ const Group = () => {
     const paginate = pageNumber => setCurrentPage(pageNumber);
 
     return (
-        <div className="container-fluid">
-            <Row>
-                <div className="col-2 profile-column">
-                    {group ? (
-                        <div>
-                            <div className="text-center">
-                                <div className="px-3 py-2 group-page-photo">
-                                    <GroupPhoto id={id} />
+        <>
+            {user ? "" : <Redirect to="/" />}
+            <div className="container-fluid">
+                <Row>
+                    <Col lg={2} className="profile-column">
+                        {group ? (
+                            <div>
+                                <div className="text-center">
+                                    <div className="px-3 py-2 group-page-photo">
+                                        <GroupPhoto id={id} />
+                                    </div>
+                                    <p className="lead">
+                                        <strong>
+                                            {group ? group.chat_name : ""}
+                                        </strong>
+                                    </p>
                                 </div>
-                                <p className="lead">
-                                    <strong>
-                                        {group ? group.chat_name : ""}
-                                    </strong>
-                                </p>
+                                <hr />
+                                <Link to={`/group/${id}/overview`}>
+                                    <p>
+                                        <FontAwesomeIcon
+                                            icon={faTable}
+                                            className="mx-2"
+                                        />
+                                        Overview
+                                    </p>
+                                </Link>
+                                <Link to={`/group/${id}/members`}>
+                                    <p>
+                                        <FontAwesomeIcon
+                                            icon={faUsers}
+                                            className="mx-2"
+                                        />
+                                        Members
+                                    </p>
+                                </Link>
+                                <Link to={`/group/${id}/messages`}>
+                                    <p>
+                                        <FontAwesomeIcon
+                                            icon={faComments}
+                                            className="mx-2"
+                                        />
+                                        Messages
+                                    </p>
+                                </Link>
+                                <Link to={`/group/${id}/pictures`}>
+                                    <p>
+                                        {" "}
+                                        <FontAwesomeIcon
+                                            icon={faImages}
+                                            className="mx-2"
+                                        />
+                                        Pictures
+                                    </p>
+                                </Link>
                             </div>
-                            <hr />
-                            <Link to={`/group/${id}/overview`}>
-                                <p>
-                                    <FontAwesomeIcon
-                                        icon={faTable}
-                                        className="mx-2"
-                                    />
-                                    Overview
-                                </p>
-                            </Link>
-                            <Link to={`/group/${id}/members`}>
-                                <p>
-                                    <FontAwesomeIcon
-                                        icon={faUsers}
-                                        className="mx-2"
-                                    />
-                                    Members
-                                </p>
-                            </Link>
-                            <Link to={`/group/${id}/messages`}>
-                                <p>
-                                    <FontAwesomeIcon
-                                        icon={faComments}
-                                        className="mx-2"
-                                    />
-                                    Messages
-                                </p>
-                            </Link>
-                            <Link to={`/group/${id}/pictures`}>
-                                <p>
-                                    {" "}
-                                    <FontAwesomeIcon
-                                        icon={faImages}
-                                        className="mx-2"
-                                    />
-                                    Pictures
-                                </p>
-                            </Link>
-                        </div>
-                    ) : (
-                        <div className="grid">
-                            <ScaleLoader color={"#e37400"} />
-                        </div>
-                    )}
-                </div>
-                <div className="col offset-2 main-display">
-                    <Row className="pt-2 fix-date">
-                        <div className="col">
-                            {group ? (
-                                <Dates
-                                    setDateRange={setDateRange}
-                                    setShowDate={setShowDate}
-                                    messages={messages}
-                                />
-                            ) : (
-                                ""
-                            )}
-                        </div>
-                    </Row>
-                    <Route path="/group/:id/overview">
-                        <div className="py-3 mb-4">
-                            <h1>Overview</h1>
-                            <div className="px-3">
-                                {media ? (
-                                    <Activity
-                                        media={media}
-                                        showDate={showDate}
+                        ) : (
+                            ""
+                        )}
+                    </Col>
+                    <Col lg={{ offset: 2 }} className="main-display">
+                        <Row className="pt-2 fix-date">
+                            <div className="col">
+                                {messages ? (
+                                    <Dates
+                                        setDateRange={setDateRange}
+                                        setShowDate={setShowDate}
+                                        messages={messages}
                                     />
                                 ) : (
-                                    <div className="d-flex align-items-center justify-content-center h-100">
-                                        <ScaleLoader color={"#e37400"} />
-                                    </div>
+                                    ""
                                 )}
                             </div>
-                            <hr />
-                            <div className="px-3">
-                                {group ? (
-                                    <GroupStats group={group} media={media} />
-                                ) : (
-                                    <div className="d-flex align-items-center justify-content-center h-100">
-                                        <ScaleLoader color={"#e37400"} />
-                                    </div>
-                                )}
-                            </div>
-                            <hr />
-                            <div className="px-3">
-                                <Row>
-                                    <div className="col-md-6">
+                        </Row>
+                        <Route path="/group/:id/overview">
+                            {media ? (
+                                <div className="py-3 mb-4">
+                                    <h1>Overview</h1>
+                                    <div className="px-3">
                                         {media ? (
-                                            <ActiveDays media={media} />
-                                        ) : (
-                                            <div className="d-flex align-items-center justify-content-center h-100">
-                                                <ScaleLoader
-                                                    color={"#e37400"}
-                                                />
-                                            </div>
-                                        )}
-                                    </div>
-                                    <div className="col-md-6">
-                                        {media ? (
-                                            <ActiveTime media={media} />
-                                        ) : (
-                                            <div className="d-flex align-items-center justify-content-center h-100">
-                                                <ScaleLoader
-                                                    color={"#e37400"}
-                                                />
-                                            </div>
-                                        )}
-                                    </div>
-                                </Row>
-                            </div>
-                            <hr />
-                            <div className="px-3">
-                                <Row>
-                                    <div className="col-md-6">
-                                        {users ? (
-                                            <UsersMessagePie users={users} />
-                                        ) : (
-                                            <div className="d-flex align-items-center justify-content-center h-100">
-                                                <ScaleLoader
-                                                    color={"#e37400"}
-                                                />
-                                            </div>
-                                        )}
-                                    </div>
-                                    <div className="col-md-6">
-                                        {group ? (
-                                            <MediaTypes
+                                            <Activity
                                                 media={media}
-                                                dateRange={dateRange}
+                                                showDate={showDate}
                                             />
                                         ) : (
-                                            <div className="d-flex align-items-center justify-content-center h-100">
-                                                <ScaleLoader
-                                                    color={"#e37400"}
-                                                />
-                                            </div>
+                                            ""
                                         )}
                                     </div>
+                                    <hr />
+                                    <div className="px-3">
+                                        {group ? (
+                                            <GroupStats
+                                                group={group}
+                                                media={media}
+                                            />
+                                        ) : (
+                                            ""
+                                        )}
+                                    </div>
+                                    <hr />
+                                    <div className="px-3">
+                                        <Row>
+                                            <Col md={6}>
+                                                {media ? (
+                                                    <ActiveDays media={media} />
+                                                ) : (
+                                                    ""
+                                                )}
+                                            </Col>
+                                            <Col md={6}>
+                                                {media ? (
+                                                    <ActiveTime media={media} />
+                                                ) : (
+                                                    ""
+                                                )}
+                                            </Col>
+                                        </Row>
+                                    </div>
+                                    <hr />
+                                    <div className="px-3">
+                                        <Row>
+                                            <Col md={6}>
+                                                {users ? (
+                                                    <UsersMessagePie
+                                                        users={users}
+                                                    />
+                                                ) : (
+                                                    ""
+                                                )}
+                                            </Col>
+                                            <Col md={6}>
+                                                {group ? (
+                                                    <MediaTypes
+                                                        media={media}
+                                                        dateRange={dateRange}
+                                                    />
+                                                ) : (
+                                                    ""
+                                                )}
+                                            </Col>
+                                        </Row>
+                                    </div>
+                                </div>
+                            ) : (
+                                <div className="d-flex align-items-center justify-content-center h-100">
+                                    <ScaleLoader color={"#e37400"} />
+                                </div>
+                            )}
+                        </Route>
+                        <Route path="/group/:id/members">
+                            {users ? (
+                                <UsersTable users={users} />
+                            ) : (
+                                <div className="d-flex align-items-center justify-content-center h-100">
+                                    <ScaleLoader color={"#e37400"} />
+                                </div>
+                            )}
+                        </Route>
+                        <Route path="/group/:id/messages">
+                            <Messages
+                                messages={currentMessage}
+                                loading={loading}
+                                users={users}
+                            />
+                            <Pagination
+                                messagesPerPage={messagesPerPage}
+                                totalMessages={messages.length}
+                                paginate={paginate}
+                                className="pagination"
+                            />
+                        </Route>
+                        <Route path="/group/:id/pictures">
+                            <div className="py-3 mb-4">
+                                <h1>Pictures</h1>
+                                <Row className="px-2">
+                                    {media
+                                        ? media.images.map((image, index) => {
+                                              return (
+                                                  <Col
+                                                      sm={2}
+                                                      className="p-2"
+                                                      key={index}
+                                                  >
+                                                      <MediaPicture
+                                                          users={users}
+                                                          image={image}
+                                                      />
+                                                  </Col>
+                                              );
+                                          })
+                                        : ""}
                                 </Row>
                             </div>
-                        </div>
-                    </Route>
-                    <Route path="/group/:id/members">
-                        {users ? (
-                            <UsersTable users={users} />
-                        ) : (
-                            <div className="d-flex align-items-center justify-content-center h-100">
-                                <ScaleLoader color={"#e37400"} />
-                            </div>
-                        )}
-                    </Route>
-                    <Route path="/group/:id/messages">
-                        <Messages
-                            messages={currentMessage}
-                            loading={loading}
-                            users={users}
-                        />
-                        <Pagination
-                            messagesPerPage={messagesPerPage}
-                            totalMessages={messages.length}
-                            paginate={paginate}
-                            className="pagination"
-                        />
-                    </Route>
-                    <Route path="/group/:id/pictures">
-                        <div className="py-3 mb-4">
-                            <h1>Pictures</h1>
-                            <Row className="px-2">
-                                {media
-                                    ? media.images.map((image, index) => {
-                                          return (
-                                              <div
-                                                  className="p-2 col-2"
-                                                  key={index}
-                                              >
-                                                  <MediaPicture
-                                                      users={users}
-                                                      image={image}
-                                                  />
-                                              </div>
-                                          );
-                                      })
-                                    : ""}
-                            </Row>
-                        </div>
-                    </Route>
-                </div>
-            </Row>
-        </div>
+                        </Route>
+                    </Col>
+                </Row>
+            </div>
+        </>
     );
 };
 

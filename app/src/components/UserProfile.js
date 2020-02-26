@@ -42,6 +42,7 @@ const UserProfile = () => {
                 />
             ) : (
                 <img
+                    alt="fallback"
                     className="profile-photo img-fluid"
                     src={`https://dummyimage.com/500.png/fab41d&text=${fallback()}`}
                 />

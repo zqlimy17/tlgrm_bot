@@ -13,11 +13,11 @@
     box-sizing: border-box;
 }
 
-.login > i {
+.login>i {
     filter: invert(100%);
 }
 
-.login > btn {
+.login>btn {
     background-color: var(--primary);
     color: black;
 }
@@ -224,7 +224,6 @@ a:hover {
     position: fixed;
     bottom: 0;
     z-index: 50;
-    background-color: white;
     margin: 0px;
 }
 
@@ -276,4 +275,18 @@ th {
     height: 792px;
     background-color: white;
     margin: 0 auto;
+}
+
+@media only screen and (max-width: 576px) {
+    .profile-column {
+        background-color: lightgray;
+        border-right: 0px;
+        min-height: 80vh;
+        position: relative !important;
+    }
+
+    .profile-photo-backround {
+        border-right: 0px;
+    }
+
 }

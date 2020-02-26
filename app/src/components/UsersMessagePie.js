@@ -7,7 +7,15 @@ const UsersMessagePie = ({ users }) => {
     const donutValues = [];
     const color = [];
     users.forEach(user => {
-        donutLabels.push(user.username);
+        if (user.username) {
+            donutLabels.push(user.username);
+        } else if (user.first_name) {
+            donutLabels.push(user.first_name);
+        } else if (user.last_name) {
+            donutLabels.push(user.last_name);
+        } else {
+            donutLabels.push("Anonymous");
+        }
         donutValues.push(
             user.log_count +
                 user.video_count +

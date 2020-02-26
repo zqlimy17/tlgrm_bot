@@ -59,13 +59,9 @@ const ActiveTime = ({ media }) => {
         0
     ];
     const constructGraph = async () => {
-        for (let i = 0; i < logs.length; i++) {
-            logs.forEach(log => {
-                if (moment(log.created_at).format("HH") === xAxis[i]) {
-                    yAxis[i]++;
-                }
-            });
-        }
+        logs.forEach(log => {
+            yAxis[moment(log.created_at).format("HH")]++;
+        });
         return;
     };
     constructGraph();

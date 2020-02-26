@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Row, Button } from "react-bootstrap";
+import { Row, Col, Button } from "react-bootstrap";
 import axios from "axios";
 import { ScaleLoader } from "react-spinners";
 import UserProfile from "../components/UserProfile";
@@ -7,6 +7,7 @@ import DashboardCard from "../components/DashboardCard";
 import UserContext from "../context/UserContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
+import { Redirect } from "react-router-dom";
 
 const Dashboard = setUser => {
     const { user, setCurrentUserId } = useContext(UserContext);
@@ -27,9 +28,10 @@ const Dashboard = setUser => {
     }, [user]);
     return (
         <>
+            {user ? "" : <Redirect to="/" />}
             <div className="container-fluid">
                 <Row>
-                    <div className="col-3 profile-column">
+                    <div className="col-sm-3 profile-column">
                         {user ? (
                             <div className="text-center">
                                 <div className="p-3">
@@ -60,9 +62,13 @@ const Dashboard = setUser => {
                                 <ScaleLoader color={"#e37400"} />
                             </div>
                         )}
-                        <img src="/img/tlgrm-plane.png" className="planey" />
+                        <img
+                            src="/img/tlgrm-plane.png"
+                            className="planey"
+                            alt="tlgrm logo plane"
+                        />
                     </div>
-                    <div className="col offset-3">
+                    <Col sm={{ offset: 3 }}>
                         <div className="p-2">
                             {chats.length > 0 ? (
                                 chats.map((chat, index) => {
@@ -79,7 +85,7 @@ const Dashboard = setUser => {
                                 </div>
                             )}
                         </div>
-                    </div>
+                    </Col>
                 </Row>
             </div>
         </>
