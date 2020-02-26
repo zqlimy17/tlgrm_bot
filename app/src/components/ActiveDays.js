@@ -6,27 +6,11 @@ import moment from "moment";
 const ActiveDays = ({ media }) => {
     const { logs } = media;
 
-    let xAxis = [
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-        "Saturday",
-        "Sunday"
-    ];
-
     let yAxis = [0, 0, 0, 0, 0, 0, 0];
     const constructGraph = async () => {
-        for (let i = 0; i < 6; i++) {
-            logs.forEach(log => {
-                if (moment(log.created_at).format("dddd") === xAxis[i]) {
-                    yAxis[i]++;
-                }
-            });
-        }
-
-        return;
+        logs.forEach(log => {
+            yAxis[moment(log.created_at).day()]++;
+        });
     };
     constructGraph();
 
